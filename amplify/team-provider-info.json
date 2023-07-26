@@ -13,13 +13,19 @@
     },
     "categories": {
       "auth": {
-        "amplifyappreact0c472650": {}
+        "amplifyappreact0c472650": {},
+        "INKTRAXUSERS": {}
       },
       "api": {
         "amplifyappreact": {}
       },
       "storage": {
         "s30e4c3291": {}
+      },
+      "function": {
+        "INKTRAXUSERSPostConfirmation": {
+          "GROUP": "customer"
+        }
       }
     }
   }
