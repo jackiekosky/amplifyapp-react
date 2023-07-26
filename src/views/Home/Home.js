@@ -8,7 +8,7 @@ import {
 
 const Home = ({ signOut }) => {
   return (
-    <h1>Hello</h1>
+    <h1>test</h1>
   );
 };
 

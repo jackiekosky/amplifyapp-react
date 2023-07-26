@@ -13,7 +13,7 @@ export const Switch = () => {
       <Routes>
         <Route path='/' element={<Home/>} />
         <Route path='/products' element={<Products/>} />
-        <Route path='/products/add_product' element={<AddProduct/>} />
+        <Route path='/products/add' element={<AddProduct/>} />
         <Route path='/account' element={<Account/>} />
         <Route path='/Home' element={<Navigate to="/" replace={true} />} />
       </Routes>
