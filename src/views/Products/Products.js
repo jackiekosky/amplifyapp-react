@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import "./App.css";
 import "@aws-amplify/ui-react/styles.css";
 import { API, Storage } from 'aws-amplify';
 import {
@@ -12,13 +11,14 @@ import {
   View,
   withAuthenticator,
 } from '@aws-amplify/ui-react';
-import { listProducts } from "./graphql/queries";
+import { listProducts } from "../../graphql/queries";
 import {
   createProduct as createProductMutation,
   deleteProduct as deleteProductMutation,
-} from "./graphql/mutations";
+} from "../../graphql/mutations";
 
-const App = ({ signOut }) => {
+
+const Products = ({ signOut }) => {
   const [Products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -71,37 +71,7 @@ const App = ({ signOut }) => {
 
   return (
     <View className="App">
-      <Heading level={1}>My Products App</Heading>
-      <View as="form" margin="3rem 0" onSubmit={createProduct}>
-        <Flex direction="row" justifyContent="center">
-          <TextField
-            name="name"
-            placeholder="Product Name"
-            label="Product Name"
-            labelHidden
-            variation="quiet"
-            required
-          />
-          <TextField
-            name="description"
-            placeholder="Product Description"
-            label="Product Description"
-            labelHidden
-            variation="quiet"
-            required
-          />
-          <View
-          name="image"
-          as="input"
-          type="file"
-          style={{ alignSelf: "end" }}
-        />
-          <Button type="submit" variation="primary">
-            Create Product
-          </Button>
-        </Flex>
-      </View>
-      <Heading level={2}>Current Products</Heading>
+      <Heading level={2}>Products</Heading>
       <View margin="3rem 0">
       {Products.map((Product) => (
   <Flex
@@ -121,12 +91,14 @@ const App = ({ signOut }) => {
         style={{ width: 400 }}
       />
     )}
+    <Button variation="link" onClick={() => deleteProduct(Product)}>
+      Delete Product
+    </Button>
   </Flex>
 ))}
       </View>
-      <Button onClick={signOut}>Sign Out</Button>
     </View>
   );
 };
 
-export default withAuthenticator(App);
+export default withAuthenticator(Products);
