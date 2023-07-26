@@ -13,7 +13,8 @@
     },
     "categories": {
       "auth": {
-        "amplifyappreact0c472650": {}
+        "amplifyappreact0c472650": {},
+        "amplifyappreact": {}
       },
       "api": {
         "amplifyappreact": {}

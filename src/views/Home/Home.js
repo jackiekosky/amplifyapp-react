@@ -3,12 +3,24 @@ import "@aws-amplify/ui-react/styles.css";
 import {
     Button,
     View,
+    Heading,
     withAuthenticator,
 } from '@aws-amplify/ui-react';
 
 const Home = ({ signOut }) => {
   return (
-    <h1>test</h1>
+    <View
+    as="div"
+    maxWidth="1200px"
+    margin="auto"
+    padding="50px 0">
+      <Heading
+        level={1}
+        textAlign="center" 
+      >
+        Welcome to InkTrax Portal
+      </Heading>
+    </View>
   );
 };
 
