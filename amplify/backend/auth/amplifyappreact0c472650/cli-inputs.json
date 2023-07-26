@@ -1,10 +1,10 @@
 {
   "version": "1",
   "cognitoConfig": {
-    "identityPoolName": "testAuthIdentityPool",
+    "identityPoolName": "amplifyappreact0c472650_identitypool_0c472650",
     "allowUnauthenticatedIdentities": false,
-    "resourceNameTruncated": "amplif7bf60fec",
-    "userPoolName": "amplifyappreact",
+    "resourceNameTruncated": "amplif0c472650",
+    "userPoolName": "amplifyappreact0c472650_userpool_0c472650",
     "autoVerifiedAttributes": [
       "email"
     ],
@@ -20,29 +20,25 @@
     "passwordPolicyMinLength": 8,
     "passwordPolicyCharacters": [],
     "requiredAttributes": [
-      "email",
-      "name",
-      "phone_number",
-      "address",
-      "locale"
+      "email"
     ],
     "aliasAttributes": [],
     "userpoolClientGenerateSecret": false,
     "userpoolClientRefreshTokenValidity": 30,
-    "userpoolClientWriteAttributes": [],
-    "userpoolClientReadAttributes": [],
-    "userpoolClientLambdaRole": "amplif7bf60fec_userpoolclient_lambda_role",
+    "userpoolClientWriteAttributes": [
+      "email"
+    ],
+    "userpoolClientReadAttributes": [
+      "email"
+    ],
+    "userpoolClientLambdaRole": "amplif0c472650_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "7bf60fec",
-    "resourceName": "amplifyappreact",
+    "sharedId": "0c472650",
+    "resourceName": "amplifyappreact0c472650",
     "authSelections": "identityPoolAndUserPool",
-    "serviceName": "Cognito",
-    "useDefault": "manual",
-    "userPoolGroups": false,
+    "useDefault": "default",
     "userPoolGroupList": [],
-    "adminQueries": false,
-    "thirdPartyAuth": false,
-    "authProviders": [],
+    "serviceName": "Cognito",
     "usernameCaseSensitive": false,
     "useEnabledMfas": true
   }

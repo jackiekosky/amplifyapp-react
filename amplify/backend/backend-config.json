@@ -23,7 +23,7 @@
     }
   },
   "auth": {
-    "amplifyappreact": {
+    "amplifyappreact0c472650": {
       "customAuth": false,
       "dependsOn": [],
       "frontendAuthConfig": {
@@ -36,11 +36,7 @@
           "passwordPolicyMinLength": 8
         },
         "signupAttributes": [
-          "EMAIL",
-          "NAME",
-          "PHONE_NUMBER",
-          "ADDRESS",
-          "LOCALE"
+          "EMAIL"
         ],
         "socialProviders": [],
         "usernameAttributes": [],
