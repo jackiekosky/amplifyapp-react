@@ -13,7 +13,13 @@
     },
     "categories": {
       "auth": {
-        "amplifyappreact0c472650": {}
+        "amplifyappreact0c472650": {},
+        "amplifyappreact": {
+          "userPoolId": "us-east-2_M53FkWpaY",
+          "userPoolName": "INKTRAX_USERS",
+          "webClientId": "4ho50eo2iinfcn6t6lo1ukjprq",
+          "nativeClientId": "4ho50eo2iinfcn6t6lo1ukjprq"
+        }
       },
       "api": {
         "amplifyappreact": {}
