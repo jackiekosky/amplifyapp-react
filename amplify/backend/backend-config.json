@@ -7,6 +7,14 @@
           "additionalAuthenticationProviders": [
             {
               "authenticationType": "AWS_IAM"
+            },
+            {
+              "apiKeyConfig": {
+                "apiKeyExpirationDate": "2023-07-27T18:09:36.527Z",
+                "apiKeyExpirationDays": 1,
+                "description": "API"
+              },
+              "authenticationType": "API_KEY"
             }
           ],
           "defaultAuthentication": {
@@ -22,36 +30,7 @@
       "service": "AppSync"
     }
   },
-  "auth": {
-    "amplifyappreact": {
-      "customAuth": false,
-      "dependsOn": [],
-      "frontendAuthConfig": {
-        "mfaConfiguration": "OFF",
-        "mfaTypes": [
-          "SMS"
-        ],
-        "passwordProtectionSettings": {
-          "passwordPolicyCharacters": [],
-          "passwordPolicyMinLength": 8
-        },
-        "signupAttributes": [
-          "EMAIL",
-          "NAME",
-          "PHONE_NUMBER",
-          "ADDRESS",
-          "LOCALE"
-        ],
-        "socialProviders": [],
-        "usernameAttributes": [],
-        "verificationMechanisms": [
-          "EMAIL"
-        ]
-      },
-      "providerPlugin": "awscloudformation",
-      "service": "Cognito"
-    }
-  },
+  "auth": {},
   "storage": {
     "s30e4c3291": {
       "dependsOn": [],
