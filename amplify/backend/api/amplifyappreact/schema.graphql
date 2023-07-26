@@ -6,11 +6,4 @@ type Product @model @auth(rules: [{allow: public}]) {
   price: String
   in_stock: Int
 }
-
-type Note @model @auth(rules: [{allow: public}]) {
-  id: ID!
-  name: String!
-  description: String
-  image: String
-}
  
