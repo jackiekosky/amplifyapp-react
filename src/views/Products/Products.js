@@ -106,13 +106,13 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const BASE_API_URL = "https://manageordersapi.com/v1/manageorders/";
-const API_ID_TOKEN = "YOUR_API_ID_TOKEN"; // Replace this with the actual API ID token
 
 async function getToken() {
     try {
       const response = await axios.post(`${BASE_API_URL}signin`, {
         username: "josh@inktrax.com",
         password: "1NKT3E$9m#",
+        'Access-Control-Allow-Origin': '*'
       });
 
       return response.data.id_token;
@@ -139,6 +139,7 @@ const Products = () => {
       const response = await axios.get(url, {
         headers: {
           Authorization: `Bearer ${API_ID_TOKEN}`,
+          'Access-Control-Allow-Origin': '*'
         },
       });
 
