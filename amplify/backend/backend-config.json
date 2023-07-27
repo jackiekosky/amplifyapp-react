@@ -31,6 +31,27 @@
       "serviceType": "imported"
     }
   },
+  "function": {
+    "amplifyappreact219abec2": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributeEnvMap": {
+            "Arn": "TABLE_ARN",
+            "Name": "TABLE_NAME"
+          },
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "storage",
+          "resourceName": "dynamo5b26a23c"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  },
   "parameters": {
     "AMPLIFY_auth_amplifyappreact_nativeClientId": {
       "usedBy": [
@@ -63,9 +84,29 @@
           "resourceName": "amplifyappreact"
         }
       ]
+    },
+    "AMPLIFY_function_amplifyappreact219abec2_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "amplifyappreact219abec2"
+        }
+      ]
+    },
+    "AMPLIFY_function_amplifyappreact219abec2_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "amplifyappreact219abec2"
+        }
+      ]
     }
   },
   "storage": {
+    "dynamo5b26a23c": {
+      "providerPlugin": "awscloudformation",
+      "service": "DynamoDB"
+    },
     "s30e4c3291": {
       "dependsOn": [],
       "providerPlugin": "awscloudformation",
