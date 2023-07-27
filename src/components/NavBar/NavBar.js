@@ -8,15 +8,14 @@ import {
     MenuButton,
     MenuItem,
     Button,
-    withAuthenticator,
+    Authenticator
 } from '@aws-amplify/ui-react';
+import { Auth } from 'aws-amplify';
 
 import './NavBar.css';
 
-
-const NavBar = ({ signOut }) =>  {
- 
-const navigate = useNavigate();
+const NavBar = () =>  {
+  const navigate = useNavigate();
   return ( 
     <View
     as="div"
@@ -47,12 +46,14 @@ const navigate = useNavigate();
             <MenuItem onClick={() => navigate("/products")} >All Products</MenuItem>
             <MenuItem onClick={() => navigate("/products/add")} >Add Product</MenuItem>
           </Menu>
-          <Button onClick={() => navigate("/account")} >My Account</Button>
-          <Button onClick={signOut} >Sign Out</Button>
+          <Authenticator.Provider>
+            <Button onClick={() => navigate("/account")} >My Account</Button>
+            <Button  onClick={() => Auth.signOut()}>Sign Out</Button>
+            </Authenticator.Provider>
         </Flex>
       </Flex>
     </View>
   );
 };
 
-export default withAuthenticator(NavBar);
+export default NavBar;

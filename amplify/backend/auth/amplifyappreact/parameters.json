@@ -1,0 +1,24 @@
+{
+  "authSelections": "userPoolOnly",
+  "resourceName": "amplifyappreact",
+  "serviceType": "imported",
+  "region": "us-east-2",
+  "authProvidersUserPool": [],
+  "requiredAttributes": [
+    "name",
+    "email",
+    "phone_number"
+  ],
+  "passwordPolicyMinLength": 8,
+  "passwordPolicyCharacters": [
+    "Requires Lowercase",
+    "Requires Uppercase",
+    "Requires Numbers",
+    "Requires Symbols"
+  ],
+  "mfaConfiguration": "OFF",
+  "autoVerifiedAttributes": [
+    "email"
+  ],
+  "mfaTypes": []
+}

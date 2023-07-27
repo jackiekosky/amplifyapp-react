@@ -18,6 +18,7 @@ import {
   deleteProduct as deleteProductMutation,
 } from "./graphql/mutations";
 
+
 const App = ({ signOut }) => {
   const [Products, setProducts] = useState([]);
 
@@ -70,63 +71,8 @@ const App = ({ signOut }) => {
   }
 
   return (
-    <View className="App">
-      <Heading level={1}>My Products App</Heading>
-      <View as="form" margin="3rem 0" onSubmit={createProduct}>
-        <Flex direction="row" justifyContent="center">
-          <TextField
-            name="name"
-            placeholder="Product Name"
-            label="Product Name"
-            labelHidden
-            variation="quiet"
-            required
-          />
-          <TextField
-            name="description"
-            placeholder="Product Description"
-            label="Product Description"
-            labelHidden
-            variation="quiet"
-            required
-          />
-          <View
-          name="image"
-          as="input"
-          type="file"
-          style={{ alignSelf: "end" }}
-        />
-          <Button type="submit" variation="primary">
-            Create Product
-          </Button>
-        </Flex>
-      </View>
-      <Heading level={2}>Current Products</Heading>
-      <View margin="3rem 0">
-      {Products.map((Product) => (
-  <Flex
-    key={Product.id || Product.name}
-    direction="row"
-    justifyContent="center"
-    alignItems="center"
-  >
-    <Text as="strong" fontWeight={700}>
-      {Product.name}
-    </Text>
-    <Text as="span">{Product.description}</Text>
-    {Product.image && (
-      <Image
-        src={Product.image}
-        alt={`visual aid for ${Products.name}`}
-        style={{ width: 400 }}
-      />
-    )}
-  </Flex>
-))}
-      </View>
-      <Button onClick={signOut}>Sign Out</Button>
-    </View>
+   <></>
   );
 };
 
-export default withAuthenticator(App);
+export default App;
