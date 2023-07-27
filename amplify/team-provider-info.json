@@ -25,14 +25,7 @@
         "amplifyappreact": {}
       },
       "storage": {
-        "s30e4c3291": {},
-        "dynamo5b26a23c": {}
-      },
-      "function": {
-        "amplifyappreact219abec2": {
-          "deploymentBucketName": "amplify-amplify1ccdac5c9a414-staging-213628-deployment",
-          "s3Key": "amplify-builds/amplifyappreact219abec2-765158627055756e4a54-build.zip"
-        }
+        "s30e4c3291": {}
       }
     }
   }
