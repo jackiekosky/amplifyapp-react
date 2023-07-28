@@ -104,28 +104,18 @@ export default withAuthenticator(Products);*/
 
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-const BASE_API_URL = "https://manageordersapi.com/v1/manageorders/signin";
-
-const data = {
-  username: "josh@inktrax.com",
-  password: "1NKT3E$9m#",
-}
-
-const config = {
-  headers: {
-    "Access-Control-Allow-Origin": "*"
-  }
-};
-
+const API_URL = "https://twermdd9bc.execute-api.us-east-2.amazonaws.com/staging/api";
+const GET_PRODUCTS_URL = "https://twermdd9bc.execute-api.us-east-2.amazonaws.com/staging/sw_products";
 
 async function getToken() {
     try {
-      const response = await  axios.post(BASE_API_URL, data, config);
-      return response.data.id_token;
+      const response = await  axios.post(API_URL);
+      return response.text();
     } catch (error) {
       console.error("Error signing in:", error.message);
     }
   };
+
 const Products = () => {
   const API_ID_TOKEN = getToken();
   const [products, setProducts] = useState([]);
@@ -136,7 +126,7 @@ const Products = () => {
     try {
       const date = new Date().toISOString().slice(0, 10);
       const url =
-        BASE_API_URL +
+      GET_PRODUCTS_URL +
         `inventorylevels?date_Modification_start=1990-01-01&date_Modification_end=${date}`;
       const response = await axios.get(url, {
         headers: {
@@ -172,7 +162,7 @@ const Products = () => {
             {products.map((product) => (
               <a key={product.part_num} href={`./single-product.php?part_num=${product.part_num}`}>
                 <div className="product white-bg rounder-borders">
-                  <img src="" alt="Product Image" />
+                  <img src="" alt="Product" />
                   <div className="product-info">
                     <div className="product-title">{product.name}</div>
                     <div className="product-subtitle">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
