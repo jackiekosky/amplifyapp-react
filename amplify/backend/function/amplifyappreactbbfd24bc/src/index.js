@@ -8,15 +8,17 @@ exports.handler = async (event) => {
     const url = "https://manageordersapi.com/v1/manageorders/signin";
 
     const data = {
-    username: "josh@inktrax.com",
-    password: "1NKT3E$9m#",
+        username: "josh@inktrax.com",
+        password: "1NKT3E$9m#",
     }
 
     const res = await fetch(url, {
-        body: JSON.stringify(data)
-    }
-
-    );
+        body: JSON.stringify(data),
+        headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Headers": "*"
+        }
+    });
 
     return {
         statusCode: res.status,
