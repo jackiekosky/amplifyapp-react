@@ -10,6 +10,6 @@ exports.handler = async (event) => {
             "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Headers": "*"
         },
-        body: event,
+        body: event.pathParameters,
     };
 };
