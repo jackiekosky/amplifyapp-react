@@ -12,6 +12,13 @@ export type AmplifyDependentResourcesAttributes = {
     }
   },
   "function": {
+    "amplifyappreact47662d94": {
+      "Arn": "string",
+      "LambdaExecutionRole": "string",
+      "LambdaExecutionRoleArn": "string",
+      "Name": "string",
+      "Region": "string"
+    },
     "amplifyappreactbbfd24bc": {
       "Arn": "string",
       "LambdaExecutionRole": "string",

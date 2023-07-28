@@ -7,6 +7,13 @@
       "permissions": {
         "setting": "open"
       }
+    },
+    "/swproducts": {
+      "name": "/swproducts",
+      "lambdaFunction": "amplifyappreact47662d94",
+      "permissions": {
+        "setting": "open"
+      }
     }
   }
 }

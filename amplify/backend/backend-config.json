@@ -30,6 +30,14 @@
           ],
           "category": "function",
           "resourceName": "amplifyappreactbbfd24bc"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "amplifyappreact47662d94"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -55,6 +63,72 @@
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_auth_amplifyappreact_nativeClientId": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "amplifyappreact"
+        }
+      ]
+    },
+    "AMPLIFY_auth_amplifyappreact_userPoolId": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "amplifyappreact"
+        }
+      ]
+    },
+    "AMPLIFY_auth_amplifyappreact_userPoolName": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "amplifyappreact"
+        }
+      ]
+    },
+    "AMPLIFY_auth_amplifyappreact_webClientId": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "amplifyappreact"
+        }
+      ]
+    },
+    "AMPLIFY_function_amplifyappreact47662d94_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "amplifyappreact47662d94"
+        }
+      ]
+    },
+    "AMPLIFY_function_amplifyappreact47662d94_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "amplifyappreact47662d94"
+        }
+      ]
+    },
+    "AMPLIFY_function_amplifyappreactbbfd24bc_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "amplifyappreactbbfd24bc"
+        }
+      ]
+    },
+    "AMPLIFY_function_amplifyappreactbbfd24bc_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "amplifyappreactbbfd24bc"
+        }
+      ]
     }
   },
   "storage": {

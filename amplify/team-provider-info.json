@@ -32,7 +32,11 @@
         "amplifyappreact220b320e": {},
         "amplifyappreactbbfd24bc": {
           "deploymentBucketName": "amplify-amplify1ccdac5c9a414-staging-213628-deployment",
-          "s3Key": "amplify-builds/amplifyappreactbbfd24bc-4e4e6d787067496d4953-build.zip"
+          "s3Key": "amplify-builds/amplifyappreactbbfd24bc-3373756977677a473052-build.zip"
+        },
+        "amplifyappreact47662d94": {
+          "deploymentBucketName": "amplify-amplify1ccdac5c9a414-staging-213628-deployment",
+          "s3Key": "amplify-builds/amplifyappreact47662d94-587043704e58624b672b-build.zip"
         }
       }
     }
