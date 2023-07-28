@@ -28,7 +28,7 @@ exports.handler = async (event) => {
             "Access-Control-Allow-Headers": "*"
         },
         body: JSON.stringify({
-            message: await res.text(),
+            access_token: await res.json(),
         }),
     };
 };
