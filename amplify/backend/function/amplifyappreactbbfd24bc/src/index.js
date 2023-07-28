@@ -5,8 +5,19 @@
  */
 exports.handler = async (event) => {
     console.log(`EVENT: ${JSON.stringify(event)}`);
-    const url = 'https://aws.amazon.com/';
-    const res = await fetch(url);
+    const url = "https://manageordersapi.com/v1/manageorders/signin";
+
+    const data = {
+    username: "josh@inktrax.com",
+    password: "1NKT3E$9m#",
+    }
+
+    const res = await fetch(url, {
+        body: JSON.stringify(data)
+    }
+
+    );
+
     return {
         statusCode: res.status,
         headers: {
