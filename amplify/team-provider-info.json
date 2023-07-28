@@ -22,10 +22,18 @@
         }
       },
       "api": {
-        "amplifyappreact": {}
+        "amplifyappreact": {},
+        "api504bcf73": {}
       },
       "storage": {
         "s30e4c3291": {}
+      },
+      "function": {
+        "amplifyappreact220b320e": {},
+        "amplifyappreactbbfd24bc": {
+          "deploymentBucketName": "amplify-amplify1ccdac5c9a414-staging-213628-deployment",
+          "s3Key": "amplify-builds/amplifyappreactbbfd24bc-4e4e6d787067496d4953-build.zip"
+        }
       }
     }
   }

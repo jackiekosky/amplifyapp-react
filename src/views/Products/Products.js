@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+/*import React, { useState, useEffect } from "react";
 import "@aws-amplify/ui-react/styles.css";
 import { API, Storage } from 'aws-amplify';
 import {
@@ -100,4 +100,98 @@ return (
 );
 };
 
-export default withAuthenticator(Products);
+export default withAuthenticator(Products);*/
+
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+const BASE_API_URL = "https://manageordersapi.com/v1/manageorders/signin";
+
+const data = {
+  username: "josh@inktrax.com",
+  password: "1NKT3E$9m#",
+}
+
+const config = {
+  headers: {
+    "Access-Control-Allow-Origin": "*"
+  }
+};
+
+
+async function getToken() {
+    try {
+      const response = await  axios.post(BASE_API_URL, data, config);
+      return response.data.id_token;
+    } catch (error) {
+      console.error("Error signing in:", error.message);
+    }
+  };
+const Products = () => {
+  const API_ID_TOKEN = getToken();
+  const [products, setProducts] = useState([]);
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+  async function fetchProducts() {
+    try {
+      const date = new Date().toISOString().slice(0, 10);
+      const url =
+        BASE_API_URL +
+        `inventorylevels?date_Modification_start=1990-01-01&date_Modification_end=${date}`;
+      const response = await axios.get(url, {
+        headers: {
+          Authorization: `Bearer ${API_ID_TOKEN}`,
+        },
+      });
+      const responseData = response.data;
+      // Process the data as needed and convert it to the required format
+      const productsData = responseData.result.map((item) => {
+        return {
+          name: item.PartDescription,
+          cost: item.TotalCost,
+          color: item.Color,
+          part_num: item.PartNumber,
+          size_1_qty: item.Size01,
+          size_2_qty: item.Size02,
+          size_3_qty: item.Size03,
+          size_4_qty: item.Size04,
+          size_5_qty: item.Size05,
+          size_6_qty: item.Size06,
+        };
+      });
+      setProducts(productsData);
+    } catch (error) {
+      console.error("Error fetching products:", error.message);
+    }
+  }
+  return (
+    <div className="container">
+      <div className="row">
+        <div className="col">
+          <div className="product-list-wrapper">
+            {products.map((product) => (
+              <a key={product.part_num} href={`./single-product.php?part_num=${product.part_num}`}>
+                <div className="product white-bg rounder-borders">
+                  <img src="" alt="Product Image" />
+                  <div className="product-info">
+                    <div className="product-title">{product.name}</div>
+                    <div className="product-subtitle">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+                    <div className="product-colors">
+                      {product.color.map((color, index) => (
+                        <span key={index} className="color" style={{ backgroundColor: color }} title={color}></span>
+                      ))}
+                      {product.color.length > 11 && (
+                        <span className="color-text">+ <span className="product-color-num">{product.color.length - 11}</span></span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+export default Products;

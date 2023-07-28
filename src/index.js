@@ -6,7 +6,11 @@ import { Amplify } from 'aws-amplify';
 import config from './aws-exports';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Switch } from './routes'; 
+
+
+
 Amplify.configure(config);
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

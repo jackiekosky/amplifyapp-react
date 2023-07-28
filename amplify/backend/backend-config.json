@@ -20,6 +20,20 @@
       },
       "providerPlugin": "awscloudformation",
       "service": "AppSync"
+    },
+    "api504bcf73": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "amplifyappreactbbfd24bc"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
     }
   },
   "auth": {
@@ -31,38 +45,11 @@
       "serviceType": "imported"
     }
   },
-  "parameters": {
-    "AMPLIFY_auth_amplifyappreact_nativeClientId": {
-      "usedBy": [
-        {
-          "category": "auth",
-          "resourceName": "amplifyappreact"
-        }
-      ]
-    },
-    "AMPLIFY_auth_amplifyappreact_userPoolId": {
-      "usedBy": [
-        {
-          "category": "auth",
-          "resourceName": "amplifyappreact"
-        }
-      ]
-    },
-    "AMPLIFY_auth_amplifyappreact_userPoolName": {
-      "usedBy": [
-        {
-          "category": "auth",
-          "resourceName": "amplifyappreact"
-        }
-      ]
-    },
-    "AMPLIFY_auth_amplifyappreact_webClientId": {
-      "usedBy": [
-        {
-          "category": "auth",
-          "resourceName": "amplifyappreact"
-        }
-      ]
+  "function": {
+    "amplifyappreactbbfd24bc": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
     }
   },
   "storage": {
