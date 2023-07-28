@@ -46,6 +46,11 @@
     }
   },
   "function": {
+    "amplifyappreact47662d94": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
     "amplifyappreactbbfd24bc": {
       "build": true,
       "providerPlugin": "awscloudformation",

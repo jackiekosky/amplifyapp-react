@@ -105,7 +105,7 @@ export default withAuthenticator(Products);*/
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 const API_URL = "https://twermdd9bc.execute-api.us-east-2.amazonaws.com/staging/api";
-const GET_PRODUCTS_URL = "https://twermdd9bc.execute-api.us-east-2.amazonaws.com/staging/sw_products";
+const GET_PRODUCTS_URL = "https://twermdd9bc.execute-api.us-east-2.amazonaws.com/staging/swproducts";
 
 async function getToken() {
     try {
@@ -118,6 +118,7 @@ async function getToken() {
 
 const Products = () => {
   const API_ID_TOKEN = getToken();
+  console.log(API_ID_TOKEN);
   const [products, setProducts] = useState([]);
   useEffect(() => {
     fetchProducts();
