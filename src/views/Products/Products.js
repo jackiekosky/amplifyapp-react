@@ -107,9 +107,9 @@ import axios from "axios";
 const API_URL = "https://twermdd9bc.execute-api.us-east-2.amazonaws.com/staging/api";
 const GET_PRODUCTS_URL = "https://twermdd9bc.execute-api.us-east-2.amazonaws.com/staging/swproducts";
 
-async function getToken() {
+function getToken() {
     try {
-      const response = await  axios.post(API_URL);
+      const response = axios.post(API_URL);
       return response;
     } catch (error) {
       console.error("Error signing in:", error.message);
