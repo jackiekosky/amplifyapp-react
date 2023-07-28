@@ -107,10 +107,11 @@ import axios from "axios";
 const API_URL = "https://twermdd9bc.execute-api.us-east-2.amazonaws.com/staging/api";
 const GET_PRODUCTS_URL = "https://twermdd9bc.execute-api.us-east-2.amazonaws.com/staging/swproducts";
 
-function getToken() {
+async function getToken() {
     try {
-      const response = axios.post(API_URL);
-      return response;
+      const response = await  axios.post(API_URL);
+      console.log(response.data.id_token);
+      return response.data.id_token;
     } catch (error) {
       console.error("Error signing in:", error.message);
     }
@@ -118,7 +119,6 @@ function getToken() {
 
 const Products = () => {
   const API_ID_TOKEN = getToken();
-  console.log(API_ID_TOKEN);
   const [products, setProducts] = useState([]);
   useEffect(() => {
     fetchProducts();
