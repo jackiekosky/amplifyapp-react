@@ -4,13 +4,14 @@
  * @type {import('@types/aws-lambda').APIGatewayProxyHandler}
  */
 exports.handler = async (event) => {
-    const token = event.pathParameters.id_token;
+    console.log(`EVENT: ${JSON.stringify(event)}`);
     return {
         statusCode: 200,
-        headers: {
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Headers": "*"
-        },
-        body: token,
+    //  Uncomment below to enable CORS requests
+    //  headers: {
+    //      "Access-Control-Allow-Origin": "*",
+    //      "Access-Control-Allow-Headers": "*"
+    //  },
+        body: JSON.stringify(event.pathParameters.id),
     };
 };
