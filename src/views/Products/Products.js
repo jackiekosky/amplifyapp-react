@@ -110,7 +110,7 @@ const GET_PRODUCTS_URL = "https://twermdd9bc.execute-api.us-east-2.amazonaws.com
 async function getToken() {
     try {
       const response = await  axios.post(API_URL);
-      console.log(response.data.id_token);
+      console.log(response);
       return response.data.id_token;
     } catch (error) {
       console.error("Error signing in:", error.message);
