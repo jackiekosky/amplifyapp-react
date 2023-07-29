@@ -19,10 +19,14 @@ deleteProduct as deleteProductMutation,
 
 const Products = ({ signOut }) => {
 const [Products, setProducts] = useState([]);
+const [Token, setToken] = useState([]);
 
 useEffect(() => {
+  componentDidMount();
   fetchProducts();
 }, []);
+
+
 
 async function fetchProducts() {
   const apiData = await API.graphql({ query: listProducts });
@@ -68,6 +72,7 @@ async function deleteProduct({ id, name }) {
   });
 }
 
+
 return (
   <View className="App">
     <Heading level={2}>Products</Heading>
@@ -100,30 +105,33 @@ return (
 );
 };
 
-export default withAuthenticator(Products);*/
+export default Products;*/
 
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 const API_URL = "https://twermdd9bc.execute-api.us-east-2.amazonaws.com/staging/api";
 const GET_PRODUCTS_URL = "https://twermdd9bc.execute-api.us-east-2.amazonaws.com/staging/swproducts";
 
-async function getToken() {
-    try {
-      const response = await  axios.post(API_URL);
-      console.log(response);
-      return response.data.id_token;
-    } catch (error) {
-      console.error("Error signing in:", error.message);
-    }
+const Products = () => {
+  const [token, setToken] = useState([]);
+  const [products, setProducts] = useState([]);
+
+
+  const getAPIToken = async (username) => {
+    const res = await fetch(API_URL);
+    const data = await res.json();
+    return data.access_token.access_token;
   };
 
-const Products = () => {
-  const API_ID_TOKEN = getToken();
-  const [products, setProducts] = useState([]);
+
   useEffect(() => {
     fetchProducts();
   }, []);
+
+
   async function fetchProducts() {
+    const API_ID_TOKEN = await getAPIToken()
+    console.log(API_ID_TOKEN);
     try {
       const date = new Date().toISOString().slice(0, 10);
       const url =
