@@ -5,9 +5,12 @@
  */
 exports.handler = async (event) => {
     console.log(`EVENT: ${JSON.stringify(event)}`);
-    const url =  process.env.SW_GET_TOKEN_URL;
+    const url = "https://manageordersapi.com/v1/manageorders/signin";
 
-    const data = process.env.SW_TOKEN_API_DATA;
+    const data = {
+        username: "josh@inktrax.com",
+        password: "1NKT3E$9m#",
+    }
 
     const res = await fetch(url, {
         method: 'POST',
