@@ -12,7 +12,12 @@ exports.handler = async (event) => {
     } catch (e) {
         // not passed json
     }
-    const header = parsedBody.header;
+    var header = parsedBody.header;
+    try {  
+        header = JSON.parse(header);
+    } catch (e) {
+        // not passed json
+    }
 
     const res = await fetch(url, {
         method: 'POST',
@@ -29,6 +34,6 @@ exports.handler = async (event) => {
             "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Headers": "*"
         },
-        body: header,
+        body: JSON.stringify(header),
     };
 };
