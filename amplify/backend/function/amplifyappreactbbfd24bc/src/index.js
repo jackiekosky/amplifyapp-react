@@ -69,7 +69,7 @@ exports.handler = async (event) => {
     
     const res = await fetch(url, fetchOptions);
 
-    const output = await res.json();
+    const output = JSON.parse(res.body);
 
     return {
         statusCode: 200,
