@@ -110,9 +110,9 @@ export default Products;*/
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-
-
 const Products = () => {
+  const [Products, setProducts] = useState([]);
+
   const API_BASE_URL = "https://twermdd9bc.execute-api.us-east-2.amazonaws.com/staging/api";
   
   const TOKEN_URL = "https://manageordersapi.com/v1/manageorders/signin";
@@ -124,56 +124,34 @@ const Products = () => {
 
   TOKEN_DATA = JSON.stringify(TOKEN_DATA);
 
-  console.log(TOKEN_DATA);
-
-  const TOKEN_CALL = {
-    "url": TOKEN_URL,
-    "data": TOKEN_DATA
-  }
-  
-  const getAPIToken = async (username) => {
-    const res = await fetch(API_BASE_URL, TOKEN_CALL);
-    const data = await res.json();
-    console.log(data)
-    return data;
-  };
-
-  
-  useEffect(() => {
-    getAPIToken();
-  }, []);
-
-
-
-  /*
-  const [token, setToken] = useState([]);
-  const [products, setProducts] = useState([]);
-
-
-  const getAPIToken = async (username) => {
-    const res = await fetch(API_URL);
-    const data = await res.json();
-    return data.access_token.access_token;
-  };
-
+  var PRODUCTS_URL = "https://manageordersapi.com/v1/manageorders/";
+  const date = new Date().toISOString().slice(0, 10);
+  PRODUCTS_URL = PRODUCTS_URL +
+    `inventorylevels?date_Modification_start=1990-01-01&date_Modification_end=${date}`;
 
   useEffect(() => {
     fetchProducts();
   }, []);
 
-
   async function fetchProducts() {
-    const API_ID_TOKEN = await getAPIToken()
-    console.log(API_ID_TOKEN);
+
+    /* Get Access Token */
+    const res = await fetch(API_BASE_URL, {
+      method: "POST",
+      body: JSON.stringify({
+        "url": TOKEN_URL,
+        "data": TOKEN_DATA
+      }), 
+    });
+    const TOKEN_RES_DATA = await res.json();
+    const TOKEN = TOKEN_RES_DATA.id_token;
+    
     try {
-      const date = new Date().toISOString().slice(0, 10);
-      const url =
-      GET_PRODUCTS_URL +
-        `inventorylevels?date_Modification_start=1990-01-01&date_Modification_end=${date}`;
-      const response = await axios.get(url, {
-        headers: {
-          Authorization: `Bearer ${API_ID_TOKEN}`,
-        },
+      const response = await axios.get(API_BASE_URL, {
+        body: {
+          "url": PRODUCTS_URL,
+          "header": `Authorization: "Bearer ${TOKEN}"`,
+        }
       });
       const responseData = response.data;
       // Process the data as needed and convert it to the required format
@@ -195,7 +173,7 @@ const Products = () => {
     } catch (error) {
       console.error("Error fetching products:", error.message);
     }
-  }*/
+  }
   return (
     <div className="container">
       <div className="row">

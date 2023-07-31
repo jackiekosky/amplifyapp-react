@@ -2,42 +2,14 @@
 
 /**
  * @type {import('@types/aws-lambda').APIGatewayProxyHandler}
- 
-exports.handler = async (event) => {
-    console.log(`EVENT: ${JSON.stringify(event)}`);
-    const url = "https://manageordersapi.com/v1/manageorders/signin";
-
-    const data = {
-        username: "josh@inktrax.com",
-        password: "1NKT3E$9m#",
-    }
-
-    const res = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-      });
-
-    return {
-        statusCode: res.status,
-        headers: {
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Headers": "*"
-        },
-        body: JSON.stringify({
-            access_token: await res.json(),
-        }),
-    };
-};
 */
 exports.handler = async (event) => {
     const parsedBody = JSON.parse(event.body); // should wrap in try/catch
     const url = parsedBody.url;
     const data = parsedBody.data;
     const new_data = JSON.parse(data);
+    const header = parsedBody.header;
+    const new_header = JSON.parse(header);
 
     const res = await fetch(url, {
         method: 'POST',
@@ -54,6 +26,6 @@ exports.handler = async (event) => {
             "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Headers": "*"
         },
-        body: await res.text(),
+        body: new_header,
     };
 };
