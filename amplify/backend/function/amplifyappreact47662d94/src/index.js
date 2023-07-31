@@ -7,11 +7,7 @@ exports.handler = async (event) => {
     const parsedBody = JSON.parse(event.body); // should wrap in try/catch
     const url = parsedBody.url;
     const data = parsedBody.data;
-
-    const back = {
-        "url": url,
-        "data": data
-    }
+    data = JSON.parse(data);
 
     const res = await fetch(url, {
         method: 'POST',
