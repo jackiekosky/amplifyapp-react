@@ -135,7 +135,7 @@ const Products = () => {
     const res = await fetch(API_BASE_URL, TOKEN_CALL);
     const data = await res.json();
     console.log(res.json())
-    return data.access_token.access_token;
+    return data;
   };
 
   
