@@ -4,7 +4,7 @@
  * @type {import('@types/aws-lambda').APIGatewayProxyHandler}
 */
 exports.handler = async (event) => {
-    const parsedBody = [];
+    var parsedBody = [];
     try {  
         parsedBody = JSON.parse(event.body); // should wrap in try/catch 
     } catch (e) {
@@ -14,7 +14,7 @@ exports.handler = async (event) => {
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Headers": "*"
             },
-            body: JSON.stringify("No Body Provided"),
+            body: JSON.stringify("Error: Cannot parse body"),
         };
     }
     
@@ -29,7 +29,7 @@ exports.handler = async (event) => {
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Headers": "*"
             },
-            body: JSON.stringify("No Proxy URL provided"),
+            body: JSON.stringify("Error: No Proxy URL provided"),
         };
     }
 
