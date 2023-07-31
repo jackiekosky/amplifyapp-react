@@ -5,14 +5,42 @@
 */
 exports.handler = async (event) => {
     const parsedBody = JSON.parse(event.body); // should wrap in try/catch
-    const url = parsedBody.url;
-    var data = parsedBody.data;
+    
+    /* GET URL FROM BODY */
+    var url = "";
+    try {  
+        url = parsedBody.url;
+    } catch (e) {
+        return {
+            statusCode: 400,
+            headers: {
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Headers": "*"
+            },
+            body: JSON.stringify("No Proxy URL provided"),
+        };
+    }
+
+    /* GET DATA FROM BODY */
+    var data = [];
+    try {  
+        data = parsedBody.data;
+    } catch (e) {
+        // no data passed, but continue
+    }
     try {  
         data = JSON.parse(data);
     } catch (e) {
-        // not passed json
+        // not passed json,  but continue
     }
-    var token = parsedBody.token;
+
+    /* GET TOKEN FROM BODY */
+    var token = "";
+    try {  
+        token = parsedBody.token;
+    } catch (e) {
+        // no token passed, but continue
+    }
 
     /*const fetchOptions = {
         headers: {
