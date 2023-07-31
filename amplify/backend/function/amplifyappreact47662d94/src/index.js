@@ -24,6 +24,6 @@ exports.handler = async (event) => {
             "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Headers": "*"
         },
-        body: await res.json(),
+        body: await res.text(),
     };
 };
