@@ -201,25 +201,6 @@ const Products = () => {
       <div className="row">
         <div className="col">
           <div className="product-list-wrapper">
-            {products.map((product) => (
-              <a key={product.part_num} href={`./single-product.php?part_num=${product.part_num}`}>
-                <div className="product white-bg rounder-borders">
-                  <img src="" alt="Product" />
-                  <div className="product-info">
-                    <div className="product-title">{product.name}</div>
-                    <div className="product-subtitle">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
-                    <div className="product-colors">
-                      {product.color.map((color, index) => (
-                        <span key={index} className="color" style={{ backgroundColor: color }} title={color}></span>
-                      ))}
-                      {product.color.length > 11 && (
-                        <span className="color-text">+ <span className="product-color-num">{product.color.length - 11}</span></span>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </a>
-            ))}
           </div>
         </div>
       </div>
