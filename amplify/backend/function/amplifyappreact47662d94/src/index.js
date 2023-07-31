@@ -14,7 +14,7 @@ exports.handler = async (event) => {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
-        body: data
+        body: JSON.stringify(data)
       });
 
     return {
@@ -23,6 +23,6 @@ exports.handler = async (event) => {
             "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Headers": "*"
         },
-        body: JSON.stringify(await res.json()),
+        body: await res.json()
     };
 };
