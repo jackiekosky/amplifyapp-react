@@ -23,8 +23,6 @@ exports.handler = async (event) => {
             "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Headers": "*"
         },
-        body: JSON.stringify({
-            access_token: await res.json(),
-        }),
+        body: await res.json(),
     };
 };
