@@ -9,7 +9,6 @@ exports.handler = async (event) => {
     const data = parsedBody.data;
     const new_data = JSON.parse(data);
     const header = parsedBody.header;
-    const new_header = JSON.parse(header);
 
     const res = await fetch(url, {
         method: 'POST',
@@ -26,6 +25,6 @@ exports.handler = async (event) => {
             "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Headers": "*"
         },
-        body: new_header,
+        body: header,
     };
 };
