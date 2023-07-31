@@ -5,7 +5,7 @@
  */
 exports.handler = async (event) => {
     console.log(event.body.url);
-
+/*
     const url = event.body.url;
     const data = event.body.data;
 
@@ -17,7 +17,7 @@ exports.handler = async (event) => {
         },
         body: JSON.stringify(data)
       });
-
+*/
     return {
         statusCode: res.status,
         headers: {
