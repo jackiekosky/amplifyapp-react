@@ -4,11 +4,10 @@
  * @type {import('@types/aws-lambda').APIGatewayProxyHandler}
  */
 exports.handler = async (event) => {
-    console.log(event.body.url);
-/*
-    const url = event.body.url;
-    const data = event.body.data;
+    console.log(event.body);
 
+    const body = event.body;
+/*
     const res = await fetch(url, {
         method: 'POST',
         headers: {
@@ -24,6 +23,6 @@ exports.handler = async (event) => {
             "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Headers": "*"
         },
-        body: event.body.url,
+        body: body,
     };
 };
