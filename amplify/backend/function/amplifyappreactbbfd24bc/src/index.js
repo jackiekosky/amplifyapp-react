@@ -57,17 +57,17 @@ exports.handler = async (event) => {
     }
 
     const fetchOptions = {
+        method: 'POST',
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`
         },
-        method: 'POST',
         body: JSON.stringify(data)
     };
     
     
-    //const res = await fetch(url, fetchOptions);
+    const res = await fetch(url, fetchOptions);
 
     return {
         statusCode: 200,
@@ -75,7 +75,6 @@ exports.handler = async (event) => {
             "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Headers": "*"
         },
-        //body: await res.text()
-        body: JSON.stringify(fetchOptions)
+        body: await res.text()
     };
 };
