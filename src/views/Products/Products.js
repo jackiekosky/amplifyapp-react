@@ -126,6 +126,7 @@ const Products = () => {
 
   var PRODUCTS_URL = "https://manageordersapi.com/v1/manageorders/";
   const date = new Date().toISOString().slice(0, 10);
+
   PRODUCTS_URL = PRODUCTS_URL +
     `inventorylevels?date_Modification_start=1990-01-01&date_Modification_end=${date}`;
 
@@ -148,12 +149,23 @@ const Products = () => {
     const TOKEN = TOKEN_RES_DATA.id_token;
 
     console.log(TOKEN);
+
     
-    try {
+    const res_prods = await fetch(API_BASE_URL, {
+      method: "POST",
+      body: JSON.stringify({
+        "url": PRODUCTS_URL,
+        "token": `${TOKEN}"`
+      }), 
+    });
+    
+    const PRODUCTS = await res_prods.json();
+    console.log(PRODUCTS);
+
+    /*try {
       const response = await axios.get(API_BASE_URL, {
         body: {
           "url": PRODUCTS_URL,
-          "token": `${TOKEN}"`
         }
       });
       const responseData = response.data;
@@ -175,7 +187,7 @@ const Products = () => {
       setProducts(productsData);
     } catch (error) {
       console.error("Error fetching products:", error.message);
-    }
+    }*/
   }
   return (
     <div className="container">
