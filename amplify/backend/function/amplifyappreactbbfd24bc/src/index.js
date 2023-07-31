@@ -20,6 +20,7 @@ exports.handler = async (event) => {
     
     /* GET URL FROM BODY */
     var url = "";
+
     try {  
         url = parsedBody.url;
     } catch (e) {
@@ -54,7 +55,7 @@ exports.handler = async (event) => {
         // no token passed, but continue
     }
 
-    /*const fetchOptions = {
+    const fetchOptions = {
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
@@ -63,8 +64,7 @@ exports.handler = async (event) => {
         body: JSON.stringify(data)
     };
     
-
-    const res = await fetch(url, fetchOptions);*/
+    const res = await fetch(url, fetchOptions);
 
     return {
         statusCode: 200,
@@ -72,6 +72,6 @@ exports.handler = async (event) => {
             "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Headers": "*"
         },
-        body: JSON.stringify(parsedBody),
+        body: await res.text(),
     };
 };
