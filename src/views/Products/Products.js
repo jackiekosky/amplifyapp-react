@@ -220,5 +220,5 @@ const Products = () => {
     </View>
   );
   };
-  //export default withAuthenticator(Products);
-  export default Products;
+  export default withAuthenticator(Products);
+  //export default Products;
