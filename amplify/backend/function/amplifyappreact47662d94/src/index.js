@@ -5,8 +5,6 @@
  */
 exports.handler = async (event) => {
     console.log(event.body);
-
-    const body = event.body;
 /*
     const res = await fetch(url, {
         method: 'POST',
@@ -23,6 +21,6 @@ exports.handler = async (event) => {
             "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Headers": "*"
         },
-        body: body,
+        body: event.body,
     };
 };
