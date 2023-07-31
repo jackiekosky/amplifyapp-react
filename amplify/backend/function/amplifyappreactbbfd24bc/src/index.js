@@ -5,14 +5,14 @@
 */
 exports.handler = async (event) => {
     const parsedBody = JSON.parse(event.body); // should wrap in try/catch
-    /*const url = parsedBody.url;
+    const url = parsedBody.url;
     var data = parsedBody.data;
     try {  
         data = JSON.parse(data);
     } catch (e) {
         // not passed json
     }
-    var token = parsedBody.token;*/
+    var token = parsedBody.token;
 
     /*const fetchOptions = {
         headers: {
@@ -32,6 +32,6 @@ exports.handler = async (event) => {
             "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Headers": "*"
         },
-        body: JSON.stringify(event.body),
+        body: JSON.stringify(parsedBody),
     };
 };
