@@ -34,6 +34,14 @@ exports.handler = async (event) => {
         };
     }
 
+    /* GET METHOD FROM BODY */
+    var method = "POST";
+    try {  
+        method = parsedBody.method;
+    } catch (e) {
+        // no token passed, but continue
+    }
+
     /* GET DATA FROM BODY */
     var data = [];
     try {  
@@ -57,7 +65,7 @@ exports.handler = async (event) => {
     }
 
     const fetchOptions = {
-        method: 'POST',
+        method: method,
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',

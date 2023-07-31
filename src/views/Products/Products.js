@@ -141,7 +141,8 @@ const Products = () => {
       method: "POST",
       body: JSON.stringify({
         "url": TOKEN_URL,
-        "data": TOKEN_DATA
+        "data": TOKEN_DATA,
+        "method": "POST"
       }), 
     });
 
@@ -156,7 +157,8 @@ const Products = () => {
       method: "POST",
       body: JSON.stringify({
         "url": PRODUCTS_URL,
-        "token": TOKEN
+        "token": TOKEN,
+        "method": "GET"
       }), 
     });
     
