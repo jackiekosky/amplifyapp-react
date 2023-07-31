@@ -6,6 +6,7 @@
 exports.handler = async (event) => {
     const parsedBody = JSON.parse(event.body); // should wrap in try/catch
     const url = parsedBody.url;
+    const data = parsedBody.data;
     
     return {
         statusCode: 200,
@@ -14,6 +15,6 @@ exports.handler = async (event) => {
             "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Headers": "*"
         },
-        body: JSON.stringify(url),
+        body: url,
     };
 };
