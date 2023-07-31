@@ -41,6 +41,7 @@ exports.handler = async (event) => {
     } catch (e) {
         // no data passed, but continue
     }
+
     try {  
         data = JSON.parse(data);
     } catch (e) {
@@ -58,11 +59,13 @@ exports.handler = async (event) => {
     const fetchOptions = {
         headers: {
             'Accept': 'application/json',
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
         },
         method: 'POST',
         body: JSON.stringify(data)
     };
+    
     
     const res = await fetch(url, fetchOptions);
 
