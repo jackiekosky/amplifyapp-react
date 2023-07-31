@@ -6,8 +6,12 @@
 exports.handler = async (event) => {
     const parsedBody = JSON.parse(event.body); // should wrap in try/catch
     const url = parsedBody.url;
-    const data = parsedBody.data;
-    const new_data = JSON.parse(data);
+    var data = parsedBody.data;
+    try {  
+        data = JSON.parse(data);
+    } catch (e) {
+        // not passed json
+    }
     const header = parsedBody.header;
 
     const res = await fetch(url, {
@@ -16,7 +20,7 @@ exports.handler = async (event) => {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(new_data)
+        body: JSON.stringify(data)
       });
 
     return {
