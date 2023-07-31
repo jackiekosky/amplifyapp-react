@@ -14,7 +14,7 @@ exports.handler = async (event) => {
     }
     var token = parsedBody.token;
 
-    const fetchOptions = {
+    /*const fetchOptions = {
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
@@ -24,7 +24,7 @@ exports.handler = async (event) => {
     };
     
 
-    const res = await fetch(url, fetchOptions);
+    const res = await fetch(url, fetchOptions);*/
 
     return {
         statusCode: 400,
