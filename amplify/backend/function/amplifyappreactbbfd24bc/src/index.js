@@ -16,7 +16,7 @@ exports.handler = async (event) => {
 
     var fetchOptions = [];
 
-    if (token != "") {
+    if (token !== "") {
         fetchOptions = {
             headers: {
                 'Accept': 'application/json',
