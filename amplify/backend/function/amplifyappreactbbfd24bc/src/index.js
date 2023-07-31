@@ -76,6 +76,6 @@ exports.handler = async (event) => {
             "Access-Control-Allow-Headers": "*"
         },
         //body: await res.text()
-        body: fetchOptions
+        body: JSON.stringify(fetchOptions)
     };
 };
