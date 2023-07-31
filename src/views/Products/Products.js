@@ -146,6 +146,8 @@ const Products = () => {
 
     const TOKEN_RES_DATA = await res.json();
     const TOKEN = TOKEN_RES_DATA.id_token;
+
+    console.log(TOKEN);
     
     try {
       const response = await axios.get(API_BASE_URL, {
