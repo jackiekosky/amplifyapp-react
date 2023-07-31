@@ -67,7 +67,7 @@ exports.handler = async (event) => {
     };
     
     
-    const res = await fetch(url, fetchOptions);
+    //const res = await fetch(url, fetchOptions);
 
     return {
         statusCode: 200,
@@ -75,6 +75,7 @@ exports.handler = async (event) => {
             "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Headers": "*"
         },
-        body: await res.text()
+        //body: await res.text()
+        body: fetchOptions
     };
 };

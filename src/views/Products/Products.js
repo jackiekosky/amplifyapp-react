@@ -149,13 +149,14 @@ const Products = () => {
     const TOKEN = TOKEN_RES_DATA.id_token;
 
     console.log(TOKEN);
+    console.log(PRODUCTS_URL);
 
     
     const res_prods = await fetch(API_BASE_URL, {
       method: "POST",
       body: JSON.stringify({
         "url": PRODUCTS_URL,
-        "token": `${TOKEN}"`
+        "token": TOKEN
       }), 
     });
     
