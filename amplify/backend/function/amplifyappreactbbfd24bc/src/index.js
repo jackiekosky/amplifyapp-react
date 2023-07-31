@@ -12,21 +12,19 @@ exports.handler = async (event) => {
     } catch (e) {
         // not passed json
     }
-    var header = parsedBody.header;
-    try {  
-        header = JSON.parse(header);
-    } catch (e) {
-        // not passed json
-    }
+    var token = parsedBody.token;
 
-    const res = await fetch(url, {
-        method: 'POST',
+    const fetchOptions = {
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token,
         },
+        method: 'POST',
         body: JSON.stringify(data)
-      });
+    };
+
+    const res = await fetch(url, fetchOptions);
 
     return {
         statusCode: 400,
@@ -34,6 +32,6 @@ exports.handler = async (event) => {
             "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Headers": "*"
         },
-        body: JSON.stringify(header),
+        body: JSON.stringify(token),
     };
 };
