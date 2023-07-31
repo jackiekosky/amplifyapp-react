@@ -108,7 +108,14 @@ return (
 export default Products;*/
 
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import {
+Text,
+Card,
+View,
+Grid,
+withAuthenticator,
+} from '@aws-amplify/ui-react';
+import "@aws-amplify/ui-react/styles.css";
 
 const Products = () => {
   const [Products, setProducts] = useState([]);
@@ -163,44 +170,55 @@ const Products = () => {
     });
     
     const PRODUCTS = await res_prods.json();
-    console.log(PRODUCTS);
-
-    /*try {
-      const response = await axios.get(API_BASE_URL, {
-        body: {
-          "url": PRODUCTS_URL,
-        }
-      });
-      const responseData = response.data;
-      // Process the data as needed and convert it to the required format
-      const productsData = responseData.result.map((item) => {
-        return {
-          name: item.PartDescription,
-          cost: item.TotalCost,
-          color: item.Color,
-          part_num: item.PartNumber,
-          size_1_qty: item.Size01,
-          size_2_qty: item.Size02,
-          size_3_qty: item.Size03,
-          size_4_qty: item.Size04,
-          size_5_qty: item.Size05,
-          size_6_qty: item.Size06,
-        };
-      });
-      setProducts(productsData);
-    } catch (error) {
-      console.error("Error fetching products:", error.message);
-    }*/
+    console.log(PRODUCTS.result);
+    
+    // Process the data as needed and convert it to the required format
+    const productsData = PRODUCTS.result.map((item) => {
+      return {
+        id: item.ID_InvLevel,
+        name: item.PartDescription,
+        cost: item.TotalCost,
+        color: item.Color,
+        part_num: item.PartNumber,
+        id_Vendor: item.id_Vendor,
+        TotalCost: item.TotalCost,
+        preprint: item.PreprintGroup,
+        type: item.ProductType,
+        size_1_qty: item.Size01,
+        size_2_qty: item.Size02,
+        size_3_qty: item.Size03,
+        size_4_qty: item.Size04,
+        size_5_qty: item.Size05,
+        size_6_qty: item.Size06,
+      };
+    });
+    setProducts(productsData);
   }
+
   return (
-    <div className="container">
-      <div className="row">
-        <div className="col">
-          <div className="product-list-wrapper">
-          </div>
-        </div>
-      </div>
-    </div>
+    <View
+    as="div"
+    maxWidth="1200px"
+    margin="auto"
+    padding="50px 0">
+    <Grid 
+    templateColumns="1fr 1fr 1fr">
+      {Products.map((Product) => (
+        <Card key={Product.id}
+        preprint={Product.preprint}
+        variation="elevated"
+        textAlign="center"
+        margin="20px"
+        minHeight="200px"
+        borderRadius="10px">
+          <Text as="strong" fontWeight={700}>
+            {Product.name}
+          </Text>
+        </Card>
+        ))}
+    </Grid>
+    </View>
   );
-};
-export default Products;
+  };
+  //export default withAuthenticator(Products);
+  export default Products;
