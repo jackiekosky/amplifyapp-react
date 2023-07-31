@@ -4,7 +4,19 @@
  * @type {import('@types/aws-lambda').APIGatewayProxyHandler}
 */
 exports.handler = async (event) => {
-    const parsedBody = JSON.parse(event.body); // should wrap in try/catch
+    const parsedBody = [];
+    try {  
+        parsedBody = JSON.parse(event.body); // should wrap in try/catch 
+    } catch (e) {
+        return {
+            statusCode: 400,
+            headers: {
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Headers": "*"
+            },
+            body: JSON.stringify("No Body Provided"),
+        };
+    }
     
     /* GET URL FROM BODY */
     var url = "";
