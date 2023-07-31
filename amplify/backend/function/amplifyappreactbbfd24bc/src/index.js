@@ -69,12 +69,14 @@ exports.handler = async (event) => {
     
     const res = await fetch(url, fetchOptions);
 
+    const output = res.json();
+
     return {
         statusCode: 200,
         headers: {
             "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Headers": "*"
         },
-        body: res.json()
+        body: JSON.stringify(output)
     };
 };
