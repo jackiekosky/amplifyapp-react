@@ -109,10 +109,43 @@ export default Products;*/
 
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-const API_URL = "https://twermdd9bc.execute-api.us-east-2.amazonaws.com/staging/api";
-const GET_PRODUCTS_URL = "https://twermdd9bc.execute-api.us-east-2.amazonaws.com/staging/swproducts";
+
+
 
 const Products = () => {
+  const API_BASE_URL = "https://twermdd9bc.execute-api.us-east-2.amazonaws.com/staging/api";
+  
+  const TOKEN_URL = "https://manageordersapi.com/v1/manageorders/signin";
+  
+  var TOKEN_DATA = {
+      username: "josh@inktrax.com",
+      password: "1NKT3E$9m#",
+  }
+
+  TOKEN_DATA = JSON.stringify(TOKEN_DATA);
+
+  console.log(TOKEN_DATA);
+
+  const TOKEN_CALL = {
+    "url": TOKEN_URL,
+    "data": TOKEN_DATA
+  }
+  
+  const getAPIToken = async (username) => {
+    const res = await fetch(API_BASE_URL, TOKEN_CALL);
+    const data = await res.json();
+    console.log(res.json())
+    return data.access_token.access_token;
+  };
+
+  
+  useEffect(() => {
+    getAPIToken();
+  }, []);
+
+
+
+  /*
   const [token, setToken] = useState([]);
   const [products, setProducts] = useState([]);
 
@@ -162,7 +195,7 @@ const Products = () => {
     } catch (error) {
       console.error("Error fetching products:", error.message);
     }
-  }
+  }*/
   return (
     <div className="container">
       <div className="row">
