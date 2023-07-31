@@ -143,6 +143,7 @@ const Products = () => {
         "data": TOKEN_DATA
       }), 
     });
+
     const TOKEN_RES_DATA = await res.json();
     const TOKEN = TOKEN_RES_DATA.id_token;
     

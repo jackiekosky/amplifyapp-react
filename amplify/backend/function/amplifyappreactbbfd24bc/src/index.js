@@ -14,15 +14,28 @@ exports.handler = async (event) => {
     }
     var token = parsedBody.token;
 
-    const fetchOptions = {
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + token,
-        },
-        method: 'POST',
-        body: JSON.stringify(data)
-    };
+    var fetchOptions = [];
+
+    if (token != "") {
+        fetchOptions = {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token,
+            },
+            method: 'POST',
+            body: JSON.stringify(data)
+        };
+    } else {
+        fetchOptions = {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify(data)
+        };
+    }
 
     const res = await fetch(url, fetchOptions);
 
