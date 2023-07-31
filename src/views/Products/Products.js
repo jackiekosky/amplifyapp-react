@@ -150,8 +150,7 @@ const Products = () => {
       const response = await axios.get(API_BASE_URL, {
         body: {
           "url": PRODUCTS_URL,
-          "data" :"",
-          "header": `Authorization: "Bearer ${TOKEN}"`
+          "token": `${TOKEN}"`
         }
       });
       const responseData = response.data;
