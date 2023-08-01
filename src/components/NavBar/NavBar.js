@@ -44,7 +44,6 @@ const NavBar = () =>  {
               </MenuButton>
             } >
             <MenuItem onClick={() => navigate("/products")} >All Products</MenuItem>
-            <MenuItem onClick={() => navigate("/products/add")} >Add Product</MenuItem>
           </Menu>
           <Authenticator.Provider>
             <Button onClick={() => navigate("/account")} >My Account</Button>

@@ -113,11 +113,11 @@ Text,
 Card,
 View,
 Grid,
-withAuthenticator,
+Authenticator,
 } from '@aws-amplify/ui-react';
 import "@aws-amplify/ui-react/styles.css";
 
-const Products = () => {
+const Products = ({ user }) => {
   const [Products, setProducts] = useState([]);
 
   const API_BASE_URL = "https://twermdd9bc.execute-api.us-east-2.amazonaws.com/staging/api";
@@ -130,6 +130,8 @@ const Products = () => {
   }
 
   TOKEN_DATA = JSON.stringify(TOKEN_DATA);
+
+  const SW_CUSTOMER_ID = user.attributes['custom:shopworks_number']
 
   var PRODUCTS_URL = "https://manageordersapi.com/v1/manageorders/";
   const date = new Date().toISOString().slice(0, 10);
@@ -195,6 +197,16 @@ const Products = () => {
     setProducts(productsData);
   }
 
+  const signUpFields = {
+    signUp: {
+      'custom:shopworks_number': {
+        placeHolder: 'Enter your Shop Works Customer Number',
+        label: 'ShopWorks Number',
+        order: 1
+       }
+    }
+  };
+
   return (
     <View
     as="div"
@@ -220,5 +232,5 @@ const Products = () => {
     </View>
   );
   };
-  export default withAuthenticator(Products);
-  //export default Products;
+
+  export default Products;
