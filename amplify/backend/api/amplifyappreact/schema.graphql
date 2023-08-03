@@ -1,3 +1,15 @@
+type CustomerIDs @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  customer_id: String
+  ProductIDs: [ProductIDs] @hasMany(indexName: "byCustomerIDs", fields: ["id"])
+}
+
+type ProductIDs @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  part_num: String
+  customeridsID: ID! @index(name: "byCustomerIDs")
+}
+
 type ProductLink @model @auth(rules: [{allow: public}]) {
   id: ID!
   customerID: String

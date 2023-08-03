@@ -1,6 +1,105 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const createCustomerIDs = /* GraphQL */ `
+  mutation CreateCustomerIDs(
+    $input: CreateCustomerIDsInput!
+    $condition: ModelCustomerIDsConditionInput
+  ) {
+    createCustomerIDs(input: $input, condition: $condition) {
+      id
+      customer_id
+      ProductIDs {
+        nextToken
+        __typename
+      }
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const updateCustomerIDs = /* GraphQL */ `
+  mutation UpdateCustomerIDs(
+    $input: UpdateCustomerIDsInput!
+    $condition: ModelCustomerIDsConditionInput
+  ) {
+    updateCustomerIDs(input: $input, condition: $condition) {
+      id
+      customer_id
+      ProductIDs {
+        nextToken
+        __typename
+      }
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const deleteCustomerIDs = /* GraphQL */ `
+  mutation DeleteCustomerIDs(
+    $input: DeleteCustomerIDsInput!
+    $condition: ModelCustomerIDsConditionInput
+  ) {
+    deleteCustomerIDs(input: $input, condition: $condition) {
+      id
+      customer_id
+      ProductIDs {
+        nextToken
+        __typename
+      }
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const createProductIDs = /* GraphQL */ `
+  mutation CreateProductIDs(
+    $input: CreateProductIDsInput!
+    $condition: ModelProductIDsConditionInput
+  ) {
+    createProductIDs(input: $input, condition: $condition) {
+      id
+      part_num
+      customeridsID
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const updateProductIDs = /* GraphQL */ `
+  mutation UpdateProductIDs(
+    $input: UpdateProductIDsInput!
+    $condition: ModelProductIDsConditionInput
+  ) {
+    updateProductIDs(input: $input, condition: $condition) {
+      id
+      part_num
+      customeridsID
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const deleteProductIDs = /* GraphQL */ `
+  mutation DeleteProductIDs(
+    $input: DeleteProductIDsInput!
+    $condition: ModelProductIDsConditionInput
+  ) {
+    deleteProductIDs(input: $input, condition: $condition) {
+      id
+      part_num
+      customeridsID
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
 export const createProductLink = /* GraphQL */ `
   mutation CreateProductLink(
     $input: CreateProductLinkInput!

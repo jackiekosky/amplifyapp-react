@@ -25,7 +25,7 @@ const Product = () => {
   const [MainProduct, setMainProduct] = useState([]);
   const [ProductLink, setProductLink] = useState([]);
   const navigate = useNavigate();
-  
+
   const queryParameters = new URLSearchParams(window.location.search);
   const part_num = queryParameters.get("part_num");
 
@@ -46,9 +46,8 @@ const Product = () => {
     if (ProductLink === "") {
       alert('Cannot be empty')
     } else {
-      alert(`The updated product: ${ProductLink}`)
+      alert(`The updated customer IDs: ${ProductLink}`)
     }
-    
   }
   
   async function createProduct(ProductLink) {
