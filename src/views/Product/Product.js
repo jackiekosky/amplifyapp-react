@@ -10,6 +10,7 @@ Heading,
 Loader,
 Text,
 Divider,
+TextField,
 Button
 } from '@aws-amplify/ui-react';
 import "@aws-amplify/ui-react/styles.css";
@@ -17,53 +18,67 @@ import { API } from "aws-amplify";
 import { createProductLink, updateProductLink } from '../../graphql/mutations';
 import { listProductLinks, getProductLink } from "../../graphql/queries";
 
-const queryParameters = new URLSearchParams(window.location.search);
-const part_num = queryParameters.get("part_num");
 
-
-async function getProduct(event) {
-  try {
-    const oneProductLink = await API.graphql({
-      query: getProductLink,
-      variables: { "productIDS": part_num }
-    });
-    return oneProductLink;
-  } catch {
-    return "N/A";
-  }
-}
-
-async function createProduct(event) {
-  await API.graphql({
-    query: createProductLink,
-    variables: { 
-      input: {
-        "customerID": "a3f4095e-39de-43d2-baf4-f8c16f0f6f4d",
-        "productIDS": part_num
-      }
-     },
-  });
-}
-
-async function updateProduct(event) {
-  await API.graphql({
-    query: updateProductLink,
-    variables: { 
-      input: {
-        "customerID": "a3f4095e-39de-43d2-baf4-f8c16f0f6f4d",
-        "productIDS": "Lorem ipsum dolor sit amet"
-      }
-     },
-  });
-}
 
 const Product = () => {
   const [Products, setProducts] = useState([]);
   const [MainProduct, setMainProduct] = useState([]);
-  const [ProductLinks, setProductLink] = useState([]);
+  const [ProductLink, setProductLink] = useState([]);
   const navigate = useNavigate();
-
   
+  const queryParameters = new URLSearchParams(window.location.search);
+  const part_num = queryParameters.get("part_num");
+
+  async function getProduct(event) {
+    try {
+      const oneProductLink = await API.graphql({
+        query: getProductLink,
+        variables: { "productIDS": part_num }
+      });
+      return oneProductLink;
+    } catch {
+      return "";
+    }
+  }
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (ProductLink === "") {
+      alert('Cannot be empty')
+    } else {
+      alert(`The updated product: ${ProductLink}`)
+    }
+    
+  }
+  
+  async function createProduct(ProductLink) {
+    await API.graphql({
+      query: createProductLink,
+      variables: { 
+        input: {
+          "customerID": "a3f4095e-39de-43d2-baf4-f8c16f0f6f4d",
+          "productIDS": ProductLink
+        }
+       },
+    });
+  }
+  
+  async function updateProduct(event) {
+    await API.graphql({
+      query: updateProductLink,
+      variables: { 
+        input: {
+          "customerID": "a3f4095e-39de-43d2-baf4-f8c16f0f6f4d",
+          "productIDS": "Lorem ipsum dolor sit amet"
+        }
+       },
+    });
+  }
+  
+  
+  const handleChange = (event) => {
+    setProductLink(event.target.value);
+  };
 
   const API_BASE_URL = "https://twermdd9bc.execute-api.us-east-2.amazonaws.com/staging/api";
   
@@ -137,7 +152,6 @@ const Product = () => {
     });
     setProducts(productsData);
   }
-    
 
   return (
     
@@ -146,6 +160,16 @@ const Product = () => {
     maxWidth="1200px"
     margin="auto"
     padding="50px 0">
+    <View as="form" onSubmit={handleSubmit}>
+      <TextField
+        descriptiveText="Enter the ShipHawk Customer IDs for the users you want to connect to this item, seperate IDs by commas"
+        label="ShipHawk Customers"
+        errorMessage="There is an error"
+        defaultValue={ProductLink}
+        onChange={handleChange}
+      />
+      <Button type="submit">Submit</Button>
+    </View>
       <Heading level="1" fontSize="30px" fontWeight="600" marginBottom="10px">{MainProduct.PartNumber} {MainProduct.PartDescription}</Heading>
       <Heading level="2" fontSize="20px" fontWeight="600">{MainProduct.ProductType}</Heading>
       <Grid templateColumns="1fr 1fr 1fr 1fr" margin="20px -20px">
@@ -168,9 +192,6 @@ const Product = () => {
           </Card>
           ))}
         </Grid>
-        <View>
-          <Text>Linked to {ProductLinks}</Text>
-        </View>
         <Button onClick={() => navigate('/products')} marginTop="20px" >
           Back to all products
         </Button>

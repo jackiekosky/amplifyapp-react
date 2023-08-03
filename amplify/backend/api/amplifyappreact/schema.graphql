@@ -1,6 +1,6 @@
 type ProductLink @model @auth(rules: [{allow: public}]) {
   id: ID!
-  customerID: ID
+  customerID: String
   productIDS: String
 }
 
@@ -20,4 +20,5 @@ type Product @model @auth(rules: [{allow: public}]) {
   type: String
   cost: String
   PreprintGroup: String
-} 
+}
+ 
