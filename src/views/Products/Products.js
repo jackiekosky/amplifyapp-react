@@ -8,36 +8,54 @@ Grid,
 Loader,
 withAuthenticator,
 } from '@aws-amplify/ui-react';
+import { API, Auth  } from "aws-amplify";
 import "@aws-amplify/ui-react/styles.css";
-
+import { listProductIDs } from "../../graphql/queries";
 
 const Products = () => {
   const navigate = useNavigate();
   const [Products, setProducts] = useState([]);
+  const [showEdit, setShowEdit] = React.useState(false);
 
   const API_BASE_URL = "https://twermdd9bc.execute-api.us-east-2.amazonaws.com/staging/api";
-  
   const TOKEN_URL = "https://manageordersapi.com/v1/manageorders/signin";
-  
-  var TOKEN_DATA = {
-      username: "josh@inktrax.com",
-      password: "1NKT3E$9m#",
-  }
-
+  var TOKEN_DATA = {username: "josh@inktrax.com",password: "1NKT3E$9m#"}
   TOKEN_DATA = JSON.stringify(TOKEN_DATA);
-
   var PRODUCTS_URL = "https://manageordersapi.com/v1/manageorders/";
   const date = new Date().toISOString().slice(0, 10);
+  PRODUCTS_URL = PRODUCTS_URL + `inventorylevels?date_Modification_start=1990-01-01&date_Modification_end=${date}`;
 
-  PRODUCTS_URL = PRODUCTS_URL +
-    `inventorylevels?date_Modification_start=1990-01-01&date_Modification_end=${date}`;
+
 
   useEffect(() => {
     fetchProducts();
   }, []);
 
   async function fetchProducts() {
+    const currentUserInfo = await Auth.currentAuthenticatedUser();
+    const groups = currentUserInfo.signInUserSession.idToken.payload['cognito:groups'];
+    const user_number = currentUserInfo.attributes['custom:shopworks_number'];
+    console.log(user_number);
 
+    if ( groups && groups.includes("Admins") ) {
+      setShowEdit(true);
+    } else {
+      const listProductID = await API.graphql({
+          query: listProductIDs,
+          variables: {
+            filter: {customerIDs: {contains: user_number}}
+          }
+      });
+      const items = listProductID.data.listProductIDs.items
+      console.log(items);
+      var product_numbers = items.map(item => item.part_num);
+      product_numbers = product_numbers.toString()
+      console.log(product_numbers);
+      PRODUCTS_URL = PRODUCTS_URL + `&PartNumber=${product_numbers}`;
+    }
+
+    console.log(PRODUCTS_URL);
+    
     /* Get Access Token */
     const res = await fetch(API_BASE_URL, {
       method: "POST",

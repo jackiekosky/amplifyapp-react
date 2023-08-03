@@ -1,60 +1,6 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const createCustomerIDs = /* GraphQL */ `
-  mutation CreateCustomerIDs(
-    $input: CreateCustomerIDsInput!
-    $condition: ModelCustomerIDsConditionInput
-  ) {
-    createCustomerIDs(input: $input, condition: $condition) {
-      id
-      customer_id
-      ProductIDs {
-        nextToken
-        __typename
-      }
-      createdAt
-      updatedAt
-      __typename
-    }
-  }
-`;
-export const updateCustomerIDs = /* GraphQL */ `
-  mutation UpdateCustomerIDs(
-    $input: UpdateCustomerIDsInput!
-    $condition: ModelCustomerIDsConditionInput
-  ) {
-    updateCustomerIDs(input: $input, condition: $condition) {
-      id
-      customer_id
-      ProductIDs {
-        nextToken
-        __typename
-      }
-      createdAt
-      updatedAt
-      __typename
-    }
-  }
-`;
-export const deleteCustomerIDs = /* GraphQL */ `
-  mutation DeleteCustomerIDs(
-    $input: DeleteCustomerIDsInput!
-    $condition: ModelCustomerIDsConditionInput
-  ) {
-    deleteCustomerIDs(input: $input, condition: $condition) {
-      id
-      customer_id
-      ProductIDs {
-        nextToken
-        __typename
-      }
-      createdAt
-      updatedAt
-      __typename
-    }
-  }
-`;
 export const createProductIDs = /* GraphQL */ `
   mutation CreateProductIDs(
     $input: CreateProductIDsInput!
@@ -63,7 +9,7 @@ export const createProductIDs = /* GraphQL */ `
     createProductIDs(input: $input, condition: $condition) {
       id
       part_num
-      customeridsID
+      customerIDs
       createdAt
       updatedAt
       __typename
@@ -78,7 +24,7 @@ export const updateProductIDs = /* GraphQL */ `
     updateProductIDs(input: $input, condition: $condition) {
       id
       part_num
-      customeridsID
+      customerIDs
       createdAt
       updatedAt
       __typename
@@ -93,52 +39,7 @@ export const deleteProductIDs = /* GraphQL */ `
     deleteProductIDs(input: $input, condition: $condition) {
       id
       part_num
-      customeridsID
-      createdAt
-      updatedAt
-      __typename
-    }
-  }
-`;
-export const createProductLink = /* GraphQL */ `
-  mutation CreateProductLink(
-    $input: CreateProductLinkInput!
-    $condition: ModelProductLinkConditionInput
-  ) {
-    createProductLink(input: $input, condition: $condition) {
-      id
-      customerID
-      productIDS
-      createdAt
-      updatedAt
-      __typename
-    }
-  }
-`;
-export const updateProductLink = /* GraphQL */ `
-  mutation UpdateProductLink(
-    $input: UpdateProductLinkInput!
-    $condition: ModelProductLinkConditionInput
-  ) {
-    updateProductLink(input: $input, condition: $condition) {
-      id
-      customerID
-      productIDS
-      createdAt
-      updatedAt
-      __typename
-    }
-  }
-`;
-export const deleteProductLink = /* GraphQL */ `
-  mutation DeleteProductLink(
-    $input: DeleteProductLinkInput!
-    $condition: ModelProductLinkConditionInput
-  ) {
-    deleteProductLink(input: $input, condition: $condition) {
-      id
-      customerID
-      productIDS
+      customerIDs
       createdAt
       updatedAt
       __typename

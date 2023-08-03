@@ -1,5 +1,3 @@
-
-
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
@@ -7,98 +5,137 @@ View,
 Card,
 Grid,
 Heading,
-Loader,
 Text,
-Divider,
 TextField,
+Flex,
 Button
 } from '@aws-amplify/ui-react';
 import "@aws-amplify/ui-react/styles.css";
-import { API } from "aws-amplify";
-import { createProductLink, updateProductLink } from '../../graphql/mutations';
-import { listProductLinks, getProductLink } from "../../graphql/queries";
-
-
+import { API, Auth  } from "aws-amplify";
+import { createProductIDs, updateProductIDs } from '../../graphql/mutations';
+import { listProductIDs } from "../../graphql/queries";
 
 const Product = () => {
   const [Products, setProducts] = useState([]);
-  const [MainProduct, setMainProduct] = useState([]);
   const [ProductLink, setProductLink] = useState([]);
+  const [MainProduct, setMainProduct] = useState([]);
+
+  const [showEdit, setShowEdit] = React.useState(false);
+
   const navigate = useNavigate();
 
-  const queryParameters = new URLSearchParams(window.location.search);
-  const part_num = queryParameters.get("part_num");
-
-  async function getProduct(event) {
+  const API_BASE_URL = "https://twermdd9bc.execute-api.us-east-2.amazonaws.com/staging/api";
+  const TOKEN_URL = "https://manageordersapi.com/v1/manageorders/signin";
+  var TOKEN_DATA = { username: "josh@inktrax.com", password: "1NKT3E$9m#" }
+  TOKEN_DATA = JSON.stringify(TOKEN_DATA);
+  
+  var queryParameters = new URLSearchParams(window.location.search);
+  var part_num = queryParameters.get("part_num");
+  
+  async function getProductIDCurrent(part_num_var) {
     try {
-      const oneProductLink = await API.graphql({
-        query: getProductLink,
-        variables: { "productIDS": part_num }
+      const listProductID = await API.graphql({
+          query: listProductIDs,
+          variables: {
+            filter: {part_num: {eq: part_num_var}}
+          }
       });
-      return oneProductLink;
+      if (listProductID.data.listProductIDs.items.length === 0) {
+        return false;
+      } else {
+        return listProductID.data.listProductIDs.items[0].customerIDs.toString()
+      }
     } catch {
-      return "";
+      return false;
     }
   }
 
-  const handleSubmit = (event) => {
+  async function getProductID(part_num_var) {
+    const listProductID = await API.graphql({
+        query: listProductIDs,
+        variables: {
+          filter: {part_num: {eq: part_num_var}}
+        }
+    });
+    if (listProductID.data.listProductIDs.items.length === 0) {
+      return false;
+    } else {
+      return listProductID.data.listProductIDs.items[0].id;
+    }
+  }
+
+
+  async function createProductID(part_num_var, link) {
+    const addingIDs = link.split(',');
+    const ifID = await getProductID(part_num_var);
+    if ( (ifID) === false ) {
+        const newProductIDs = await API.graphql({
+          query: createProductIDs,
+          variables: {
+              input: {
+                "part_num": part_num_var,
+                "customerIDs": addingIDs
+              }
+            }
+        });
+        return "Added the following ShipHawk IDs to the product " + newProductIDs.data.createProductIDs.customerIDs.toString();
+    } else {
+      return "no";
+      //return updatedProductIDs(ifID, part_num_var, link);
+    }
+  }
+  
+  async function updatedProductIDs(new_id, part_num_var, link) {
+    const addingIDs = link.split(',');
+    try {
+      const updatedProductIDs = await API.graphql({
+        query: updateProductIDs,
+        variables: {
+          input: {
+            id: new_id,
+            "part_num": part_num_var,
+            "customerIDs": addingIDs
+          }
+        }
+      });
+      return "ShipHawk Customer IDs have been updated to " + link;
+    } catch {
+      return "Error on update";
+    }
+  }
+
+ 
+async function handleSubmit(event) {
     event.preventDefault();
     if (ProductLink === "") {
       alert('Cannot be empty')
     } else {
-      alert(`The updated customer IDs: ${ProductLink}`)
+      const prodIDcreate = await createProductID(part_num, ProductLink);
+      alert(prodIDcreate);
     }
   }
-  
-  async function createProduct(ProductLink) {
-    await API.graphql({
-      query: createProductLink,
-      variables: { 
-        input: {
-          "customerID": "a3f4095e-39de-43d2-baf4-f8c16f0f6f4d",
-          "productIDS": ProductLink
-        }
-       },
-    });
-  }
-  
-  async function updateProduct(event) {
-    await API.graphql({
-      query: updateProductLink,
-      variables: { 
-        input: {
-          "customerID": "a3f4095e-39de-43d2-baf4-f8c16f0f6f4d",
-          "productIDS": "Lorem ipsum dolor sit amet"
-        }
-       },
-    });
-  }
-  
   
   const handleChange = (event) => {
     setProductLink(event.target.value);
   };
 
-  const API_BASE_URL = "https://twermdd9bc.execute-api.us-east-2.amazonaws.com/staging/api";
-  
-  const TOKEN_URL = "https://manageordersapi.com/v1/manageorders/signin";
-  
-  var TOKEN_DATA = {
-      username: "josh@inktrax.com",
-      password: "1NKT3E$9m#",
-  }
-
-  TOKEN_DATA = JSON.stringify(TOKEN_DATA);
-
   useEffect(() => {
     fetchProduct();
   }, []);
 
-  async function fetchProduct() {
 
-    var output = await getProduct();
+  
+  async function fetchProduct() {
+    queryParameters = new URLSearchParams(window.location.search);
+    part_num = queryParameters.get("part_num");
+
+
+    const currentUserInfo = await Auth.currentAuthenticatedUser();
+    const groups = currentUserInfo.signInUserSession.idToken.payload['cognito:groups'];
     
-    setProductLink(output);
+    if ( groups && groups.includes("Admins") ) {
+      setShowEdit(true);
+    }
 
     /* Get Access Token */
     const res = await fetch(API_BASE_URL, {
@@ -159,16 +196,7 @@ const Product = () => {
     maxWidth="1200px"
     margin="auto"
     padding="50px 0">
-    <View as="form" onSubmit={handleSubmit}>
-      <TextField
-        descriptiveText="Enter the ShipHawk Customer IDs for the users you want to connect to this item, seperate IDs by commas"
-        label="ShipHawk Customers"
-        errorMessage="There is an error"
-        defaultValue={ProductLink}
-        onChange={handleChange}
-      />
-      <Button type="submit">Submit</Button>
-    </View>
+      
       <Heading level="1" fontSize="30px" fontWeight="600" marginBottom="10px">{MainProduct.PartNumber} {MainProduct.PartDescription}</Heading>
       <Heading level="2" fontSize="20px" fontWeight="600">{MainProduct.ProductType}</Heading>
       <Grid templateColumns="1fr 1fr 1fr 1fr" margin="20px -20px">
@@ -190,7 +218,18 @@ const Product = () => {
           </Button>
           </Card>
           ))}
-        </Grid>
+        </Grid>{ showEdit ? 
+    <Flex as="form" onSubmit={handleSubmit} alignItems="flex-end">
+      <TextField
+        descriptiveText="Enter the ShipHawk Customer IDs for the users you want to connect to this item, seperate IDs by commas"
+        label="ShipHawk Customers"
+        errorMessage="There is an error"
+        defaultValue={ProductLink}
+        onChange={handleChange}
+        alignItems="flex-start"
+      />
+      <Button type="submit">Submit</Button>
+    </Flex> : null }
         <Button onClick={() => navigate('/products')} marginTop="20px" >
           Back to all products
         </Button>

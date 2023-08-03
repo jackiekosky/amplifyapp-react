@@ -1,57 +1,6 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const onCreateCustomerIDs = /* GraphQL */ `
-  subscription OnCreateCustomerIDs(
-    $filter: ModelSubscriptionCustomerIDsFilterInput
-  ) {
-    onCreateCustomerIDs(filter: $filter) {
-      id
-      customer_id
-      ProductIDs {
-        nextToken
-        __typename
-      }
-      createdAt
-      updatedAt
-      __typename
-    }
-  }
-`;
-export const onUpdateCustomerIDs = /* GraphQL */ `
-  subscription OnUpdateCustomerIDs(
-    $filter: ModelSubscriptionCustomerIDsFilterInput
-  ) {
-    onUpdateCustomerIDs(filter: $filter) {
-      id
-      customer_id
-      ProductIDs {
-        nextToken
-        __typename
-      }
-      createdAt
-      updatedAt
-      __typename
-    }
-  }
-`;
-export const onDeleteCustomerIDs = /* GraphQL */ `
-  subscription OnDeleteCustomerIDs(
-    $filter: ModelSubscriptionCustomerIDsFilterInput
-  ) {
-    onDeleteCustomerIDs(filter: $filter) {
-      id
-      customer_id
-      ProductIDs {
-        nextToken
-        __typename
-      }
-      createdAt
-      updatedAt
-      __typename
-    }
-  }
-`;
 export const onCreateProductIDs = /* GraphQL */ `
   subscription OnCreateProductIDs(
     $filter: ModelSubscriptionProductIDsFilterInput
@@ -59,7 +8,7 @@ export const onCreateProductIDs = /* GraphQL */ `
     onCreateProductIDs(filter: $filter) {
       id
       part_num
-      customeridsID
+      customerIDs
       createdAt
       updatedAt
       __typename
@@ -73,7 +22,7 @@ export const onUpdateProductIDs = /* GraphQL */ `
     onUpdateProductIDs(filter: $filter) {
       id
       part_num
-      customeridsID
+      customerIDs
       createdAt
       updatedAt
       __typename
@@ -87,49 +36,7 @@ export const onDeleteProductIDs = /* GraphQL */ `
     onDeleteProductIDs(filter: $filter) {
       id
       part_num
-      customeridsID
-      createdAt
-      updatedAt
-      __typename
-    }
-  }
-`;
-export const onCreateProductLink = /* GraphQL */ `
-  subscription OnCreateProductLink(
-    $filter: ModelSubscriptionProductLinkFilterInput
-  ) {
-    onCreateProductLink(filter: $filter) {
-      id
-      customerID
-      productIDS
-      createdAt
-      updatedAt
-      __typename
-    }
-  }
-`;
-export const onUpdateProductLink = /* GraphQL */ `
-  subscription OnUpdateProductLink(
-    $filter: ModelSubscriptionProductLinkFilterInput
-  ) {
-    onUpdateProductLink(filter: $filter) {
-      id
-      customerID
-      productIDS
-      createdAt
-      updatedAt
-      __typename
-    }
-  }
-`;
-export const onDeleteProductLink = /* GraphQL */ `
-  subscription OnDeleteProductLink(
-    $filter: ModelSubscriptionProductLinkFilterInput
-  ) {
-    onDeleteProductLink(filter: $filter) {
-      id
-      customerID
-      productIDS
+      customerIDs
       createdAt
       updatedAt
       __typename

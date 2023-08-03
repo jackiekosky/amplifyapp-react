@@ -1,4 +1,12 @@
-import { Authenticator  } from "@aws-amplify/ui-react";
+
+import {
+  Text,
+  Flex,
+  Button,
+  View,
+  } from '@aws-amplify/ui-react';
+  import { Authenticator  } from "@aws-amplify/ui-react";
+  import { useNavigate } from "react-router-dom";
 
 const formFields = {
     signUp: {
@@ -11,9 +19,22 @@ const formFields = {
   };
   
 const SignUp = () => {
+  const navigate = useNavigate();
+
   return (
     <Authenticator formFields={formFields}>
-
+    <View
+    as="div"
+    maxWidth="1200px"
+    margin="auto"
+    padding="50px 0">
+      <Text>You are now signed in, please proceed to one of the following pages.</Text>
+      <Flex>
+        <Button onClick={() => navigate("/products")} >Products</Button>
+        <Button onClick={() => navigate("/orders")} >My Orders</Button>
+        <Button onClick={() => navigate("/account")} >My Account</Button>
+      </Flex>
+      </View>
     </Authenticator>
   );
 };
