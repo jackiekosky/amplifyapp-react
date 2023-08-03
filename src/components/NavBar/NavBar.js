@@ -37,14 +37,8 @@ const NavBar = () =>  {
           </Link>
         </Flex>
         <Flex flex={{ base: 1 }} justify={{ base: "center", md: "start" }}>
-          <Menu
-            trigger={
-              <MenuButton>
-                Products
-              </MenuButton>
-            } >
-            <MenuItem onClick={() => navigate("/products")} >All Products</MenuItem>
-          </Menu>
+          <Button onClick={() => navigate("/products")} >Products</Button>
+          <Button onClick={() => navigate("/orders")} >My Orders</Button>
           <Authenticator.Provider>
             <Button onClick={() => navigate("/account")} >My Account</Button>
             <Button  onClick={() => Auth.signOut()}>Sign Out</Button>

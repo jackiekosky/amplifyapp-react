@@ -7,8 +7,6 @@ import config from './aws-exports';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Switch } from './routes'; 
 
-
-
 Amplify.configure(config);
 
 

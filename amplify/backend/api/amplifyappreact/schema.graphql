@@ -1,9 +1,23 @@
+type ProductLink @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  customerID: ID
+  productIDS: String
+}
+
 type Product @model @auth(rules: [{allow: public}]) {
   id: ID!
   name: String
-  description: String
-  image: String
   price: String
-  in_stock: Int
-}
- 
+  color: String
+  part_num: String
+  id_Vendor: String
+  size_1_qty: Int
+  size_2_qty: Int
+  size_3_qty: Int
+  size_4_qty: Int
+  size_5_qty: Int
+  size_6_qty: Int
+  type: String
+  cost: String
+  PreprintGroup: String
+} 

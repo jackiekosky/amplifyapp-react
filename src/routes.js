@@ -1,8 +1,10 @@
 import React from 'react';
 import { Home } from './views/Home';
 import { Account } from './views/Account';
+import { Orders } from './views/Orders';
 import { Products } from './views/Products';
 import { Product } from './views/Product';
+import { Order } from './views/Order';
 import { SignUp } from './views/SignUp';
 import { NavBar } from './components/NavBar';
 import { ProtectedRoute } from './components/ProtectedRoute';
@@ -28,6 +30,16 @@ export const Switch = () => {
                     <Products />
                 </ProtectedRoute>
           } />
+          <Route  path="/orders" element={
+                  <ProtectedRoute>
+                      <Orders />
+                  </ProtectedRoute>
+            } />
+            <Route  path="/order" element={
+                    <ProtectedRoute>
+                        <Order />
+                    </ProtectedRoute>
+              } />
       </Routes>
     </div>
   );

@@ -32,12 +32,14 @@
         "amplifyappreact220b320e": {},
         "amplifyappreactbbfd24bc": {
           "deploymentBucketName": "amplify-amplify1ccdac5c9a414-staging-213628-deployment",
-          "s3Key": "amplify-builds/amplifyappreactbbfd24bc-3373756977677a473052-build.zip"
+          "s3Key": "amplify-builds/amplifyappreactbbfd24bc-43727179506843675654-build.zip"
         },
         "amplifyappreact47662d94": {
           "deploymentBucketName": "amplify-amplify1ccdac5c9a414-staging-213628-deployment",
-          "s3Key": "amplify-builds/amplifyappreact47662d94-6c70504472382f704448-build.zip"
-        }
+          "s3Key": "amplify-builds/amplifyappreact47662d94-37707a556f4e6655362f-build.zip"
+        },
+        "productPull": {},
+        "pullProducts": {}
       }
     }
   }

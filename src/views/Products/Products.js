@@ -1,123 +1,18 @@
-/*import React, { useState, useEffect } from "react";
-import "@aws-amplify/ui-react/styles.css";
-import { API, Storage } from 'aws-amplify';
-import {
-Button,
-Flex,
-Heading,
-Image,
-Text,
-TextField,
-View,
-withAuthenticator,
-} from '@aws-amplify/ui-react';
-import { listProducts } from "../../graphql/queries";
-import {
-createProduct as createProductMutation,
-deleteProduct as deleteProductMutation,
-} from "../../graphql/mutations";
-
-const Products = ({ signOut }) => {
-const [Products, setProducts] = useState([]);
-const [Token, setToken] = useState([]);
-
-useEffect(() => {
-  componentDidMount();
-  fetchProducts();
-}, []);
-
-
-
-async function fetchProducts() {
-  const apiData = await API.graphql({ query: listProducts });
-  const ProductsFromAPI = apiData.data.listProducts.items;
-  await Promise.all(
-    ProductsFromAPI.map(async (Product) => {
-      if (Product.image) {
-        const url = await Storage.get(Product.name);
-        Product.image = url;
-      }
-      return Product;
-    })
-  );
-  setProducts(ProductsFromAPI);
-}
-
-async function createProduct(event) {
-  event.preventDefault();
-  const form = new FormData(event.target);
-  const image = form.get("image");
-  const data = {
-    name: form.get("name"),
-    description: form.get("description"),
-    image: image.name,
-  };
-  if (!!data.image) await Storage.put(data.name, image);
-  await API.graphql({
-    query: createProductMutation,
-    variables: { input: data },
-  });
-  fetchProducts();
-  event.target.reset();
-}
-
-
-async function deleteProduct({ id, name }) {
-  const newProducts = Products.filter((Product) => Product.id !== id);
-  setProducts(newProducts);
-  await Storage.remove(name);
-  await API.graphql({
-    query: deleteProductMutation,
-    variables: { input: { id } },
-  });
-}
-
-
-return (
-  <View className="App">
-    <Heading level={2}>Products</Heading>
-    <View margin="3rem 0">
-    {Products.map((Product) => (
-<Flex
-  key={Product.id || Product.name}
-  direction="row"
-  justifyContent="center"
-  alignItems="center"
->
-  <Text as="strong" fontWeight={700}>
-    {Product.name}
-  </Text>
-  <Text as="span">{Product.description}</Text>
-  {Product.image && (
-    <Image
-      src={Product.image}
-      alt={`visual aid for ${Products.name}`}
-      style={{ width: 400 }}
-    />
-  )}
-  <Button variation="link" onClick={() => deleteProduct(Product)}>
-    Delete Product
-  </Button>
-</Flex>
-))}
-    </View>
-  </View>
-);
-};
-
-export default Products;*/
-
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import {
 Text,
 Card,
 View,
 Grid,
-Authenticator,
+Loader,
+withAuthenticator,
 } from '@aws-amplify/ui-react';
 import "@aws-amplify/ui-react/styles.css";
 
-const Products = ({ user }) => {
+
+const Products = () => {
+  const navigate = useNavigate();
   const [Products, setProducts] = useState([]);
 
   const API_BASE_URL = "https://twermdd9bc.execute-api.us-east-2.amazonaws.com/staging/api";
@@ -130,8 +25,6 @@ const Products = ({ user }) => {
   }
 
   TOKEN_DATA = JSON.stringify(TOKEN_DATA);
-
-  const SW_CUSTOMER_ID = user.attributes['custom:shopworks_number']
 
   var PRODUCTS_URL = "https://manageordersapi.com/v1/manageorders/";
   const date = new Date().toISOString().slice(0, 10);
@@ -158,10 +51,6 @@ const Products = ({ user }) => {
     const TOKEN_RES_DATA = await res.json();
     const TOKEN = TOKEN_RES_DATA.id_token;
 
-    console.log(TOKEN);
-    console.log(PRODUCTS_URL);
-
-    
     const res_prods = await fetch(API_BASE_URL, {
       method: "POST",
       body: JSON.stringify({
@@ -172,7 +61,6 @@ const Products = ({ user }) => {
     });
     
     const PRODUCTS = await res_prods.json();
-    console.log(PRODUCTS.result);
     
     // Process the data as needed and convert it to the required format
     const productsData = PRODUCTS.result.map((item) => {
@@ -192,20 +80,11 @@ const Products = ({ user }) => {
         size_4_qty: item.Size04,
         size_5_qty: item.Size05,
         size_6_qty: item.Size06,
+        find_Code: item.FindCode
       };
     });
     setProducts(productsData);
   }
-
-  const signUpFields = {
-    signUp: {
-      'custom:shopworks_number': {
-        placeHolder: 'Enter your Shop Works Customer Number',
-        label: 'ShopWorks Number',
-        order: 1
-       }
-    }
-  };
 
   return (
     <View
@@ -218,13 +97,13 @@ const Products = ({ user }) => {
       {Products.map((Product) => (
         <Card key={Product.id}
         preprint={Product.preprint}
+        onClick={() => navigate(`/product?part_num=${Product.part_num}`)}
         variation="elevated"
         textAlign="center"
         margin="20px"
-        minHeight="200px"
         borderRadius="10px">
           <Text as="strong" fontWeight={700}>
-            {Product.name}
+            {Product.part_num} - {Product.name} {Product.color}
           </Text>
         </Card>
         ))}
@@ -232,5 +111,5 @@ const Products = ({ user }) => {
     </View>
   );
   };
-
-  export default Products;
+  export default withAuthenticator(Products);
+  //export default Products;

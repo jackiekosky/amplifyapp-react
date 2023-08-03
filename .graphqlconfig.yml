@@ -1,5 +1,5 @@
 projects:
-  amplifyappreact:
+  amplifyappreact-staging:
     schemaPath: src/graphql/schema.json
     includes:
       - src/graphql/**/*.js
@@ -10,6 +10,9 @@ projects:
         codeGenTarget: javascript
         generatedFileName: ''
         docsFilePath: src/graphql
+        region: us-east-2
+        apiId: hcbe7uocpvfwzmr42546zsrmna
+        maxDepth: 2
 extensions:
   amplify:
     version: 3
