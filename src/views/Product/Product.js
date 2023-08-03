@@ -60,6 +60,7 @@ async function updateProduct(event) {
 const Product = () => {
   const [Products, setProducts] = useState([]);
   const [MainProduct, setMainProduct] = useState([]);
+  const [ProductLinks, setProductLink] = useState([]);
   const navigate = useNavigate();
 
   
@@ -82,7 +83,8 @@ const Product = () => {
   async function fetchProduct() {
 
     var output = await getProduct();
-    console.log(output);
+    
+    setProductLink(output);
 
     /* Get Access Token */
     const res = await fetch(API_BASE_URL, {
@@ -166,6 +168,9 @@ const Product = () => {
           </Card>
           ))}
         </Grid>
+        <View>
+          <Text>Linked to {ProductLinks}</Text>
+        </View>
         <Button onClick={() => navigate('/products')} marginTop="20px" >
           Back to all products
         </Button>
