@@ -18,12 +18,12 @@ const Products = () => {
   const [showEdit, setShowEdit] = React.useState(false);
 
   const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+  console.log(API_BASE_URL);
   const TOKEN_URL =  process.env.REACT_APP_SW_GET_TOKEN_URL;
   var TOKEN_DATA = {
     username: process.env.REACT_APP_TOKEN_DATA_USER,
     password: process.env.REACT_APP_TOKEN_DATA_PASS
   }
-  
   console.log(TOKEN_DATA);
   TOKEN_DATA = JSON.stringify(TOKEN_DATA);
   console.log(TOKEN_DATA);
