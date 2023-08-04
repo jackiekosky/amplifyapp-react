@@ -40,7 +40,6 @@ const Orders = () => {
       console.log('error fetching user info: ', err);
     }
     
-    console.log(SW_CUSTOMER_ID);
     var PRODUCTS_URL = `https://manageordersapi.com/v1/manageorders/orders?id_Customer=${SW_CUSTOMER_ID}`;
   
 
@@ -56,9 +55,6 @@ const Orders = () => {
 
     const TOKEN_RES_DATA = await res.json();
     const TOKEN = TOKEN_RES_DATA.id_token;
-    console.log(TOKEN);
-
-    console.log(PRODUCTS_URL);
   
     const res_prods = await fetch(API_BASE_URL, {
       method: "POST",
@@ -70,31 +66,6 @@ const Orders = () => {
     });
     
     const PRODUCTS = await res_prods.json();
-    console.log(PRODUCTS);
-
-    var ORDERS_LIST = [];
-
-    /*PRODUCTS.result.forEach(async (result) => {
-      var ORDER_URL = `https://manageordersapi.com/v1/manageorders/lineitems/${result.id_Order}`;
-  
-      console.log(ORDER_URL);
-      const orders_res = await fetch(API_BASE_URL, {
-        method: "POST",
-        body: JSON.stringify({
-          "url": ORDER_URL,
-          "token": TOKEN,
-          "method": "GET"
-        }), 
-      });
-      var order_items = await orders_res.json();
-      if (order_items.status === "success") {
-        order_items.result.forEach((item) => {
-          ORDERS_LIST.push(item);
-        });
-      }
-      console.log(order_items);
-    });
-    */
 
     // Process the data as needed and convert it to the required format
     const ordersData = PRODUCTS.result.map((item) => {

@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link, useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import {
     Flex,
     Text,
@@ -17,11 +17,28 @@ import './NavBar.css';
 
 const NavBar = () =>  {
   const navigate = useNavigate();
+  const location = useLocation();
 
-
+  const [SignedIn, setSignedIn] = React.useState(false);
+  
   function clickSignOut() {
     Auth.signOut();
     navigate("/");
+    setSignedIn(false);
+  }
+
+  useEffect(() => {
+    fetchUser();
+  }, [location]);
+
+  async function fetchUser()  {
+    Auth.currentAuthenticatedUser()
+      .then(user => {
+        setSignedIn(true);
+      })
+      .catch(err => {
+        setSignedIn(false);
+      });
   }
 
   return ( 
@@ -45,12 +62,11 @@ const NavBar = () =>  {
           </Link>
         </Flex>
         <Flex flex={{ base: 1 }} justify={{ base: "center", md: "start" }}>
-          <Button onClick={() => navigate("/products")} >Products</Button>
-          <Button onClick={() => navigate("/orders")} >My Orders</Button>
-          <Authenticator.Provider>
-            <Button onClick={() => navigate("/account")} >My Account</Button>
-            <Button  onClick={clickSignOut}>Sign Out</Button>
-            </Authenticator.Provider>
+          <Button  as={Link} to={'/products'} >Products</Button>
+          <Button  as={Link} to={'/orders'}>My Orders</Button>
+          { SignedIn ? <><Button  as={Link} to={'/account'}>My Account</Button><Button onClick={clickSignOut}>Sign Out</Button></> : 
+          <Button  as={Link} to={'/signup'}>Sign In</Button> }
+            
         </Flex>
       </Flex>
     </View>
