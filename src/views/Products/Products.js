@@ -18,16 +18,12 @@ const Products = () => {
   const [showEdit, setShowEdit] = React.useState(false);
 
   const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
-  console.log(API_BASE_URL);
-  const TOKEN_URL =  process.env.REACT_APP_SW_GET_TOKEN_URL;
-  console.log(TOKEN_URL);
+  const TOKEN_URL =  process.env.REACT_APP_GET_TOKEN_URL;
   var TOKEN_DATA = {
     username: process.env.REACT_APP_TOKEN_DATA_USER,
     password: process.env.REACT_APP_TOKEN_DATA_PASS
   }
-  console.log(TOKEN_DATA);
   TOKEN_DATA = JSON.stringify(TOKEN_DATA);
-  console.log(TOKEN_DATA);
   var PRODUCTS_URL = process.env.REACT_APP_PRODUCTS_URL;
   const date = new Date().toISOString().slice(0, 10);
   PRODUCTS_URL = PRODUCTS_URL + `?date_Modification_start=1990-01-01&date_Modification_end=${date}`;
