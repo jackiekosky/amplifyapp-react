@@ -21,7 +21,7 @@ const Products = () => {
   const TOKEN_URL =  process.env.REACT_APP_SW_GET_TOKEN_URL;
   var TOKEN_DATA = process.env.REACT_APP_TOKEN_DATA;
   console.log(TOKEN_DATA);
-  //TOKEN_DATA = JSON.stringify(TOKEN_DATA);
+  TOKEN_DATA = JSON.stringify(TOKEN_DATA);
   var PRODUCTS_URL = process.env.REACT_APP_PRODUCTS_URL;
   const date = new Date().toISOString().slice(0, 10);
   PRODUCTS_URL = PRODUCTS_URL + `?date_Modification_start=1990-01-01&date_Modification_end=${date}`;
