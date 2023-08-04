@@ -19,13 +19,13 @@ const Product = () => {
   const [Products, setProducts] = useState([]);
   const [ProductLink, setProductLink] = useState([]);
   const [MainProduct, setMainProduct] = useState([]);
-
   const [showEdit, setShowEdit] = React.useState(false);
 
   const navigate = useNavigate();
 
   const API_BASE_URL = "https://twermdd9bc.execute-api.us-east-2.amazonaws.com/staging/api";
-  const TOKEN_URL = "https://manageordersapi.com/v1/manageorders/signin";
+  const TOKEN_URL = process.env.SW_GET_TOKEN_URL;
+  console.log(TOKEN_URL);
   var TOKEN_DATA = { username: "josh@inktrax.com", password: "1NKT3E$9m#" }
   TOKEN_DATA = JSON.stringify(TOKEN_DATA);
   
