@@ -23,9 +23,10 @@ const Product = () => {
 
   const navigate = useNavigate();
 
-  const API_BASE_URL = "https://twermdd9bc.execute-api.us-east-2.amazonaws.com/staging/api";
-  const TOKEN_URL = "https://manageordersapi.com/v1/manageorders/signin";
-  var TOKEN_DATA = { username: "josh@inktrax.com", password: "1NKT3E$9m#" }
+  
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+  const TOKEN_URL =  process.env.REACT_APP_SW_GET_TOKEN_URL;
+  var TOKEN_DATA = process.env.REACT_APP_TOKEN_DATA;
   TOKEN_DATA = JSON.stringify(TOKEN_DATA);
   
   var queryParameters = new URLSearchParams(window.location.search);
@@ -79,8 +80,7 @@ const Product = () => {
         });
         return "Added the following ShipHawk IDs to the product " + newProductIDs.data.createProductIDs.customerIDs.toString();
     } else {
-      return "no";
-      //return updatedProductIDs(ifID, part_num_var, link);
+      return updatedProductIDs(ifID, part_num_var, link);
     }
   }
   
@@ -149,7 +149,7 @@ async function handleSubmit(event) {
     const TOKEN_RES_DATA = await res.json();
     const TOKEN = TOKEN_RES_DATA.id_token;
     
-    const PRODUCTS_URL = `https://manageordersapi.com/v1/manageorders/inventorylevels?PartNumber=${part_num}`;
+    const PRODUCTS_URL = process.env.REACT_APP_PRODUCTS_URL + `?PartNumber=${part_num}`;
 
     const res_prods = await fetch(API_BASE_URL, {
       method: "POST",

@@ -16,15 +16,9 @@ const Order = () => {
   const [Orders, setOrders] = useState([]);
   const [Items, setItems] = useState([]);
 
-  const API_BASE_URL = "https://twermdd9bc.execute-api.us-east-2.amazonaws.com/staging/api";
-  
-  const TOKEN_URL = "https://manageordersapi.com/v1/manageorders/signin";
-  
-  var TOKEN_DATA = {
-      username: "josh@inktrax.com",
-      password: "1NKT3E$9m#",
-  }
-
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+  const TOKEN_URL =  process.env.REACT_APP_SW_GET_TOKEN_URL;
+  var TOKEN_DATA = process.env.REACT_APP_TOKEN_DATA;
   TOKEN_DATA = JSON.stringify(TOKEN_DATA);
 
 
@@ -38,9 +32,8 @@ const Order = () => {
     
     const queryParameters = new URLSearchParams(window.location.search);
     const id = queryParameters.get("id");
-    
-    console.log(SW_CUSTOMER_ID);
-    var PRODUCTS_URL = `https://manageordersapi.com/v1/manageorders/orders/${id}`;
+  
+    var PRODUCTS_URL = process.env.REACT_APP_ORDERS_URL + `/${id}`;
   
 
     /* Get Access Token */
@@ -55,10 +48,7 @@ const Order = () => {
 
     const TOKEN_RES_DATA = await res.json();
     const TOKEN = TOKEN_RES_DATA.id_token;
-    console.log(TOKEN);
 
-    console.log(PRODUCTS_URL);
-  
     const res_prods = await fetch(API_BASE_URL, {
       method: "POST",
       body: JSON.stringify({
@@ -84,11 +74,9 @@ const Order = () => {
     });
     setOrders(ordersData);
 
-    console.log(PRODUCTS);
-
     var ORDERS_LIST = [];
     PRODUCTS.result.forEach(async (result) => {
-      var ORDER_URL = `https://manageordersapi.com/v1/manageorders/lineitems/${result.id_Order}`;
+      var ORDER_URL = process.env.REACT_APP_LINEITEMS_URL + `/${result.id_Order}`;
   
       const orders_res = await fetch(API_BASE_URL, {
         method: "POST",

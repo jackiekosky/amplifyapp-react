@@ -19,11 +19,11 @@ const Products = () => {
 
   const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
   const TOKEN_URL =  process.env.REACT_APP_SW_GET_TOKEN_URL;
-  var TOKEN_DATA = {username: "josh@inktrax.com",password: "1NKT3E$9m#"}
+  var TOKEN_DATA = process.env.REACT_APP_TOKEN_DATA;
   TOKEN_DATA = JSON.stringify(TOKEN_DATA);
-  var PRODUCTS_URL = "https://manageordersapi.com/v1/manageorders/";
+  var PRODUCTS_URL = process.env.REACT_APP_PRODUCTS_URL;
   const date = new Date().toISOString().slice(0, 10);
-  PRODUCTS_URL = PRODUCTS_URL + `inventorylevels?date_Modification_start=1990-01-01&date_Modification_end=${date}`;
+  PRODUCTS_URL = PRODUCTS_URL + `?date_Modification_start=1990-01-01&date_Modification_end=${date}`;
 
 
 
