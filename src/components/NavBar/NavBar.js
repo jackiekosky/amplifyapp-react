@@ -14,8 +14,16 @@ import { Auth } from 'aws-amplify';
 
 import './NavBar.css';
 
+
 const NavBar = () =>  {
   const navigate = useNavigate();
+
+
+  function clickSignOut() {
+    Auth.signOut();
+    navigate("/");
+  }
+
   return ( 
     <View
     as="div"
@@ -41,7 +49,7 @@ const NavBar = () =>  {
           <Button onClick={() => navigate("/orders")} >My Orders</Button>
           <Authenticator.Provider>
             <Button onClick={() => navigate("/account")} >My Account</Button>
-            <Button  onClick={() => Auth.signOut()}>Sign Out</Button>
+            <Button  onClick={clickSignOut}>Sign Out</Button>
             </Authenticator.Provider>
         </Flex>
       </Flex>

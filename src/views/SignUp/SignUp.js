@@ -27,9 +27,10 @@ const SignUp = () => {
     as="div"
     maxWidth="1200px"
     margin="auto"
-    padding="50px 0">
+    padding="50px 0"
+    textAlign="center">
       <Text>You are now signed in, please proceed to one of the following pages.</Text>
-      <Flex>
+      <Flex justifyContent="center" marginTop="50px">
         <Button onClick={() => navigate("/products")} >Products</Button>
         <Button onClick={() => navigate("/orders")} >My Orders</Button>
         <Button onClick={() => navigate("/account")} >My Account</Button>
