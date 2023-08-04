@@ -25,6 +25,7 @@ const Products = () => {
   const date = new Date().toISOString().slice(0, 10);
   PRODUCTS_URL = PRODUCTS_URL + `?date_Modification_start=1990-01-01&date_Modification_end=${date}`;
 
+  console.log(PRODUCTS_URL);
 
 
   useEffect(() => {
