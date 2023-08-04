@@ -18,8 +18,8 @@ const Products = () => {
   const [showEdit, setShowEdit] = React.useState(false);
 
   const API_BASE_URL = "https://twermdd9bc.execute-api.us-east-2.amazonaws.com/staging/api";
-  const TOKEN_URL = process.env.SW_GET_TOKEN_URL;
-
+  const TOKEN_URL =  process.env.REACT_APP_SW_GET_TOKEN_URL;
+  console.log(TOKEN_URL);
   var TOKEN_DATA = {username: "josh@inktrax.com",password: "1NKT3E$9m#"}
   TOKEN_DATA = JSON.stringify(TOKEN_DATA);
   var PRODUCTS_URL = "https://manageordersapi.com/v1/manageorders/";
@@ -36,7 +36,6 @@ const Products = () => {
     const currentUserInfo = await Auth.currentAuthenticatedUser();
     const groups = currentUserInfo.signInUserSession.idToken.payload['cognito:groups'];
     const user_number = currentUserInfo.attributes['custom:shopworks_number'];
-    console.log(user_number);
 
     if ( groups && groups.includes("Admins") ) {
       setShowEdit(true);
@@ -48,14 +47,11 @@ const Products = () => {
           }
       });
       const items = listProductID.data.listProductIDs.items
-      console.log(items);
       var product_numbers = items.map(item => item.part_num);
       product_numbers = product_numbers.toString()
-      console.log(product_numbers);
       PRODUCTS_URL = PRODUCTS_URL + `&PartNumber=${product_numbers}`;
     }
 
-    console.log(PRODUCTS_URL);
 
     /* Get Access Token */
     const res = await fetch(API_BASE_URL, {
