@@ -33,7 +33,6 @@ const Product = () => {
   var part_num = queryParameters.get("part_num");
   
   async function getProductIDCurrent(part_num_var) {
-    try {
       const listProductID = await API.graphql({
           query: listProductIDs,
           variables: {
@@ -41,14 +40,11 @@ const Product = () => {
           }
       });
       if (listProductID.data.listProductIDs.items.length === 0) {
-        return false;
+        return 0;
       } else {
         return listProductID.data.listProductIDs.items[0].customerIDs.toString()
       }
-    } catch {
-      return false;
-    }
-  }
+    } 
 
   async function getProductID(part_num_var) {
     const listProductID = await API.graphql({
@@ -125,11 +121,11 @@ async function handleSubmit(event) {
 
   
   async function fetchProduct() {
-    var currentProds = await getProductIDCurrent();
-    setProductLink(currentProds);
     
     queryParameters = new URLSearchParams(window.location.search);
     part_num = queryParameters.get("part_num");
+    var currentProds = await getProductIDCurrent(part_num);
+    setProductLink(currentProds);
 
 
     const currentUserInfo = await Auth.currentAuthenticatedUser();
@@ -232,7 +228,7 @@ async function handleSubmit(event) {
       />
       <Button type="submit">Submit</Button>
     </Flex> : null }
-        <Button  as={Link} to={'/product'} marginTop="20px" >
+        <Button  as={Link} to={'/products'} marginTop="20px" >
           Back to all products
         </Button>
     </View>
