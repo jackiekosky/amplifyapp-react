@@ -29,8 +29,6 @@ const Order = () => {
     fetchOrder();
   }, []);
 
-  var SW_CUSTOMER_ID = 0;
-
   async function fetchOrder() {
     
     const queryParameters = new URLSearchParams(window.location.search);

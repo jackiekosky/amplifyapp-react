@@ -213,8 +213,8 @@ async function handleSubmit(event) {
           <Text> Size 2: {Product.size_2_qty}</Text>
           <Text> Size 3: {Product.size_3_qty}</Text>
           <Text> Size 4: {Product.size_4_qty}</Text>
-          <Text> Size 5: {Product.size_4_qty}</Text>
-          <Text> Size 6: {Product.size_5_qty}</Text>
+          <Text> Size 5: {Product.size_5_qty}</Text>
+          <Text> Size 6: {Product.size_6_qty}</Text>
           <Button as={Link} to={`/push?part_num=${Product.part_num}&color=${Product.color}`} marginTop="20px" >
             Order This Color
           </Button>
