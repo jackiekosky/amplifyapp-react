@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import {
 Text,
 Heading,
@@ -105,7 +105,6 @@ const Order = () => {
       };
     });
     setItems(itemsData);
-      console.log(itemsData);
     });
     
   }
@@ -135,7 +134,9 @@ const Order = () => {
           variation="elevated"
           margin="20px 0"
           width="auto"
-          borderRadius="10px">
+          borderRadius="10px"
+          as={Link}
+          to={`/product?part_num=${Item.PartNumber}`}>
             <Text>{Item.PartNumber} {Item.PartDescription} {Item.PartColor}</Text>
             <Text>Line Qty: {Item.LineQuantity}</Text>
         </Card>

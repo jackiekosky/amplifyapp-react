@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import {
 View,
 Card,
@@ -20,9 +20,6 @@ const Product = () => {
   const [ProductLink, setProductLink] = useState([]);
   const [MainProduct, setMainProduct] = useState([]);
   const [showEdit, setShowEdit] = React.useState(false);
-
-  const navigate = useNavigate();
-
   
   const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
   const TOKEN_URL =  process.env.REACT_APP_GET_TOKEN_URL;
@@ -128,6 +125,9 @@ async function handleSubmit(event) {
 
   
   async function fetchProduct() {
+    var currentProds = await getProductIDCurrent();
+    setProductLink(currentProds);
+    
     queryParameters = new URLSearchParams(window.location.search);
     part_num = queryParameters.get("part_num");
 
@@ -215,7 +215,7 @@ async function handleSubmit(event) {
           <Text> Size 4: {Product.size_4_qty}</Text>
           <Text> Size 5: {Product.size_4_qty}</Text>
           <Text> Size 6: {Product.size_5_qty}</Text>
-          <Button onClick={() => navigate('/products')} marginTop="20px" >
+          <Button as={Link} to={`/push?part_num=${Product.part_num}&color=${Product.color}`} marginTop="20px" >
             Order This Color
           </Button>
           </Card>
@@ -232,7 +232,7 @@ async function handleSubmit(event) {
       />
       <Button type="submit">Submit</Button>
     </Flex> : null }
-        <Button onClick={() => navigate('/products')} marginTop="20px" >
+        <Button  as={Link} to={'/product'} marginTop="20px" >
           Back to all products
         </Button>
     </View>

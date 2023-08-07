@@ -6,6 +6,7 @@ import { Products } from './views/Products';
 import { Product } from './views/Product';
 import { Order } from './views/Order';
 import { SignUp } from './views/SignUp';
+import { Push } from './views/Push';
 import { NavBar } from './components/NavBar';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { Route, Routes, Navigate } from 'react-router-dom';
@@ -40,6 +41,11 @@ export const Switch = () => {
                         <Order />
                     </ProtectedRoute>
               } />
+              <Route  path="/push" element={
+                      <ProtectedRoute>
+                          <Push />
+                      </ProtectedRoute>
+                } />
       </Routes>
     </div>
   );

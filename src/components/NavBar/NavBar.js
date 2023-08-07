@@ -11,9 +11,7 @@ import {
     Authenticator
 } from '@aws-amplify/ui-react';
 import { Auth } from 'aws-amplify';
-
 import './NavBar.css';
-
 
 const NavBar = () =>  {
   const navigate = useNavigate();
