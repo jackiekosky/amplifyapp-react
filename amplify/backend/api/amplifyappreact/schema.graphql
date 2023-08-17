@@ -1,3 +1,9 @@
+type PushedOrders @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  customerID: String
+  product: String
+}
+
 type ProductIDs @model @auth(rules: [{allow: public}]) {
   id: ID!
   part_num: String
@@ -20,4 +26,5 @@ type Product @model @auth(rules: [{allow: public}]) {
   type: String
   cost: String
   PreprintGroup: String
-} 
+}
+ 

@@ -53,10 +53,6 @@ const Push = () => {
       'ExtCustomerID': SW_NUM,
       'PartNumber': part_num,
       'Size01' : qty1,
-      'Size02' : qty2,
-      'Size03' : qty3,
-      'Size04' : qty4,
-      'Size05' : qty5,
     }
     console.log(orderQtys)
   }
@@ -112,6 +108,8 @@ const Push = () => {
     });
 
     const PRODUCT = await res_prods.json();
+
+    console.log(PRODUCT);
     
     // Process the data as needed and convert it to the required format
     const productsData = PRODUCT.result.map((item) => {
@@ -122,7 +120,7 @@ const Push = () => {
         color: item.Color,
         part_num: item.PartNumber,
         id_Vendor: item.id_Vendor,
-        TotalCost: item.TotalCost,
+        UnitCost: item.UnitCost,
         preprint: item.PreprintGroup,
         type: item.ProductType,
         size_1_qty: item.Size01,
@@ -146,6 +144,7 @@ const Push = () => {
     {Products.map((Product) => (
       <View key={Product.id}>
         <Heading level="1" fontWeight="600">{Product.name} - {Product.color}</Heading>
+        <Heading level="2" fontWeight="600">{Product.UnitCost}</Heading>
         <Table caption="" highlightOnHover={false} margin="20px 0">
           <TableHead>
             <TableRow>
@@ -156,32 +155,32 @@ const Push = () => {
           </TableHead>
           <TableBody>
             <TableRow>
-              <TableCell>Size 1</TableCell>
+              <TableCell>S</TableCell>
               <TableCell>{Product.size_1_qty}</TableCell>
               <TableCell><StepperField min={0} max={Product.size_1_qty} step={1} label="Stepper" labelHidden marginLeft="20px" display="inline-block"  value={qty1} onStepChange={(e) => setQty1(e) } /></TableCell>
             </TableRow>
             <TableRow>
-              <TableCell>Size 2</TableCell>
+              <TableCell>M</TableCell>
               <TableCell>{Product.size_2_qty}</TableCell>
               <TableCell><StepperField min={0} max={Product.size_2_qty} step={1} label="Stepper" labelHidden marginLeft="20px" display="inline-block" value={qty2} onStepChange={(e) => setQty2(e) }/></TableCell>
             </TableRow>
             <TableRow>
-              <TableCell>Size 3</TableCell>
+              <TableCell>LG</TableCell>
               <TableCell>{Product.size_3_qty}</TableCell>
               <TableCell><StepperField min={0} max={Product.size_3_qty} step={1} label="Stepper" labelHidden marginLeft="20px" display="inline-block" value={qty3} onStepChange={(e) => setQty3(e) }/></TableCell>
             </TableRow>
             <TableRow>
-              <TableCell>Size 4</TableCell>
+              <TableCell>XL</TableCell>
               <TableCell>{Product.size_4_qty}</TableCell>
               <TableCell><StepperField min={0} max={Product.size_4_qty}step={1} label="Stepper" labelHidden marginLeft="20px" display="inline-block" value={qty4} onStepChange={(e) => setQty4(e) }/></TableCell>
             </TableRow>
             <TableRow>
-              <TableCell>Size 5</TableCell>
+              <TableCell>XXL</TableCell>
               <TableCell>{Product.size_5_qty}</TableCell>
               <TableCell><StepperField min={0} max={Product.size_5_qty} step={1} label="Stepper" labelHidden marginLeft="20px" display="inline-block" value={qty5} onStepChange={(e) => setQty5(e) }/></TableCell>
             </TableRow>
             <TableRow>
-              <TableCell>Size 6</TableCell>
+              <TableCell>3X-5X</TableCell>
               <TableCell>{Product.size_6_qty}</TableCell>
               <TableCell><StepperField min={0} max={Product.size_6_qty} step={1} label="Stepper" labelHidden marginLeft="20px" display="inline-block" value={qty6} onStepChange={(e) => setQty6(e)} /></TableCell>
             </TableRow>

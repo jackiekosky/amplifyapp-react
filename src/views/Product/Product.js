@@ -160,7 +160,6 @@ async function handleSubmit(event) {
     });
 
     const PRODUCT = await res_prods.json();
-  
     setMainProduct(PRODUCT.result[0]);
     
     // Process the data as needed and convert it to the required format

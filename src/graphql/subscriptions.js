@@ -1,6 +1,48 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const onCreatePushedOrders = /* GraphQL */ `
+  subscription OnCreatePushedOrders(
+    $filter: ModelSubscriptionPushedOrdersFilterInput
+  ) {
+    onCreatePushedOrders(filter: $filter) {
+      id
+      customerID
+      product
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const onUpdatePushedOrders = /* GraphQL */ `
+  subscription OnUpdatePushedOrders(
+    $filter: ModelSubscriptionPushedOrdersFilterInput
+  ) {
+    onUpdatePushedOrders(filter: $filter) {
+      id
+      customerID
+      product
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const onDeletePushedOrders = /* GraphQL */ `
+  subscription OnDeletePushedOrders(
+    $filter: ModelSubscriptionPushedOrdersFilterInput
+  ) {
+    onDeletePushedOrders(filter: $filter) {
+      id
+      customerID
+      product
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
 export const onCreateProductIDs = /* GraphQL */ `
   subscription OnCreateProductIDs(
     $filter: ModelSubscriptionProductIDsFilterInput

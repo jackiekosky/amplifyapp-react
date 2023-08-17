@@ -9,4 +9,6 @@ export { default as ProductCreateForm } from "./ProductCreateForm";
 export { default as ProductIDsCreateForm } from "./ProductIDsCreateForm";
 export { default as ProductIDsUpdateForm } from "./ProductIDsUpdateForm";
 export { default as ProductUpdateForm } from "./ProductUpdateForm";
+export { default as PushedOrdersCreateForm } from "./PushedOrdersCreateForm";
+export { default as PushedOrdersUpdateForm } from "./PushedOrdersUpdateForm";
 export { default as studioTheme } from "./studioTheme";
