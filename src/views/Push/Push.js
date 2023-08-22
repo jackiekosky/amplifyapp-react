@@ -8,6 +8,7 @@ Heading,
 Text,
 StepperField,
 TextField,
+SelectField,
 Flex,
 Button,
 Table,
@@ -22,15 +23,14 @@ import { createPushedOrders } from '../../graphql/mutations';
 
 const Push = () => {
 const [Products, setProducts] = useState([]);
+
 const [SW_NUM, setSW_NUM] = useState([]);
 const [USER_EMAIL, setUSER_EMAIL] = useState([]);
 const [USER_FIRSTNAME, setUSER_FIRSTNAME] = useState([]);
 const [USER_LASTNAME, setUSER_LASTNAME] = useState([]);
 const [USER_PHONE, setUSER_PHONE] = useState([]);
 
-const [ProductLink, setProductLink] = useState([]);
 const [MainProduct, setMainProduct] = useState([]);
-const [showEdit, setShowEdit] = React.useState(false);
 
 const [qty1, setQty1] = useState([]);
 const [qty2, setQty2] = useState([]);
@@ -40,18 +40,23 @@ const [qty5, setQty5] = useState([]);
 const [qty6, setQty6] = useState([]);
 
 
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
-const TOKEN_URL =  process.env.REACT_APP_GET_TOKEN_URL;
-var TOKEN_DATA = {
-  username: process.env.REACT_APP_TOKEN_DATA_USER,
-  password: process.env.REACT_APP_TOKEN_DATA_PASS
-}
-TOKEN_DATA = JSON.stringify(TOKEN_DATA);
+const [ShippingAddress, setShippingAddress] = useState([]);
+const [ShippingCity, setShippingCity] = useState([]);
+const [ShippingState, setShippingState] = useState([]);
+const [ShippingZip, setShippingZip] = useState([]);
+const [ShippingMethod, setShippingMethod] = useState([]);
 
 var queryParameters = new URLSearchParams(window.location.search);
 var part_num = queryParameters.get("part_num");
 var part_color = queryParameters.get("color");
 
+const BASE_API_URL = process.env.REACT_APP_API_BASE_URL;
+
+var TOKEN_DATA = {
+  username: process.env.REACT_APP_TOKEN_DATA_USER,
+  password: process.env.REACT_APP_TOKEN_DATA_PASS
+}
+TOKEN_DATA = JSON.stringify(TOKEN_DATA);
 
 async function handleSubmit(event) {
   event.preventDefault();
@@ -141,7 +146,45 @@ async function handleSubmit(event) {
     "ContactNameLast": USER_LASTNAME,
     "ContactPhone": USER_PHONE,
     "date_OrderPlaced": currentdate,
+    "ShippingAddresses": [
+      {
+        "ShipMethod": ShippingMethod,
+        "ShipAddress01": ShippingAddress,
+        "ShipCity": ShippingCity,
+        "ShipState": ShippingState,
+        "ShipZip": ShippingZip,
+        "ShipCountry": "US",
+      }
+    ],
   }
+
+  orderQtys = JSON.stringify(orderQtys);
+
+  const res_access_token = await fetch(BASE_API_URL, {
+    method: "POST",
+    body: JSON.stringify({
+      "url": process.env.REACT_APP_GET_PUSH_TOKEN_URL,
+      "data": TOKEN_DATA,
+      "method": "POST"
+    }), 
+  });
+
+  const TOKEN_PUSH_RES_DATA = await res_access_token.json();
+
+  const PUSH_TOKEN = TOKEN_PUSH_RES_DATA.id_token;
+
+  const res_push = await fetch(BASE_API_URL, {
+    method: "POST",
+    body: JSON.stringify({
+      "url": process.env.REACT_APP_PUSH_URL,
+      "token": PUSH_TOKEN,
+      "method": "POST",
+      "data": orderQtys
+    }), 
+  });
+
+  const PUSH_RESULT = await res_push.json();
+  alert(PUSH_RESULT.result);
 }
 
 async function createOrderInDB() {
@@ -164,6 +207,8 @@ useEffect(() => {
 
 
 async function fetchProduct() {
+
+
   try {
     const currentUserInfo = await Auth.currentUserInfo()
     setSW_NUM(currentUserInfo.attributes['custom:shopworks_number']);
@@ -188,26 +233,25 @@ async function fetchProduct() {
   part_color = queryParameters.get("color");
 
   /* Get Access Token */
-  const res = await fetch(API_BASE_URL, {
+  const res = await fetch(BASE_API_URL, {
     method: "POST",
     body: JSON.stringify({
-      "url": TOKEN_URL,
+      "url": process.env.REACT_APP_GET_TOKEN_URL,
       "data": TOKEN_DATA,
       "method": "POST"
     }), 
   });
 
-
   const TOKEN_RES_DATA = await res.json();
-  const TOKEN = TOKEN_RES_DATA.id_token;
+  const TOKEN_DATA_NEW = TOKEN_RES_DATA.id_token;
 
   const PRODUCTS_URL = process.env.REACT_APP_PRODUCTS_URL + `?PartNumber=${part_num}&Color=${part_color}`;
 
-  const res_prods = await fetch(API_BASE_URL, {
+  const res_prods = await fetch(BASE_API_URL, {
     method: "POST",
     body: JSON.stringify({
       "url": PRODUCTS_URL,
-      "token": TOKEN,
+      "token": TOKEN_DATA_NEW,
       "method": "GET"
     }), 
   });
@@ -294,7 +338,18 @@ return (
     </View>
 
     ))}
-    <Text>ShopWorks Customer Number: {SW_NUM}</Text>
+    <Text marginBottom="20px">ShopWorks Customer Number: {SW_NUM}</Text>
+    <View maxWidth="300px">
+    <TextField label="Shipping Address" marginBottom="5px" onChange={(e) => setShippingAddress(e.target.value) } />
+    <TextField label="Shipping City" marginBottom="5px" onChange={(e) => setShippingCity(e.target.value) } />
+    <TextField label="Shipping State" marginBottom="5px" onChange={(e) => setShippingState(e.target.value) } />
+    <TextField label="Shipping Zipcode" marginBottom="5px" onChange={(e) => setShippingZip(e.target.value) } />
+    <SelectField label="Shipping Method" onChange={(e) => setShippingMethod(e.target.value) }>
+      <option value="UPS">UPS</option>
+      <option value="Pickup">Pickup</option>
+      <option value="Delivery">Delivery</option>
+    </SelectField>
+    </View>
     <Button type="submit" marginTop="20px">
       Order
     </Button>
