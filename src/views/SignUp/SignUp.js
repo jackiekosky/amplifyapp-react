@@ -10,6 +10,12 @@ import {
 
 const formFields = {
     signUp: {
+      given_name: {
+        label: 'First Name'
+      },
+      family_name: {
+        label: 'Last Name'
+      },
         'custom:shopworks_number': {
             label: 'ShopWorks Customer ID',
             placeholder: 'Enter your ShopWorks Customer ID',

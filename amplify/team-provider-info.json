@@ -15,10 +15,10 @@
       "auth": {
         "amplifyappreact0c472650": {},
         "amplifyappreact": {
-          "userPoolId": "us-east-2_M53FkWpaY",
-          "userPoolName": "INKTRAX_USERS",
-          "webClientId": "4ho50eo2iinfcn6t6lo1ukjprq",
-          "nativeClientId": "4ho50eo2iinfcn6t6lo1ukjprq"
+          "userPoolId": "us-east-2_MwKP5RP3P",
+          "userPoolName": "INKTRAX",
+          "webClientId": "35u9ddrmicfk4i3gr1jfunq55n",
+          "nativeClientId": "35u9ddrmicfk4i3gr1jfunq55n"
         }
       },
       "api": {

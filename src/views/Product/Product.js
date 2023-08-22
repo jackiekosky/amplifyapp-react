@@ -131,7 +131,7 @@ async function handleSubmit(event) {
     const currentUserInfo = await Auth.currentAuthenticatedUser();
     const groups = currentUserInfo.signInUserSession.idToken.payload['cognito:groups'];
     
-    if ( groups && groups.includes("Admins") ) {
+    if ( groups && groups.includes("Admin") ) {
       setShowEdit(true);
     }
 
@@ -194,8 +194,6 @@ async function handleSubmit(event) {
     margin="auto"
     padding="50px 0">
       
-      <Heading level="1" fontSize="30px" fontWeight="600" marginBottom="10px">{MainProduct.PartNumber} {MainProduct.PartDescription}</Heading>
-      <Heading level="2" fontSize="20px" fontWeight="600">{MainProduct.ProductType}</Heading>
       <Grid templateColumns="1fr 1fr 1fr 1fr" margin="20px -20px">
         {Products.map((Product) => (
           <Card key={Product.id}
@@ -204,12 +202,12 @@ async function handleSubmit(event) {
           borderRadius="10px">
           <Heading level="2" fontSize="20px" fontWeight="600">{Product.color}</Heading>
           <Heading level="3" fontSize="16px" margin="10px 0 5px" fontWeight="600">Quantity</Heading>
-          <Text> Size 1: {Product.size_1_qty}</Text>
-          <Text> Size 2: {Product.size_2_qty}</Text>
-          <Text> Size 3: {Product.size_3_qty}</Text>
-          <Text> Size 4: {Product.size_4_qty}</Text>
-          <Text> Size 5: {Product.size_5_qty}</Text>
-          <Text> Size 6: {Product.size_6_qty}</Text>
+          <Text> S: {Product.size_1_qty}</Text>
+          <Text> M: {Product.size_2_qty}</Text>
+          <Text> LG: {Product.size_3_qty}</Text>
+          <Text> XL: {Product.size_4_qty}</Text>
+          <Text> XXL: {Product.size_5_qty}</Text>
+          <Text> 3X-5X: {Product.size_6_qty}</Text>
           <Button as={Link} to={`/push?part_num=${Product.part_num}&color=${Product.color}`} marginTop="20px" >
             Order This Color
           </Button>

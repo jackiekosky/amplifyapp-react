@@ -22,6 +22,7 @@ const Account = ({ user }) => {
       <Text>Username: {user.username}</Text>
       <Text>Email: {user.attributes.email}</Text>
       <Text>Phone: {user.attributes.phone_number}</Text>
+      <Text>Name: {user.attributes.given_name} {user.attributes.family_name}</Text>
       <Text>ShopWorks Customer ID: {user.attributes['custom:shopworks_number']}</Text>
       <Text>User Level: {user.signInUserSession.accessToken.payload["cognito:groups"]}</Text>
     </View>

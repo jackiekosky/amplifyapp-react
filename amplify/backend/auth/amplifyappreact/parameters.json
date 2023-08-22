@@ -3,9 +3,12 @@
   "resourceName": "amplifyappreact",
   "serviceType": "imported",
   "region": "us-east-2",
-  "authProvidersUserPool": [],
+  "aliasAttributes": [
+    "preferred_username"
+  ],
   "requiredAttributes": [
-    "name",
+    "given_name",
+    "family_name",
     "email",
     "phone_number"
   ],
@@ -16,9 +19,11 @@
     "Requires Numbers",
     "Requires Symbols"
   ],
-  "mfaConfiguration": "OFF",
+  "mfaConfiguration": "OPTIONAL",
   "autoVerifiedAttributes": [
     "email"
   ],
-  "mfaTypes": []
+  "mfaTypes": [
+    "TOTP"
+  ]
 }
