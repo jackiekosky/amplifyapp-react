@@ -65,7 +65,22 @@ TOKEN_DATA = JSON.stringify(TOKEN_DATA);
 async function handleSubmit(event) {
   event.preventDefault();
   var newID = await createOrderInDB();
-  var currentdate = new Date(); 
+
+  const today = new Date();
+  const yyyy = today.getFullYear();
+  let mm = today.getMonth() + 1; // Months start at 0!
+  let dd = today.getDate();
+  if (dd < 10) dd = '0' + dd;
+  if (mm < 10) mm = '0' + mm;
+  const formattedToday = mm + '/' + dd + '/' + yyyy;
+
+  const shipDate = new Date(RequestedShip);
+  const shipyyyy = shipDate.getFullYear();
+  let shipmm = shipDate.getMonth() + 1; // Months start at 0!
+  let shipdd = shipDate.getDate();
+  if (shipdd < 10) shipdd = '0' + shipdd;
+  if (shipmm < 10) shipmm = '0' + shipmm;
+  const FormattedShipDate = shipmm + '/' + shipdd + '/' + shipyyyy;
 
   var partNum = MainProduct.PartNumber;
   var partColor = MainProduct.Color;
@@ -147,6 +162,8 @@ async function handleSubmit(event) {
     'ExtCustomerID': SW_NUM,
     'LinesOE' : lineItems,
     "id_Customer": SW_NUM,
+    "date_OrderPlaced": formattedToday,
+    "date_OrderRequestedToShip": FormattedShipDate,
     "ContactEmail": USER_EMAIL,
     "ContactNameFirst": USER_FIRSTNAME,
     "ContactNameLast": USER_LASTNAME,
@@ -163,9 +180,7 @@ async function handleSubmit(event) {
     ],
   }
 
-
   orderQtys = JSON.stringify(orderQtys);
-  console.log(orderQtys);
 
   const res_access_token = await fetch(BASE_API_URL, {
     method: "POST",
