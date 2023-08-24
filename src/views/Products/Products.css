@@ -1,0 +1,19 @@
+.pagi {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin:0;
+    padding:0;
+}
+
+.pagi li {
+    list-style: none;
+    padding:20px;
+    margin:0;
+    cursor: pointer;
+}
+.pagi li.selected {
+    font-weight:700;
+}

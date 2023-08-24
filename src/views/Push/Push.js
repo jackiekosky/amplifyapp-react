@@ -15,6 +15,7 @@ Table,
 TableHead,
 TableRow,
 TableCell,
+Loader,
 TableBody
 } from '@aws-amplify/ui-react';
 import "@aws-amplify/ui-react/styles.css";
@@ -23,6 +24,8 @@ import { createPushedOrders } from '../../graphql/mutations';
 
 const Push = () => {
 const [Products, setProducts] = useState([]);
+
+const [showProducts, setShowProducts] = React.useState(false);
 
 const [SW_NUM, setSW_NUM] = useState([]);
 const [USER_EMAIL, setUSER_EMAIL] = useState([]);
@@ -40,6 +43,7 @@ const [qty5, setQty5] = useState([]);
 const [qty6, setQty6] = useState([]);
 
 
+const [RequestedShip, setRequestedShip] = useState([]);
 const [ShippingAddress, setShippingAddress] = useState([]);
 const [ShippingCity, setShippingCity] = useState([]);
 const [ShippingState, setShippingState] = useState([]);
@@ -147,7 +151,6 @@ async function handleSubmit(event) {
     "ContactNameFirst": USER_FIRSTNAME,
     "ContactNameLast": USER_LASTNAME,
     "ContactPhone": USER_PHONE,
-    "date_OrderPlaced": currentdate,
     "ShippingAddresses": [
       {
         "ShipMethod": ShippingMethod,
@@ -287,6 +290,7 @@ async function fetchProduct() {
     };
   });
   setProducts(productsData);
+  setShowProducts(true);
 }
 
 return (
@@ -294,57 +298,59 @@ return (
   maxWidth="1200px"
   margin="auto"
   padding="50px 0" as="form" onSubmit={handleSubmit}>
-  
-  {Products.map((Product) => (
-    <View key={Product.id}>
-      <Heading level="1" fontWeight="600">{Product.name} - {Product.color}</Heading>
-      <Heading level="2" fontWeight="600">{Product.UnitCost}</Heading>
-      <Table caption="" highlightOnHover={false} margin="20px 0">
-        <TableHead>
-          <TableRow>
-            <TableCell as="th">Size</TableCell>
-            <TableCell as="th">Current Qty</TableCell>
-            <TableCell as="th">Qty to order</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          <TableRow>
-            <TableCell>S</TableCell>
-            <TableCell>{Product.size_1_qty}</TableCell>
-            <TableCell><StepperField min={0} max={Product.size_1_qty} step={1} label="Stepper" labelHidden marginLeft="20px" display="inline-block"  value={qty1} onStepChange={(e) => setQty1(e) } /></TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>M</TableCell>
-            <TableCell>{Product.size_2_qty}</TableCell>
-            <TableCell><StepperField min={0} max={Product.size_2_qty} step={1} label="Stepper" labelHidden marginLeft="20px" display="inline-block" value={qty2} onStepChange={(e) => setQty2(e) }/></TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>LG</TableCell>
-            <TableCell>{Product.size_3_qty}</TableCell>
-            <TableCell><StepperField min={0} max={Product.size_3_qty} step={1} label="Stepper" labelHidden marginLeft="20px" display="inline-block" value={qty3} onStepChange={(e) => setQty3(e) }/></TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>XL</TableCell>
-            <TableCell>{Product.size_4_qty}</TableCell>
-            <TableCell><StepperField min={0} max={Product.size_4_qty}step={1} label="Stepper" labelHidden marginLeft="20px" display="inline-block" value={qty4} onStepChange={(e) => setQty4(e) }/></TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>XXL</TableCell>
-            <TableCell>{Product.size_5_qty}</TableCell>
-            <TableCell><StepperField min={0} max={Product.size_5_qty} step={1} label="Stepper" labelHidden marginLeft="20px" display="inline-block" value={qty5} onStepChange={(e) => setQty5(e) }/></TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>3X-5X</TableCell>
-            <TableCell>{Product.size_6_qty}</TableCell>
-            <TableCell><StepperField min={0} max={Product.size_6_qty} step={1} label="Stepper" labelHidden marginLeft="20px" display="inline-block" value={qty6} onStepChange={(e) => setQty6(e)} /></TableCell>
-          </TableRow>
-        </TableBody>
-      </Table>
-    </View>
+  { showProducts ? <View>
+    {Products.map((Product) => (
+      <View key={Product.id}>
+        <Heading level="1" fontWeight="600">{Product.name} - {Product.color}</Heading>
+        <Heading level="2" fontWeight="600">{Product.UnitCost}</Heading>
+        <Table caption="" highlightOnHover={false} margin="20px 0">
+          <TableHead>
+            <TableRow>
+              <TableCell as="th">Size</TableCell>
+              <TableCell as="th">Current Qty</TableCell>
+              <TableCell as="th">Qty to order</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            <TableRow>
+              <TableCell>S</TableCell>
+              <TableCell>{Product.size_1_qty}</TableCell>
+              <TableCell><StepperField min={0} max={Product.size_1_qty} step={1} label="Stepper" labelHidden marginLeft="20px" display="inline-block"  value={qty1} onStepChange={(e) => setQty1(e) } /></TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>M</TableCell>
+              <TableCell>{Product.size_2_qty}</TableCell>
+              <TableCell><StepperField min={0} max={Product.size_2_qty} step={1} label="Stepper" labelHidden marginLeft="20px" display="inline-block" value={qty2} onStepChange={(e) => setQty2(e) }/></TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>LG</TableCell>
+              <TableCell>{Product.size_3_qty}</TableCell>
+              <TableCell><StepperField min={0} max={Product.size_3_qty} step={1} label="Stepper" labelHidden marginLeft="20px" display="inline-block" value={qty3} onStepChange={(e) => setQty3(e) }/></TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>XL</TableCell>
+              <TableCell>{Product.size_4_qty}</TableCell>
+              <TableCell><StepperField min={0} max={Product.size_4_qty}step={1} label="Stepper" labelHidden marginLeft="20px" display="inline-block" value={qty4} onStepChange={(e) => setQty4(e) }/></TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>XXL</TableCell>
+              <TableCell>{Product.size_5_qty}</TableCell>
+              <TableCell><StepperField min={0} max={Product.size_5_qty} step={1} label="Stepper" labelHidden marginLeft="20px" display="inline-block" value={qty5} onStepChange={(e) => setQty5(e) }/></TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>3X-5X</TableCell>
+              <TableCell>{Product.size_6_qty}</TableCell>
+              <TableCell><StepperField min={0} max={Product.size_6_qty} step={1} label="Stepper" labelHidden marginLeft="20px" display="inline-block" value={qty6} onStepChange={(e) => setQty6(e)} /></TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </View>
+      ))}
+    </View> : <Loader margin="auto" display="block"/> }
 
-    ))}
     <Text marginBottom="20px">ShopWorks Customer Number: {SW_NUM}</Text>
     <View maxWidth="300px">
+    <TextField label="Requested to Ship Date" type= "date" marginBottom="5px" onChange={(e) => setRequestedShip(e.target.value) } />
     <TextField label="Shipping Address" marginBottom="5px" onChange={(e) => setShippingAddress(e.target.value) } />
     <TextField label="Shipping City" marginBottom="5px" onChange={(e) => setShippingCity(e.target.value) } />
     <TextField label="Shipping State" marginBottom="5px" onChange={(e) => setShippingState(e.target.value) } />

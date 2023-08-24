@@ -7,6 +7,7 @@ Button,
 Card,
 Divider,
 View,
+Loader,
 } from '@aws-amplify/ui-react';
 import "@aws-amplify/ui-react/styles.css";
 import { Auth } from "aws-amplify";
@@ -15,6 +16,7 @@ const Order = () => {
   const navigate = useNavigate();
   const [Orders, setOrders] = useState([]);
   const [Items, setItems] = useState([]);
+  const [showOrders, setShowOrders] = React.useState(false);
 
   const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
   const TOKEN_URL =  process.env.REACT_APP_GET_TOKEN_URL;
@@ -103,6 +105,7 @@ const Order = () => {
       };
     });
     setItems(itemsData);
+    setShowOrders(true);
     });
     
   }
@@ -113,6 +116,7 @@ const Order = () => {
     maxWidth="1200px"
     margin="auto"
     padding="50px 0">
+      { showOrders ? <View>
       {Orders.map((Order) => (
           <><Heading level="1" fontSize="30px" marginBottom="10px">
           {Order.id} {Order.name}
@@ -123,10 +127,6 @@ const Order = () => {
         <Text><b>Design ID</b>: {Order.id_Design}</Text>
         </>
         ))}
-        <Divider orientation="horizontal" margin="20px 0" />
-        <Heading level="2" fontSize="20px" marginBottom="10px">
-          Line Items in Order
-        </Heading>
         {Items.map((Item) => (
           <Card key={Item.PartNumber}
           variation="elevated"
@@ -139,6 +139,7 @@ const Order = () => {
             <Text>Line Qty: {Item.LineQuantity}</Text>
         </Card>
         ))}
+        </View> : <Loader margin="auto" display="block"/> }
       <Button onClick={() => navigate('/orders')} marginTop="20px">
         Back to my orders
       </Button>

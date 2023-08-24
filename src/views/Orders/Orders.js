@@ -4,7 +4,8 @@ import {
 Text,
 Card,
 View,
-Grid
+Collection,
+Loader
 } from '@aws-amplify/ui-react';
 import "@aws-amplify/ui-react/styles.css";
 import { Auth } from "aws-amplify";
@@ -12,6 +13,7 @@ import { Auth } from "aws-amplify";
 const Orders = () => {
   const navigate = useNavigate();
   const [Orders, setOrders] = useState([]);
+  const [showOrders, setShowOrders] = React.useState(false);
 
   const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
   const TOKEN_URL =  process.env.REACT_APP_GET_TOKEN_URL;
@@ -72,6 +74,7 @@ const Orders = () => {
       };
     });
     setOrders(ordersData);
+    setShowOrders(true);
   }
 
   return (
@@ -80,21 +83,24 @@ const Orders = () => {
     maxWidth="1200px"
     margin="auto"
     padding="50px 0">
-      <Grid templateColumns="1fr 1fr 1fr">
-      {Orders.map((Order) => (
-        <Card key={Order.id}
-        preprint={Order.preprint}
-        variation="elevated"
-        textAlign="center"
-        margin="20px"
-        onClick={() => navigate(`/order?id=${Order.id}`)}
-        borderRadius="10px">
-          <Text as="strong" fontWeight={700}>
-            {Order.id} {Order.name}
-          </Text>
-        </Card>
-        ))}
-        </Grid>
+      { showOrders ? <Collection
+      type="grid"
+      templateColumns="1fr 1fr 1fr"
+      gap="20px"
+      items={Orders}
+    >
+      {(Order, index) => (
+            <Card key={Order.id}
+              preprint={Order.preprint}
+              variation="elevated"
+              textAlign="center"
+              onClick={() => navigate(`/order?id=${Order.id}`)}>
+                <Text as="strong" fontWeight={700}>
+                  {Order.id} {Order.name}
+                </Text>
+              </Card>
+        )}
+        </Collection> : <Loader margin="auto" display="block"/> }
     </View>
   );
   };

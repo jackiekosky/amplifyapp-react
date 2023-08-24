@@ -6,16 +6,24 @@ Card,
 View,
 Grid,
 Loader,
+Collection,
 withAuthenticator,
 } from '@aws-amplify/ui-react';
 import { API, Auth  } from "aws-amplify";
 import "@aws-amplify/ui-react/styles.css";
 import { listProductIDs } from "../../graphql/queries";
+import ReactPaginate from 'react-paginate';
+import './Products.css';
 
 const Products = () => {
   const navigate = useNavigate();
   const [Products, setProducts] = useState([]);
+
   const [showEdit, setShowEdit] = React.useState(false);
+
+  const [showProducts, setShowProducts] = React.useState(false);
+  
+  const itemsPerPage = 33;
 
   const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
   const TOKEN_URL =  process.env.REACT_APP_GET_TOKEN_URL;
@@ -27,9 +35,6 @@ const Products = () => {
   var PRODUCTS_URL = process.env.REACT_APP_PRODUCTS_URL;
   const date = new Date().toISOString().slice(0, 10);
   PRODUCTS_URL = PRODUCTS_URL + `?date_Modification_start=1990-01-01&date_Modification_end=${date}`;
-
-
-
 
   useEffect(() => {
     fetchProducts();
@@ -101,8 +106,11 @@ const Products = () => {
         find_Code: item.FindCode
       };
     });
+    setShowProducts(true);
     setProducts(productsData);
   }
+
+
 
   return (
     <View
@@ -110,24 +118,30 @@ const Products = () => {
     maxWidth="1200px"
     margin="auto"
     padding="50px 0">
-    <Grid 
-    templateColumns="1fr 1fr 1fr">
-      {Products.map((Product) => (
-        <Card key={Product.id}
-        preprint={Product.preprint}
-        onClick={() => navigate(`/product?part_num=${Product.part_num}`)}
-        variation="elevated"
-        textAlign="center"
-        margin="20px"
-        borderRadius="10px">
-          <Text as="strong" fontWeight={700}>
-            {Product.part_num} - {Product.name} {Product.color}
-          </Text>
-        </Card>
-        ))}
-    </Grid>
+    { showProducts ? 
+    <Collection
+      type="grid"
+      templateColumns="1fr 1fr 1fr"
+      gap="20px"
+      items={Products}
+      isPaginated
+      itemsPerPage={33}
+    > 
+    {(Product, index) => (
+    <Card key={Product.id}
+    preprint={Product.preprint}
+    onClick={() => navigate(`/product?part_num=${Product.part_num}`)}
+    variation="elevated"
+    textAlign="center">
+      <Text as="strong" fontWeight={700}>
+        {Product.part_num} - {Product.name} {Product.color}
+      </Text>
+    </Card>
+  )}
+    </Collection> : <Loader margin="auto" display="block"/> }
     </View>
-  );
+    );
   };
+
+
   export default withAuthenticator(Products);
-  //export default Products;

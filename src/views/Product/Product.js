@@ -3,12 +3,13 @@ import { useNavigate, Link } from "react-router-dom";
 import {
 View,
 Card,
-Grid,
+Collection,
 Heading,
 Text,
 TextField,
 Flex,
-Button
+Button,
+Loader
 } from '@aws-amplify/ui-react';
 import "@aws-amplify/ui-react/styles.css";
 import { API, Auth  } from "aws-amplify";
@@ -20,6 +21,8 @@ const Product = () => {
   const [ProductLink, setProductLink] = useState([]);
   const [MainProduct, setMainProduct] = useState([]);
   const [showEdit, setShowEdit] = React.useState(false);
+
+  const [showProducts, setShowProducts] = React.useState(false);
   
   const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
   const TOKEN_URL =  process.env.REACT_APP_GET_TOKEN_URL;
@@ -184,6 +187,7 @@ async function handleSubmit(event) {
       };
     });
     setProducts(productsData);
+    setShowProducts(true);
   }
 
   return (
@@ -193,13 +197,16 @@ async function handleSubmit(event) {
     maxWidth="1200px"
     margin="auto"
     padding="50px 0">
-      
-      <Grid templateColumns="1fr 1fr 1fr 1fr" margin="20px -20px">
-        {Products.map((Product) => (
+      { showProducts ? <Collection
+      type="grid"
+      templateColumns="1fr 1fr 1fr 1fr"
+      gap="20px"
+      items={Products}
+      marginBottom="20px"
+    > 
+    {(Product, index) => (
           <Card key={Product.id}
-          variation="elevated"
-          margin="20px"
-          borderRadius="10px">
+          variation="elevated">
           <Heading level="2" fontSize="20px" fontWeight="600">{Product.color}</Heading>
           <Heading level="3" fontSize="16px" margin="10px 0 5px" fontWeight="600">Quantity</Heading>
           <Text> S: {Product.size_1_qty}</Text>
@@ -212,9 +219,9 @@ async function handleSubmit(event) {
             Order This Color
           </Button>
           </Card>
-          ))}
-        </Grid>{ showEdit ? 
-    <Flex as="form" onSubmit={handleSubmit} alignItems="flex-end">
+        )}
+    </Collection> : <Loader margin="auto" display="block"/> }
+        { showEdit ?  <Flex as="form" onSubmit={handleSubmit} alignItems="flex-end">
       <TextField
         descriptiveText="Enter the ShipHawk Customer IDs for the users you want to connect to this item, seperate IDs by commas"
         label="ShipHawk Customers"
