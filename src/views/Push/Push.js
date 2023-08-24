@@ -67,74 +67,76 @@ async function handleSubmit(event) {
   var partColor = MainProduct.Color;
   var partDesc = MainProduct.PartDescription;
   var partUnitCost = MainProduct.UnitCost;
-  var qty1Item = [];
-  var qty2Item = [];
-  var qty3Item = [];
-  var qty4Item = [];
-  var qty5Item = [];
-  var qty6Item = [];
+
+  var lineItems = [];
 
   if (qty1 > 0) {
-    qty1Item = {
+    var qty1Item = {
       "PartNumber": partNum,
       "Color": partColor,
       "Description": partDesc,
       "Size": "S",
-      "Qty": qty1,
-      "Price": partUnitCost,
+      "Qty": qty1.toString(),
+      "Price": partUnitCost.toString(),
     }
+    lineItems.push(qty1Item);
   }
   if (qty2 > 0) {
-    qty2Item = {
+    var qty2Item = {
       "PartNumber": partNum,
       "Color": partColor,
       "Description": partDesc,
       "Size": "M",
-      "Qty": qty2,
-      "Price": partUnitCost,
+      "Qty": qty2.toString(),
+      "Price": partUnitCost.toString(),
     }
+    lineItems.push(qty2Item);
   }
   if (qty3 > 0) {
-    qty3Item = {
+    var qty3Item = {
       "PartNumber": partNum,
       "Color": partColor,
       "Description": partDesc,
       "Size": "LG",
-      "Qty": qty3,
-      "Price": partUnitCost,
+      "Qty": qty3.toString(),
+      "Price": partUnitCost.toString(),
     }
+    lineItems.push(qty3Item);
   }
   if (qty4 > 0) {
-    qty4Item =  {
+    var qty4Item =  {
       "PartNumber": partNum,
       "Color": partColor,
       "Description": partDesc,
       "Size": "XL",
-      "Qty": qty4,
-      "Price": partUnitCost,
+      "Qty": qty4.toString(),
+      "Price": partUnitCost.toString(),
     }
+    lineItems.push(qty4Item);
   }
   if (qty5 > 0) {
-    qty5Item = {
+    var qty5Item = {
       "PartNumber": partNum,
       "Color": partColor,
       "Description": partDesc,
       "Size": "XXL",
-      "Qty": qty5,
-      "Price": partUnitCost,
+      "Qty": qty5.toString(),
+      "Price": partUnitCost.toString(),
     }
+    lineItems.push(qty5Item);
   }
   if (qty6 > 0) {
-    qty6Item = {
+    var qty6Item = {
       "PartNumber": partNum,
       "Color": partColor,
       "Description": partDesc,
       "Size": "3X-5X",
-      "Qty": qty6,
-      "Price": partUnitCost,
+      "Qty": qty6.toString(),
+      "Price": partUnitCost.toString(),
     }
+    lineItems.push(qty6Item);
   }
-  var lineItems = [qty1Item, qty2Item, qty3Item, qty4Item, qty5Item, qty6Item]
+
   var orderQtys = {
     "ExtSource": "INKTrax Portal",
     'ExtOrderID': newID,
@@ -158,7 +160,9 @@ async function handleSubmit(event) {
     ],
   }
 
+
   orderQtys = JSON.stringify(orderQtys);
+  console.log(orderQtys);
 
   const res_access_token = await fetch(BASE_API_URL, {
     method: "POST",
@@ -185,6 +189,7 @@ async function handleSubmit(event) {
 
   const PUSH_RESULT = await res_push.json();
   alert(PUSH_RESULT.result);
+  window.location.reload(false);
 }
 
 async function createOrderInDB() {
