@@ -197,7 +197,12 @@ async function handleSubmit(event) {
     maxWidth="1200px"
     margin="auto"
     padding="50px 0">
-      { showProducts ? <Collection
+      { showProducts ? <View>
+        <View marginBottom="20px">
+          <Heading level="1" marginBottom="15px">{MainProduct.PartDescription}</Heading>
+          <Heading level="2" marginBottom="15px">{MainProduct.TotalCost}</Heading>
+        </View>
+      <Collection
       type="grid"
       templateColumns="1fr 1fr 1fr 1fr"
       gap="20px"
@@ -220,7 +225,7 @@ async function handleSubmit(event) {
           </Button>
           </Card>
         )}
-    </Collection> : <Loader margin="auto" display="block"/> }
+    </Collection></View> : <Loader margin="auto" display="block"/> }
         { showEdit ?  <Flex as="form" onSubmit={handleSubmit} alignItems="flex-end">
       <TextField
         descriptiveText="Enter the ShipHawk Customer IDs for the users you want to connect to this item, seperate IDs by commas"

@@ -6,6 +6,7 @@ Heading,
 Button,
 Card,
 Divider,
+Collection,
 View,
 Loader,
 } from '@aws-amplify/ui-react';
@@ -127,18 +128,22 @@ const Order = () => {
         <Text><b>Design ID</b>: {Order.id_Design}</Text>
         </>
         ))}
-        {Items.map((Item) => (
+        <Collection
+        type="list"
+        gap="20px"
+        items={Items}
+        margin="20px 0"
+      > 
+        {(Item, index) => (
           <Card key={Item.PartNumber}
           variation="elevated"
-          margin="20px 0"
-          width="auto"
-          borderRadius="10px"
           as={Link}
           to={`/product?part_num=${Item.PartNumber}`}>
             <Text>{Item.PartNumber} {Item.PartDescription} {Item.PartColor}</Text>
             <Text>Line Qty: {Item.LineQuantity}</Text>
         </Card>
-        ))}
+        )}
+        </Collection>
         </View> : <Loader margin="auto" display="block"/> }
       <Button onClick={() => navigate('/orders')} marginTop="20px">
         Back to my orders
