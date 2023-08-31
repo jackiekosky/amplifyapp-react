@@ -41,11 +41,11 @@ export const Switch = () => {
                         <Order />
                     </ProtectedRoute>
               } />
-              <Route  path="/push" element={
+              {/*<Route  path="/push" element={
                       <ProtectedRoute>
                           <Push />
                       </ProtectedRoute>
-                } />
+                } />*/}
       </Routes>
     </div>
   );

@@ -4,7 +4,10 @@ import {
 Text,
 Card,
 View,
-Grid,
+Flex,
+Icon,
+Button,
+TextField,
 Loader,
 Collection,
 withAuthenticator,
@@ -12,18 +15,19 @@ withAuthenticator,
 import { API, Auth  } from "aws-amplify";
 import "@aws-amplify/ui-react/styles.css";
 import { listProductIDs } from "../../graphql/queries";
-import ReactPaginate from 'react-paginate';
 import './Products.css';
+
 
 const Products = () => {
   const navigate = useNavigate();
   const [Products, setProducts] = useState([]);
+  const [AllProducts, setAllProducts] = useState([]);
 
-  const [showEdit, setShowEdit] = React.useState(false);
+  const [showSearch, setShowSearch] = React.useState(false);
+  const [SearchPhrase, setSearchPhrase] = useState("");
 
   const [showProducts, setShowProducts] = React.useState(false);
   
-  const itemsPerPage = 33;
 
   const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
   const TOKEN_URL =  process.env.REACT_APP_GET_TOKEN_URL;
@@ -39,14 +43,30 @@ const Products = () => {
   useEffect(() => {
     fetchProducts();
   }, []);
-
+/*
+  function searchItems() {
+    var searchedProductData = AllProducts.filter(item => item.part_num.includes(SearchPhrase));
+    setProducts(searchedProductData);
+  };
+*/
+  
+  const searchItems = (e) => {
+    console.log(e.currentTarget.value);
+    var searchedProductData = AllProducts.filter(item => item.part_num.includes(e.currentTarget.value));
+    setProducts(searchedProductData);
+  };
+  
   async function fetchProducts() {
     const currentUserInfo = await Auth.currentAuthenticatedUser();
     const groups = currentUserInfo.signInUserSession.idToken.payload['cognito:groups'];
     const user_number = currentUserInfo.attributes['custom:shopworks_number'];
+    const user_code = currentUserInfo.attributes['custom:sw_item_code'];
 
-    if ( groups && groups.includes("Admins") ) {
-      setShowEdit(true);
+    if ( groups && groups.includes("Admin") ) {
+      setShowSearch(true);
+    }
+    /*if ( groups && groups.includes("Admins") ) {
+      setShowSearch(true);
     } else {
       const listProductID = await API.graphql({
           query: listProductIDs,
@@ -58,7 +78,7 @@ const Products = () => {
       var product_numbers = items.map(item => item.part_num);
       product_numbers = product_numbers.toString()
       PRODUCTS_URL = PRODUCTS_URL + `&PartNumber=${product_numbers}`;
-    }
+    }*/
 
 
     /* Get Access Token */
@@ -106,39 +126,42 @@ const Products = () => {
         find_Code: item.FindCode
       };
     });
+
+    setAllProducts(productsData);
+
+    if ( groups && groups.includes("Admins") ) {
+      var filteredProductData = productsData.filter(item => item.part_num.includes(`${user_code}_`));
+      setProducts(filteredProductData);
+    } else {
+      setProducts(productsData);
+    }
     setShowProducts(true);
-    setProducts(productsData);
   }
 
-
-
   return (
-    <View
-    as="div"
-    maxWidth="1200px"
-    margin="auto"
-    padding="50px 0">
-    { showProducts ? 
-    <Collection
-      type="grid"
-      templateColumns="1fr 1fr 1fr"
-      gap="20px"
-      items={Products}
-      isPaginated
-      itemsPerPage={33}
-    > 
-    {(Product, index) => (
-    <Card key={Product.id}
-    preprint={Product.preprint}
-    onClick={() => navigate(`/product?part_num=${Product.part_num}`)}
-    variation="elevated"
-    textAlign="center">
-      <Text as="strong" fontWeight={700}>
-        {Product.part_num} - {Product.name} {Product.color}
-      </Text>
-    </Card>
-  )}
-    </Collection> : <Loader margin="auto" display="block"/> }
+    <View as="div" maxWidth="1200px" margin="auto" padding="50px 0">
+      { showProducts ? <View>
+        { showSearch ? <Flex justifyContent="end" marginBottom="30px">
+          <TextField innerEndComponent={
+            <Text padding="8px 16px">
+              <Icon pathData="M142.938822,125.786164 L133.905089,125.786164 L130.703259,122.698685 C142.296993,109.25125 148.66898,92.0834126 148.656375,74.3281875 C148.656375,33.2778631 115.378512,0 74.3281875,0 C33.2778631,0 0,33.2778631 0,74.3281875 C0,115.378512 33.2778631,148.656375 74.3281875,148.656375 C92.7387078,148.656375 109.662664,141.909663 122.698685,130.703259 L125.786164,133.905089 L125.786164,142.938822 L182.961692,200 L200,182.961692 L142.938822,125.786164 Z M73.5042735,124.786325 C45.1282051,124.786325 22.2222222,101.880342 22.2222222,73.5042735 C22.2222222,45.1282051 45.1282051,22.2222222 73.5042735,22.2222222 C101.880342,22.2222222 124.786325,45.1282051 124.786325,73.5042735 C124.786325,101.880342 101.880342,124.786325 73.5042735,124.786325 Z" viewBox={{width: 200, height: 200, }} ariaLabel="Search"/>
+            </Text>
+          } onChange={searchItems} ></TextField>
+        </Flex> : null }
+        <Collection type="grid" templateColumns="1fr 1fr 1fr" gap="20px" items={Products} isPaginated itemsPerPage={33} > 
+          {(Product, index) => (
+            <Card key={Product.id}
+            preprint={Product.preprint}
+            onClick={() => navigate(`/product?part_num=${Product.part_num}&color=${Product.color}`)}
+            variation="elevated"
+            textAlign="center">
+              <Text as="strong" fontWeight={700}>
+                {Product.part_num} - {Product.name} {Product.color}
+              </Text>
+            </Card>
+          )}
+        </Collection>
+      </View> : <Loader margin="auto" display="block"/> }
     </View>
     );
   };
