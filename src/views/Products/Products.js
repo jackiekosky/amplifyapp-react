@@ -2,11 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
 Text,
-Card,
-View,
 Flex,
 Icon,
-Button,
 TextField,
 Loader,
 Collection,
@@ -16,6 +13,10 @@ import { API, Auth  } from "aws-amplify";
 import "@aws-amplify/ui-react/styles.css";
 import { listProductIDs } from "../../graphql/queries";
 import './Products.css';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Card from 'react-bootstrap/Card';
+import Button from 'react-bootstrap/Button';
 
 
 const Products = () => {
@@ -129,40 +130,40 @@ const Products = () => {
 
     setAllProducts(productsData);
 
-    if ( groups && groups.includes("Admins") ) {
+    if ( groups && groups.includes("Admin") ) {
+      setProducts(productsData);
+    } else {
       var filteredProductData = productsData.filter(item => item.part_num.includes(`${user_code}_`));
       setProducts(filteredProductData);
-    } else {
-      setProducts(productsData);
     }
     setShowProducts(true);
   }
 
-  return (
-    <View as="div" maxWidth="1200px" margin="auto" padding="50px 0">
-      { showProducts ? <View>
-        { showSearch ? <Flex justifyContent="end" marginBottom="30px">
-          <TextField innerEndComponent={
-            <Text padding="8px 16px">
-              <Icon pathData="M142.938822,125.786164 L133.905089,125.786164 L130.703259,122.698685 C142.296993,109.25125 148.66898,92.0834126 148.656375,74.3281875 C148.656375,33.2778631 115.378512,0 74.3281875,0 C33.2778631,0 0,33.2778631 0,74.3281875 C0,115.378512 33.2778631,148.656375 74.3281875,148.656375 C92.7387078,148.656375 109.662664,141.909663 122.698685,130.703259 L125.786164,133.905089 L125.786164,142.938822 L182.961692,200 L200,182.961692 L142.938822,125.786164 Z M73.5042735,124.786325 C45.1282051,124.786325 22.2222222,101.880342 22.2222222,73.5042735 C22.2222222,45.1282051 45.1282051,22.2222222 73.5042735,22.2222222 C101.880342,22.2222222 124.786325,45.1282051 124.786325,73.5042735 C124.786325,101.880342 101.880342,124.786325 73.5042735,124.786325 Z" viewBox={{width: 200, height: 200, }} ariaLabel="Search"/>
-            </Text>
-          } onChange={searchItems} ></TextField>
-        </Flex> : null }
-        <Collection type="grid" templateColumns="1fr 1fr 1fr" gap="20px" items={Products} isPaginated itemsPerPage={33} > 
-          {(Product, index) => (
-            <Card key={Product.id}
-            preprint={Product.preprint}
-            onClick={() => navigate(`/product?part_num=${Product.part_num}&color=${Product.color}`)}
-            variation="elevated"
-            textAlign="center">
-              <Text as="strong" fontWeight={700}>
-                {Product.part_num} - {Product.name} {Product.color}
+    return (
+      <Container className="py-4">
+        { showProducts ? <Row>
+          { showSearch ? <Flex justifyContent="end" marginBottom="30px">
+            <TextField innerEndComponent={
+              <Text padding="8px 16px">
+                <Icon pathData="M142.938822,125.786164 L133.905089,125.786164 L130.703259,122.698685 C142.296993,109.25125 148.66898,92.0834126 148.656375,74.3281875 C148.656375,33.2778631 115.378512,0 74.3281875,0 C33.2778631,0 0,33.2778631 0,74.3281875 C0,115.378512 33.2778631,148.656375 74.3281875,148.656375 C92.7387078,148.656375 109.662664,141.909663 122.698685,130.703259 L125.786164,133.905089 L125.786164,142.938822 L182.961692,200 L200,182.961692 L142.938822,125.786164 Z M73.5042735,124.786325 C45.1282051,124.786325 22.2222222,101.880342 22.2222222,73.5042735 C22.2222222,45.1282051 45.1282051,22.2222222 73.5042735,22.2222222 C101.880342,22.2222222 124.786325,45.1282051 124.786325,73.5042735 C124.786325,101.880342 101.880342,124.786325 73.5042735,124.786325 Z" viewBox={{width: 200, height: 200, }} ariaLabel="Search"/>
               </Text>
-            </Card>
-          )}
-        </Collection>
-      </View> : <Loader margin="auto" display="block"/> }
-    </View>
+            } onChange={searchItems} ></TextField>
+          </Flex> : null }
+          <Collection type="grid" templateColumns={{base:"1fr", large:"1fr 1fr 1fr 1fr", medium: "1fr 1fr"}} gap="20px" items={Products} isPaginated itemsPerPage={33} > 
+            {(Product, index) => (
+              <Card key={Product.id} preprint={Product.preprint}  >
+                <Card.Body>
+                  <Card.Title>{Product.part_num}</Card.Title>
+                  <Card.Text style={{ minHeight: '30px'}} >{Product.name} {Product.color}</Card.Text>
+                </Card.Body>
+                <Card.Body>
+                  <Button variant="secondary" style={{ width: '100%', display:'block' }} onClick={() => navigate(`/product?part_num=${Product.part_num}&color=${Product.color}`)}>Order</Button>
+                </Card.Body>
+              </Card>
+            )}
+          </Collection>
+        </Row> : <Loader margin="auto" display="block"/> }
+      </Container>
     );
   };
 

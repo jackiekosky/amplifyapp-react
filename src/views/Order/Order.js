@@ -3,8 +3,6 @@ import { useNavigate, Link } from "react-router-dom";
 import {
 Text,
 Heading,
-Button,
-Card,
 Divider,
 Collection,
 View,
@@ -12,6 +10,10 @@ Loader,
 } from '@aws-amplify/ui-react';
 import "@aws-amplify/ui-react/styles.css";
 import { Auth } from "aws-amplify";
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Card from 'react-bootstrap/Card';
+import Button from 'react-bootstrap/Button';
 
 const Order = () => {
   const navigate = useNavigate();
@@ -112,43 +114,31 @@ const Order = () => {
   }
 
   return (
-    <View
-    as="div"
-    maxWidth="1200px"
-    margin="auto"
-    padding="50px 0">
+    <Container className="py-4">
       { showOrders ? <View>
       {Orders.map((Order) => (
-          <><Heading level="1" fontSize="30px" marginBottom="10px">
-          {Order.id} {Order.name}
-        </Heading>
-        <Text><b>Customer</b>: {Order.CustomerName}</Text>
-        <Text><b>Contact</b>: {Order.ContactFirstName} {Order.ContactLastName}</Text>
-        <Text><b>Customer Service Rep</b>: {Order.CustomerServiceRep}</Text>
-        <Text><b>Design ID</b>: {Order.id_Design}</Text>
-        </>
-        ))}
-        <Collection
-        type="list"
-        gap="20px"
-        items={Items}
-        margin="20px 0"
-      > 
+        <Row className="py-4">
+          <Heading level="1" fontSize="30px" marginBottom="10px">{Order.id} {Order.name}</Heading>
+          <Text><b>Customer</b>: {Order.CustomerName}</Text>
+          <Text><b>Contact</b>: {Order.ContactFirstName} {Order.ContactLastName}</Text>
+          <Text><b>Customer Service Rep</b>: {Order.CustomerServiceRep}</Text>
+         <Text><b>Design ID</b>: {Order.id_Design}</Text>
+        </Row>
+      ))}
+      <Collection type="list" gap="20px" items={Items}> 
         {(Item, index) => (
-          <Card key={Item.PartNumber}
-          variation="elevated"
-          as={Link}
-          to={`/product?part_num=${Item.PartNumber}`}>
-            <Text>{Item.PartNumber} {Item.PartDescription} {Item.PartColor}</Text>
-            <Text>Line Qty: {Item.LineQuantity}</Text>
-        </Card>
+          <Card key={Item.PartNumber}>
+            <Card.Header>{Item.PartNumber} {Item.PartDescription} {Item.PartColor}</Card.Header>
+            <Card.Body>
+              <Card.Text>Line Qty: {Item.LineQuantity}</Card.Text>
+              <Button variant="secondary" onClick={() => navigate(`/product?part_num=${Item.PartNumber}`)}>View</Button>
+            </Card.Body>
+          </Card>
         )}
-        </Collection>
-        </View> : <Loader margin="auto" display="block"/> }
-      <Button onClick={() => navigate('/orders')} marginTop="20px">
-        Back to my orders
-      </Button>
-    </View>
+      </Collection>
+      </View> : <Loader margin="auto" display="block"/> }
+      <Button variant="secondary" onClick={() => navigate('/orders')} className="mt-3">Back to my orders</Button>
+    </Container>
   );
   };
 

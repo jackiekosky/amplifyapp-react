@@ -6,6 +6,7 @@ import { Amplify } from 'aws-amplify';
 import config from './aws-exports';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Switch } from './routes'; 
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 Amplify.configure(config);
 

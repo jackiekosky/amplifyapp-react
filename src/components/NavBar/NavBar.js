@@ -1,28 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import {
-    Flex,
-    Text,
-    View,
-    Menu,
-    MenuButton,
-    MenuItem,
-    Button,
-    Authenticator
-} from '@aws-amplify/ui-react';
 import { Auth } from 'aws-amplify';
 import './NavBar.css';
+import { FiLogIn, FiLogOut, FiUser, FiShoppingBag, FiShoppingCart } from "react-icons/fi";
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
 
 const NavBar = () =>  {
   const navigate = useNavigate();
   const location = useLocation();
 
   const [SignedIn, setSignedIn] = React.useState(false);
+
+  const [isAdmin, setisAdmin] = React.useState(false);
   
   function clickSignOut() {
     Auth.signOut();
-    navigate("/");
     setSignedIn(false);
+    navigate("/");
+    window.location.reload(false);
   }
 
   useEffect(() => {
@@ -40,34 +37,24 @@ const NavBar = () =>  {
   }
 
   return ( 
-    <View
-    as="div"
-    maxWidth="1200px"
-    margin="auto"
-    padding="10px 0" >
-      <Flex
-      direction="row"
-      justifyContent="space-between"
-      alignItems="stretch"
-      alignContent="flex-start"
-      wrap="nowrap"
-      gap="1rem" >
-        <Flex flex={{ base: 1 }} justify={{ base: "center", md: "start" }}>
-          <Link 
-          style={{ textDecoration: 'none' }}
-          to="/" >
-            <Text fontSize="1.5em">InkTrax Portal</Text>
-          </Link>
-        </Flex>
-        <Flex flex={{ base: 1 }} justify={{ base: "center", md: "start" }}>
-          <Button  as={Link} to={'/products'} >Products</Button>
-          <Button  as={Link} to={'/orders'}>My Orders</Button>
-          { SignedIn ? <><Button  as={Link} to={'/account'}>My Account</Button><Button onClick={clickSignOut}>Sign Out</Button></> : 
-          <Button  as={Link} to={'/signup'}>Sign In</Button> }
-            
-        </Flex>
-      </Flex>
-    </View>
+    
+    <Navbar expand="lg" className="bg-body-tertiary">
+    <Container>
+      <Navbar.Brand href="/">InkTrax Portal</Navbar.Brand>
+      <Navbar.Toggle aria-controls="basic-navbar-nav" />
+      <Navbar.Collapse id="basic-navbar-nav">
+        <Nav className="justify-content-end" style={{ width: "100%" }}>
+          { SignedIn ? <>
+            <Nav.Link href="/products"><FiShoppingBag /> My Products</Nav.Link>
+            <Nav.Link href="/orders"><FiShoppingCart /> My Orders</Nav.Link>
+            <Nav.Link href="/account"><FiUser /> My Account</Nav.Link>
+            <Nav.Link  onClick={clickSignOut}><FiLogOut /> Sign Out</Nav.Link></> :
+          <Nav.Link href="/signup"><FiLogIn /> Sign In</Nav.Link> }
+
+        </Nav>
+      </Navbar.Collapse>
+    </Container>
+  </Navbar>
   );
 };
 

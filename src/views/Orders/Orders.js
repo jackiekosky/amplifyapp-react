@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
-Text,
-Card,
-View,
 Collection,
 Loader
 } from '@aws-amplify/ui-react';
 import "@aws-amplify/ui-react/styles.css";
 import { Auth } from "aws-amplify";
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Card from 'react-bootstrap/Card';
+import Button from 'react-bootstrap/Button';
 
 const Orders = () => {
   const navigate = useNavigate();
@@ -77,32 +78,22 @@ const Orders = () => {
     setShowOrders(true);
   }
 
-  return (
-    <View
-    as="div"
-    maxWidth="1200px"
-    margin="auto"
-    padding="50px 0">
-      { showOrders ? <Collection
-      type="grid"
-      templateColumns="1fr 1fr 1fr"
-      gap="20px"
-      items={Orders}
-    >
-      {(Order, index) => (
-            <Card key={Order.id}
-              preprint={Order.preprint}
-              variation="elevated"
-              textAlign="center"
-              onClick={() => navigate(`/order?id=${Order.id}`)}>
-                <Text as="strong" fontWeight={700}>
-                  {Order.id} {Order.name}
-                </Text>
+    return (
+      <Container className="py-4">
+        
+          { showOrders ? <Row><Collection type="grid" templateColumns={{base:"1fr", large:"1fr 1fr 1fr 1fr", medium: "1fr 1fr"}} gap="20px" items={Orders}>
+            {(Order, index) => (
+              <Card key={Order.id} preprint={Order.preprint}>
+                  <Card.Body>
+                    <Card.Title style={{textAlign:'center'}}>{Order.id} {Order.name}</Card.Title>
+                    <Button variant="secondary" style={{ width: '100%', display:'block' }} onClick={() => navigate(`/order?id=${Order.id}`)}>View</Button>
+                  </Card.Body>
               </Card>
-        )}
-        </Collection> : <Loader margin="auto" display="block"/> }
-    </View>
-  );
+            )}
+          </Collection></Row> : <Loader margin="auto" display="block"/> }
+        
+      </Container>
+    );
   };
 
   export default Orders;
