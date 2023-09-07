@@ -15,7 +15,7 @@ Loader,
 TableBody,
 Button
 } from '@aws-amplify/ui-react';
-
+import "@aws-amplify/ui-react/styles.css";
 import { API, Auth } from "aws-amplify";
 import { createPushedOrders } from '../../graphql/mutations';
 import Container from 'react-bootstrap/Container';
