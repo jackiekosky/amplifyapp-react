@@ -18,7 +18,6 @@ import Row from 'react-bootstrap/Row';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 
-
 const Products = () => {
   const navigate = useNavigate();
   const [Products, setProducts] = useState([]);
@@ -149,16 +148,14 @@ const Products = () => {
               </Text>
             } onChange={searchItems} ></TextField>
           </Flex> : null }
-          <Collection type="grid" templateColumns={{base:"1fr", large:"1fr 1fr 1fr 1fr", medium: "1fr 1fr"}} gap="20px" items={Products} isPaginated itemsPerPage={33} > 
+          <Collection type="grid" templateColumns={{base:"1fr", large:"1fr 1fr 1fr 1fr", medium: "1fr 1fr"}} gap="20px" items={Products} isPaginated itemsPerPage={24} > 
             {(Product, index) => (
               <Card key={Product.id} preprint={Product.preprint}  >
                 <Card.Body>
                   <Card.Title>{Product.part_num}</Card.Title>
                   <Card.Text style={{ minHeight: '30px'}} >{Product.name} {Product.color}</Card.Text>
                 </Card.Body>
-                <Card.Body>
-                  <Button variant="secondary" style={{ width: '100%', display:'block' }} onClick={() => navigate(`/product?part_num=${Product.part_num}&color=${Product.color}`)}>Order</Button>
-                </Card.Body>
+                <Button variant="secondary" style={{ width: '100%', display:'block' }} onClick={() => navigate(`/product?part_num=${Product.part_num}&color=${Product.color}`)}>Order</Button>
               </Card>
             )}
           </Collection>

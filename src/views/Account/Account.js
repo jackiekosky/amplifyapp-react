@@ -6,7 +6,7 @@ import {
   Authenticator,
   withAuthenticator
 } from '@aws-amplify/ui-react';
-import "@aws-amplify/ui-react/styles.css";
+
 
 const Account = ({ user }) => {
   return (

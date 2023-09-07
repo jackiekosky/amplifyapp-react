@@ -8,7 +8,7 @@ Collection,
 View,
 Loader,
 } from '@aws-amplify/ui-react';
-import "@aws-amplify/ui-react/styles.css";
+
 import { Auth } from "aws-amplify";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';

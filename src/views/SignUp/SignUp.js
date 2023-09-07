@@ -7,6 +7,8 @@ import {
   } from '@aws-amplify/ui-react';
   import { Authenticator  } from "@aws-amplify/ui-react";
   import { useNavigate } from "react-router-dom";
+  import Container from 'react-bootstrap/Container';
+  import Row from 'react-bootstrap/Row';
 
 const formFields = {
     signUp: {
@@ -33,21 +35,18 @@ const SignUp = () => {
   const navigate = useNavigate();
 
   return (
-    <Authenticator formFields={formFields}>
-    <View
-    as="div"
-    maxWidth="1200px"
-    margin="auto"
-    padding="50px 0"
-    textAlign="center">
-      <Text>You are now signed in, please proceed to one of the following pages.</Text>
-      <Flex justifyContent="center" marginTop="50px">
-        <Button onClick={() => navigate("/products")} >My Products</Button>
-        <Button onClick={() => navigate("/orders")} >My Orders</Button>
-        <Button onClick={() => navigate("/account")} >My Account</Button>
-      </Flex>
-      </View>
-    </Authenticator>
+    <Container className="py-5">
+      <Row>
+        <Authenticator formFields={formFields} hideSignUp={true}>
+          <Text textAlign="center">You are now signed in, please proceed to one of the following pages.</Text>
+          <Flex justifyContent="center" marginTop="50px">
+            <Button onClick={() => navigate("/products")} >My Products</Button>
+            <Button onClick={() => navigate("/orders")} >My Orders</Button>
+            <Button onClick={() => navigate("/account")} >My Account</Button>
+          </Flex>
+        </Authenticator>
+        </Row>
+      </Container>
   );
 };
 

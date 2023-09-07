@@ -15,7 +15,7 @@ Loader,
 TableBody,
 Button
 } from '@aws-amplify/ui-react';
-import "@aws-amplify/ui-react/styles.css";
+
 import { API, Auth } from "aws-amplify";
 import { createPushedOrders } from '../../graphql/mutations';
 import Container from 'react-bootstrap/Container';
@@ -148,7 +148,7 @@ async function handleSubmit(event) {
       "PartNumber": partNum,
       "Color": partColor,
       "Description": partDesc,
-      "Size": "3X-5X",
+      "Size": "3x",
       "Qty": qty6.toString(),
       "Price": partUnitCost.toString(),
     }
@@ -351,7 +351,7 @@ return (
               <TableCell><StepperField min={0} max={Product.size_5_qty} step={1} label="Stepper" labelHidden marginLeft="20px" display="inline-block" value={qty5} onStepChange={(e) => setQty5(e) }/></TableCell>
             </TableRow>
             <TableRow>
-              <TableCell>3X-5X</TableCell>
+              <TableCell>3x</TableCell>
               <TableCell>{Product.size_6_qty}</TableCell>
               <TableCell><StepperField min={0} max={Product.size_6_qty} step={1} label="Stepper" labelHidden marginLeft="20px" display="inline-block" value={qty6} onStepChange={(e) => setQty6(e)} /></TableCell>
             </TableRow>
