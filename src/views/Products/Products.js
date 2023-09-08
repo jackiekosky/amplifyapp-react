@@ -24,8 +24,6 @@ const Products = () => {
   const [AllProducts, setAllProducts] = useState([]);
 
   const [showSearch, setShowSearch] = React.useState(false);
-  const [SearchPhrase, setSearchPhrase] = useState("");
-
   const [showProducts, setShowProducts] = React.useState(false);
   
 
@@ -51,7 +49,6 @@ const Products = () => {
 */
   
   const searchItems = (e) => {
-    console.log(e.currentTarget.value);
     var searchedProductData = AllProducts.filter(item => item.part_num.includes(e.currentTarget.value));
     setProducts(searchedProductData);
   };
@@ -104,7 +101,7 @@ const Products = () => {
     });
     
     const PRODUCTS = await res_prods.json();
-    
+    console.log(PRODUCTS);
     // Process the data as needed and convert it to the required format
     const productsData = PRODUCTS.result.map((item) => {
       return {
@@ -153,8 +150,13 @@ const Products = () => {
               <Card key={Product.id} preprint={Product.preprint}  >
                 <Card.Body>
                   <Card.Title>{Product.part_num}</Card.Title>
-                  <Card.Text style={{ minHeight: '30px'}} >{Product.name} {Product.color}</Card.Text>
+                  <Card.Text style={{ minHeight: '30px'}} >{Product.name} {Product.color}
+                  </Card.Text>
+                  
+                  {(Product.size_1_qty === 0 && Product.size_2_qty === 0 && Product.size_3_qty === 0 && Product.size_4_qty === 0 && Product.size_4_qty === 0 && Product.size_5_qty === 0) ? <Card.Text style={{ textAlign: 'center', fontWeight: '600', fontSize: "11px", fontStyle: 'italic'}}>CURRENTLY NO STOCK</Card.Text> : <Card.Text style={{ textAlign: 'center', fontSize: "11px"}}>IN STOCK</Card.Text>}
+                 
                 </Card.Body>
+                
                 <Button variant="secondary" style={{ width: '100%', display:'block' }} onClick={() => navigate(`/product?part_num=${Product.part_num}&color=${Product.color}`)}>Order</Button>
               </Card>
             )}
