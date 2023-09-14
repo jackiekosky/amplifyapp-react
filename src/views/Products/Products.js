@@ -161,7 +161,7 @@ const Products = () => {
               </Card>
             )}
           </Collection>
-        </Row> : <Loader margin="auto" display="block"/> }
+        </Row> : <Loader margin="auto" display="block" filledColor="#c23f33"/> }
       </Container>
     );
   };

@@ -136,7 +136,7 @@ const Order = () => {
           </Card>
         )}
       </Collection>
-      </View> : <Loader margin="auto" display="block"/> }
+      </View> : <Loader margin="auto" display="block" filledColor="#c23f33"/> }
       <Button variant="secondary" onClick={() => navigate('/orders')} className="mt-3">Back to my orders</Button>
     </Container>
   );

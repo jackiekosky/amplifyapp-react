@@ -12,14 +12,14 @@ TableHead,
 TableRow,
 TableCell,
 Loader,
-TableBody,
-Button
+TableBody
 } from '@aws-amplify/ui-react';
 import "@aws-amplify/ui-react/styles.css";
 import { API, Auth } from "aws-amplify";
 import { createPushedOrders } from '../../graphql/mutations';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
+import Button from 'react-bootstrap/Button';
 
 const Product = () => {
 const [Products, setProducts] = useState([]);
@@ -287,11 +287,11 @@ async function fetchProduct() {
     return {
       id: item.ID_InvLevel,
       name: item.PartDescription,
-      cost: item.TotalCost,
+      cost: (Math.round(item.TotalCost * 100) / 100).toFixed(2),
       color: item.Color,
       part_num: item.PartNumber,
       id_Vendor: item.id_Vendor,
-      UnitCost: item.UnitCost,
+      UnitCost: (Math.round(item.UnitCost * 100) / 100).toFixed(2),
       preprint: item.PreprintGroup,
       type: item.ProductType,
       size_1_qty: item.Size01,
@@ -359,12 +359,12 @@ return (
         </Table>
       </View>
       ))}
-    </Row> : <Loader margin="auto" display="block"/> }
+    </Row> : <Loader margin="auto" display="block" filledColor="#c23f33"/> }
     <Row>
       <Text marginBottom="20px">ShopWorks Customer Number: {SW_NUM}</Text>
       <View maxWidth="300px">
       <TextField label="Requested to Ship Date" type= "date" marginBottom="5px" onChange={(e) => setRequestedShip(e.target.value) } />
-      <TextField label="Shipping Address" marginBottom="5px" onChange={(e) => setShippingAddress(e.target.value) } />
+      {/*<TextField label="Shipping Address" marginBottom="5px" onChange={(e) => setShippingAddress(e.target.value) } />
       <TextField label="Shipping City" marginBottom="5px" onChange={(e) => setShippingCity(e.target.value) } />
       <TextField label="Shipping State" marginBottom="5px" onChange={(e) => setShippingState(e.target.value) } />
       <TextField label="Shipping Zipcode" marginBottom="5px" onChange={(e) => setShippingZip(e.target.value) } />
@@ -372,8 +372,9 @@ return (
         <option value="UPS">UPS</option>
         <option value="Pickup">Pickup</option>
         <option value="Delivery">Delivery</option>
-      </SelectField>
-      <Button type="submit" marginTop="20px">Order</Button>
+      </SelectField>*/}
+
+      <Button variant="secondary" type="submit" style={{ margin: '20px 0 0'}} >Order</Button>
       </View>
     </Row>
   </Container>

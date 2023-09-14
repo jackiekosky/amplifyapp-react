@@ -6,16 +6,21 @@
 
 body {
   margin: 0;
+  font-size:18px;
   font-family: 'Open Sans', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #444444;
 }
 
+p {
+  font-size:18px;
+}
+
 h1, h2, h3, h4, .amplify-heading {
   margin: 5px 0 5px;
-  text-transform: uppercase;
-  font-family: "Montserrat";
+  text-transform: uppercase!important;
+  font-family: "Montserrat"!important;
   letter-spacing: 4px;
   font-weight: 700;
   letter-spacing: 4px;
@@ -75,7 +80,7 @@ h1, h2, h3, h4, .amplify-heading {
   margin-bottom:20px;
 }
 
-.btn {
+.btn, .amplify-button--primary {
   font-family: 'Montserrat';
   font-weight: bold!important;
   text-transform: uppercase;
@@ -87,6 +92,10 @@ h1, h2, h3, h4, .amplify-heading {
   border-radius:0px!important;
   width:auto!important;
   vertical-align: middle;
+}
+
+.amplify-button--link {
+  color: #c23f33!important;
 }
 
 .card {
@@ -108,4 +117,8 @@ h1, h2, h3, h4, .amplify-heading {
 
 .amplify-pagination__item-current {
   background-color: #c23f33!important;
+}
+
+.amplify-input {
+  border-radius: 0px!important;
 }

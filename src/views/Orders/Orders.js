@@ -86,11 +86,12 @@ const Orders = () => {
               <Card key={Order.id} preprint={Order.preprint}>
                   <Card.Body>
                     <Card.Title style={{textAlign:'center'}}>{Order.id} {Order.name}</Card.Title>
-                    <Button variant="secondary" style={{ width: '100%', display:'block' }} onClick={() => navigate(`/order?id=${Order.id}`)}>View</Button>
+                   
                   </Card.Body>
+                  <Button variant="secondary" style={{ width: '100%', display:'block' }} onClick={() => navigate(`/order?id=${Order.id}`)}>View</Button>
               </Card>
             )}
-          </Collection></Row> : <Loader margin="auto" display="block"/> }
+          </Collection></Row> : <Loader margin="auto" display="block" filledColor="#c23f33"/> }
         
       </Container>
     );

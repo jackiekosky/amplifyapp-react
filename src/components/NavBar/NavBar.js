@@ -14,11 +14,11 @@ const NavBar = () =>  {
 
   const [SignedIn, setSignedIn] = React.useState(false);
 
-  function clickSignOut() {
-    Auth.signOut();
+  async function clickSignOut() {
+    await Auth.signOut();
     setSignedIn(false);
     navigate("/");
-    window.location.reload(false);
+    window.location.reload(true);
   }
 
   useEffect(() => {
