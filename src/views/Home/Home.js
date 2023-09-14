@@ -31,7 +31,7 @@ const Home = ({ signOut }) => {
     <Container fluid className="hero">
         <Container>
           <Row className="justify-content-md-center">
-            <Heading level={1} textAlign="center"> Welcome to InkTrax Portal </Heading>
+            <Heading level={1} textAlign="center"> Welcome to Ink Trax Portal </Heading>
             { SignedIn ? <><> </><Button href="/products">Products</Button><Button href="/orders">MY ORDERS</Button><Button href="/account">MY ACCOUNT</Button></>
             : <Button href="/signup">Sign In</Button> }
           </Row>

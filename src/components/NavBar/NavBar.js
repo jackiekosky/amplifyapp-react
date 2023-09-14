@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Auth } from 'aws-amplify';
 import './NavBar.css';
 import { FiLogIn, FiLogOut, FiUser, FiShoppingBag, FiShoppingCart } from "react-icons/fi";
@@ -39,7 +39,7 @@ const NavBar = () =>  {
     
     <Navbar expand="lg" sticky="top">
     <Container>
-      <Navbar.Brand href="/">InkTrax Portal</Navbar.Brand>
+      <Navbar.Brand href="/">Ink Trax Portal</Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="justify-content-end" style={{ width: "100%" }}>
