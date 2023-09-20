@@ -287,11 +287,10 @@ async function fetchProduct() {
     return {
       id: item.ID_InvLevel,
       name: item.PartDescription,
-      cost: (Math.round(item.TotalCost * 100) / 100).toFixed(2),
+      cost: item.TotalCost,
       color: item.Color,
       part_num: item.PartNumber,
       id_Vendor: item.id_Vendor,
-      UnitCost: (Math.round(item.UnitCost * 100) / 100).toFixed(2),
       preprint: item.PreprintGroup,
       type: item.ProductType,
       size_1_qty: item.Size01,
@@ -315,7 +314,7 @@ return (
       <View key={Product.id}>
         <Heading level="1" fontWeight="600">{Product.part_num}</Heading>
         <Heading level="2" fontWeight="600">{Product.name} - {Product.color}</Heading>
-        <Heading level="3" fontWeight="600">${Product.UnitCost}</Heading>
+        <Heading level="3" fontWeight="600">${Product.cost}</Heading>
         <Table caption="" highlightOnHover={false} margin="20px 0">
           <TableHead>
             <TableRow>
