@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, createContext } from "react";
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
@@ -10,6 +10,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 Amplify.configure(config);
 
+export const CartContext = createContext();
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

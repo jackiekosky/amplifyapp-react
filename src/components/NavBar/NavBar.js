@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, createContext } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Auth } from 'aws-amplify';
 import './NavBar.css';
-import { FiLogIn, FiLogOut, FiUser, FiShoppingBag, FiShoppingCart } from "react-icons/fi";
+import { FiLogIn, FiLogOut, FiArchive, FiUser, FiShoppingBag, FiShoppingCart } from "react-icons/fi";
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { View } from '@aws-amplify/ui-react';
 
+
 const NavBar = () =>  {
+
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -49,17 +51,22 @@ const NavBar = () =>  {
                 Products
             </Nav.Link>
             <Nav.Link href="/orders">
-              <View className="icon"><FiShoppingCart /> </View>
+              <View className="icon"><FiUser /> </View>
                 My Orders
             </Nav.Link>
             <Nav.Link href="/account">
-            <View className="icon"><FiUser /></View>
+            <View className="icon"><FiArchive /></View>
               My Account
             </Nav.Link>
             <Nav.Link  onClick={clickSignOut}>
             <View className="icon"><FiLogOut /></View>
               Sign Out
-            </Nav.Link></> : <Nav.Link href="/signup">
+            </Nav.Link>
+            <Nav.Link href="/cart">
+            <View className="icon"><FiShoppingCart /></View>
+              Cart
+            </Nav.Link>
+            </> : <Nav.Link href="/signup">
             <View className="icon"><FiLogIn /> </View>
               Sign In
             </Nav.Link> }

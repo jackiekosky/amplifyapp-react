@@ -39,7 +39,7 @@ const SignUp = () => {
         <Authenticator formFields={formFields} hideSignUp={true}>
           <Text textAlign="center">You are now signed in! Please proceed to one of the following pages.</Text>
           <Flex justifyContent="center" marginTop="50px">
-            <Button onClick={() => navigate("/products")}  variant="secondary">My Products</Button>
+            <Button onClick={() => navigate("/products")}  variant="secondary">Products</Button>
             <Button onClick={() => navigate("/orders")}  variant="secondary">My Orders</Button>
             <Button onClick={() => navigate("/account")}  variant="secondary">My Account</Button>
           </Flex>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import {
 View,
@@ -63,7 +63,7 @@ TOKEN_DATA = JSON.stringify(TOKEN_DATA);
 
 async function handleSubmit(event) {
   event.preventDefault();
-  var newID = await createOrderInDB();
+ /* var newID = await createOrderInDB();
 
   const today = new Date();
   const yyyy = today.getFullYear();
@@ -79,7 +79,7 @@ async function handleSubmit(event) {
   let shipdd = shipDate.getDate();
   if (shipdd < 10) shipdd = '0' + shipdd;
   if (shipmm < 10) shipmm = '0' + shipmm;
-  const FormattedShipDate = shipmm + '/' + shipdd + '/' + shipyyyy;
+  const FormattedShipDate = shipmm + '/' + shipdd + '/' + shipyyyy;*/
 
   var partNum = MainProduct.PartNumber;
   var partColor = MainProduct.Color;
@@ -154,8 +154,23 @@ async function handleSubmit(event) {
     }
     lineItems.push(qty6Item);
   }
+  var cart = localStorage.getItem("cart");
+  var cartObj = JSON.parse(cart);
 
-  var orderQtys = {
+  if (cartObj) {
+    lineItems = lineItems.concat(cartObj);
+  }
+  
+  cart = lineItems;
+  
+  var cartString = JSON.stringify(cart);
+  localStorage.setItem('cart', cartString);
+  alert('Added to order!');
+
+  
+  //
+
+  /*var orderQtys = {
     "ExtSource": "INKTrax Portal",
     'ExtOrderID': newID,
     'ExtCustomerID': SW_NUM,
@@ -205,10 +220,10 @@ async function handleSubmit(event) {
   });
 
   const PUSH_RESULT = await res_push.json();
-  alert(PUSH_RESULT.result);
+  alert(PUSH_RESULT.result);*/
   window.location.reload(false);
 }
-
+/*
 async function createOrderInDB() {
   const newPushedOrders = await API.graphql({
       query: createPushedOrders,
@@ -220,7 +235,7 @@ async function createOrderInDB() {
       }
   });
   return newPushedOrders.data.createPushedOrders.id;
-}
+}*/
 
 useEffect(() => {
   fetchProduct();
@@ -287,7 +302,7 @@ async function fetchProduct() {
     return {
       id: item.ID_InvLevel,
       name: item.PartDescription,
-      cost: item.TotalCost,
+      cost: (Math.round(item.TotalCost * 100) / 100).toFixed(2),
       color: item.Color,
       part_num: item.PartNumber,
       id_Vendor: item.id_Vendor,
@@ -360,21 +375,7 @@ return (
       ))}
     </Row> : <Loader margin="auto" display="block" filledColor="#c23f33"/> }
     <Row>
-      <Text marginBottom="20px">ShopWorks Customer Number: {SW_NUM}</Text>
-      <View maxWidth="300px">
-      <TextField label="Requested to Ship Date" type= "date" marginBottom="5px" onChange={(e) => setRequestedShip(e.target.value) } />
-      {/*<TextField label="Shipping Address" marginBottom="5px" onChange={(e) => setShippingAddress(e.target.value) } />
-      <TextField label="Shipping City" marginBottom="5px" onChange={(e) => setShippingCity(e.target.value) } />
-      <TextField label="Shipping State" marginBottom="5px" onChange={(e) => setShippingState(e.target.value) } />
-      <TextField label="Shipping Zipcode" marginBottom="5px" onChange={(e) => setShippingZip(e.target.value) } />
-      <SelectField label="Shipping Method" onChange={(e) => setShippingMethod(e.target.value) }>
-        <option value="UPS">UPS</option>
-        <option value="Pickup">Pickup</option>
-        <option value="Delivery">Delivery</option>
-      </SelectField>*/}
-
-      <Button variant="secondary" type="submit" style={{ margin: '20px 0 0'}} >Order</Button>
-      </View>
+      <Button variant="secondary" type="submit" style={{ margin: '20px 0 0'}} >Add to Order</Button>
     </Row>
   </Container>
 );
