@@ -101,8 +101,7 @@ async function handleSubmit(event) {
   }
 
   orderQtys = JSON.stringify(orderQtys);
-  console.log(orderQtys);
-/*
+
   const res_access_token = await fetch(BASE_API_URL, {
     method: "POST",
     body: JSON.stringify({
@@ -128,7 +127,9 @@ async function handleSubmit(event) {
 
   const PUSH_RESULT = await res_push.json();
   alert(PUSH_RESULT.result);
-  window.location.reload(false);*/
+  localStorage.setItem('cart', "");
+  setShowProducts(false);
+  window.location.reload(false);
 }
 
 async function createOrderInDB() {
