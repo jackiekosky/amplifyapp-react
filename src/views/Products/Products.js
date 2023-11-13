@@ -52,12 +52,17 @@ const Products = () => {
     var searchedProductData = AllProducts.filter(item => item.part_num.includes(e.currentTarget.value));
     setProducts(searchedProductData);
   };
+
+  
   
   async function fetchProducts() {
     const currentUserInfo = await Auth.currentAuthenticatedUser();
     const groups = currentUserInfo.signInUserSession.idToken.payload['cognito:groups'];
     const user_number = currentUserInfo.attributes['custom:shopworks_number'];
-    const user_code = currentUserInfo.attributes['custom:sw_item_code'];
+    var user_code = currentUserInfo.attributes['custom:sw_item_code'];
+    user_code  = user_code.split(', ').join('_,');
+    user_code = user_code + "_";
+    user_code = user_code.split(',');
 
     if ( groups && groups.includes("Admin") ) {
       setShowSearch(true);
@@ -101,7 +106,6 @@ const Products = () => {
     });
     
     const PRODUCTS = await res_prods.json();
-    console.log(PRODUCTS);
     // Process the data as needed and convert it to the required format
     const productsData = PRODUCTS.result.map((item) => {
       return {
@@ -129,7 +133,15 @@ const Products = () => {
     if ( groups && groups.includes("Admin") ) {
       setProducts(productsData);
     } else {
-      var filteredProductData = productsData.filter(item => item.part_num.includes(`${user_code}_`));
+      console.log(user_code);
+      console.log(productsData);
+      //var filteredProductData = productsData.filter(item => item.part_num.includes(`${user_code}`));
+      //var filteredProductData = productsData.filter(item => user_code.includes(item.part_num));
+      var filteredProductData = [];
+      user_code.forEach((code) => {
+        var tempArray = productsData.filter(item => item.part_num.includes(`${code}`));
+        filteredProductData = filteredProductData.concat(tempArray);
+      });
       setProducts(filteredProductData);
     }
     setShowProducts(true);
