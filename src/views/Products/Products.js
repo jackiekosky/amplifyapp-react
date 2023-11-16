@@ -60,9 +60,11 @@ const Products = () => {
     const groups = currentUserInfo.signInUserSession.idToken.payload['cognito:groups'];
     const user_number = currentUserInfo.attributes['custom:shopworks_number'];
     var user_code = currentUserInfo.attributes['custom:sw_item_code'];
-    user_code  = user_code.split(', ').join('_,');
-    user_code = user_code + "_";
-    user_code = user_code.split(',');
+    if (user_code) {
+      user_code  = user_code.split(', ').join('_,');
+      user_code = user_code + "_";
+      user_code = user_code.split(',');
+    }
 
     if ( groups && groups.includes("Admin") ) {
       setShowSearch(true);
@@ -133,8 +135,6 @@ const Products = () => {
     if ( groups && groups.includes("Admin") ) {
       setProducts(productsData);
     } else {
-      console.log(user_code);
-      console.log(productsData);
       //var filteredProductData = productsData.filter(item => item.part_num.includes(`${user_code}`));
       //var filteredProductData = productsData.filter(item => user_code.includes(item.part_num));
       var filteredProductData = [];
