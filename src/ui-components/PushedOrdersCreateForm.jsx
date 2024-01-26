@@ -7,10 +7,9 @@
 /* eslint-disable */
 import * as React from "react";
 import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
-import { getOverrideProps } from "@aws-amplify/ui-react/internal";
-import { PushedOrders } from "../models";
-import { fetchByPath, validateField } from "./utils";
-import { DataStore } from "aws-amplify";
+import { fetchByPath, getOverrideProps, validateField } from "./utils";
+import { API } from "aws-amplify";
+import { createPushedOrders } from "../graphql/mutations";
 export default function PushedOrdersCreateForm(props) {
   const {
     clearOnSuccess = true,
@@ -95,7 +94,14 @@ export default function PushedOrdersCreateForm(props) {
               modelFields[key] = null;
             }
           });
-          await DataStore.save(new PushedOrders(modelFields));
+          await API.graphql({
+            query: createPushedOrders.replaceAll("__typename", ""),
+            variables: {
+              input: {
+                ...modelFields,
+              },
+            },
+          });
           if (onSuccess) {
             onSuccess(modelFields);
           }
@@ -104,7 +110,8 @@ export default function PushedOrdersCreateForm(props) {
           }
         } catch (err) {
           if (onError) {
-            onError(modelFields, err.message);
+            const messages = err.errors.map((e) => e.message).join("\n");
+            onError(modelFields, messages);
           }
         }
       }}

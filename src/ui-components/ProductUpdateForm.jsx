@@ -7,10 +7,10 @@
 /* eslint-disable */
 import * as React from "react";
 import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
-import { getOverrideProps } from "@aws-amplify/ui-react/internal";
-import { Product } from "../models";
-import { fetchByPath, validateField } from "./utils";
-import { DataStore } from "aws-amplify";
+import { fetchByPath, getOverrideProps, validateField } from "./utils";
+import { API } from "aws-amplify";
+import { getProduct } from "../graphql/queries";
+import { updateProduct } from "../graphql/mutations";
 export default function ProductUpdateForm(props) {
   const {
     id: idProp,
@@ -80,7 +80,12 @@ export default function ProductUpdateForm(props) {
   React.useEffect(() => {
     const queryData = async () => {
       const record = idProp
-        ? await DataStore.query(Product, idProp)
+        ? (
+            await API.graphql({
+              query: getProduct.replaceAll("__typename", ""),
+              variables: { id: idProp },
+            })
+          )?.data?.getProduct
         : productModelProp;
       setProductRecord(record);
     };
@@ -129,20 +134,20 @@ export default function ProductUpdateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
-          name,
-          price,
-          color,
-          part_num,
-          id_Vendor,
-          size_1_qty,
-          size_2_qty,
-          size_3_qty,
-          size_4_qty,
-          size_5_qty,
-          size_6_qty,
-          type,
-          cost,
-          PreprintGroup,
+          name: name ?? null,
+          price: price ?? null,
+          color: color ?? null,
+          part_num: part_num ?? null,
+          id_Vendor: id_Vendor ?? null,
+          size_1_qty: size_1_qty ?? null,
+          size_2_qty: size_2_qty ?? null,
+          size_3_qty: size_3_qty ?? null,
+          size_4_qty: size_4_qty ?? null,
+          size_5_qty: size_5_qty ?? null,
+          size_6_qty: size_6_qty ?? null,
+          type: type ?? null,
+          cost: cost ?? null,
+          PreprintGroup: PreprintGroup ?? null,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -172,17 +177,22 @@ export default function ProductUpdateForm(props) {
               modelFields[key] = null;
             }
           });
-          await DataStore.save(
-            Product.copyOf(productRecord, (updated) => {
-              Object.assign(updated, modelFields);
-            })
-          );
+          await API.graphql({
+            query: updateProduct.replaceAll("__typename", ""),
+            variables: {
+              input: {
+                id: productRecord.id,
+                ...modelFields,
+              },
+            },
+          });
           if (onSuccess) {
             onSuccess(modelFields);
           }
         } catch (err) {
           if (onError) {
-            onError(modelFields, err.message);
+            const messages = err.errors.map((e) => e.message).join("\n");
+            onError(modelFields, messages);
           }
         }
       }}

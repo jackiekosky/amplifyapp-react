@@ -49,7 +49,13 @@ const Products = () => {
 */
   
   const searchItems = (e) => {
-    var searchedProductData = AllProducts.filter(item => item.part_num.includes(e.currentTarget.value));
+    var searchedProductData = AllProducts.filter(item => {
+      if (item.part_num.toLowerCase().includes(e.currentTarget.value.toLowerCase())) { return true};
+      if (item.name.toLowerCase().includes(e.currentTarget.value.toLowerCase())) { return true};
+      if (item.color.toLowerCase().includes(e.currentTarget.value.toLowerCase())) { return true};
+      if (item.type.toLowerCase().includes(e.currentTarget.value.toLowerCase())) { return true};
+      if (item.find_Code.toLowerCase().includes(e.currentTarget.value.toLowerCase())) { return true};
+    });
     setProducts(searchedProductData);
   };
 

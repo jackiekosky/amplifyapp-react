@@ -20,9 +20,6 @@
     "Requires Symbols"
   ],
   "mfaConfiguration": "OPTIONAL",
-  "autoVerifiedAttributes": [
-    "email"
-  ],
   "mfaTypes": [
     "TOTP"
   ]

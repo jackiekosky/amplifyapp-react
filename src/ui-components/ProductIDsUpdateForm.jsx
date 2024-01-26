@@ -18,10 +18,10 @@ import {
   TextField,
   useTheme,
 } from "@aws-amplify/ui-react";
-import { getOverrideProps } from "@aws-amplify/ui-react/internal";
-import { ProductIDs } from "../models";
-import { fetchByPath, validateField } from "./utils";
-import { DataStore } from "aws-amplify";
+import { fetchByPath, getOverrideProps, validateField } from "./utils";
+import { API } from "aws-amplify";
+import { getProductIDs } from "../graphql/queries";
+import { updateProductIDs } from "../graphql/mutations";
 function ArrayField({
   items = [],
   onChange,
@@ -34,6 +34,7 @@ function ArrayField({
   defaultFieldValue,
   lengthLimit,
   getBadgeText,
+  runValidationTasks,
   errorMessage,
 }) {
   const labelElement = <Text>{label}</Text>;
@@ -57,6 +58,7 @@ function ArrayField({
     setSelectedBadgeIndex(undefined);
   };
   const addItem = async () => {
+    const { hasError } = runValidationTasks();
     if (
       currentFieldValue !== undefined &&
       currentFieldValue !== null &&
@@ -166,12 +168,7 @@ function ArrayField({
               }}
             ></Button>
           )}
-          <Button
-            size="small"
-            variation="link"
-            isDisabled={hasError}
-            onClick={addItem}
-          >
+          <Button size="small" variation="link" onClick={addItem}>
             {selectedBadgeIndex !== undefined ? "Save" : "Add"}
           </Button>
         </Flex>
@@ -215,7 +212,12 @@ export default function ProductIDsUpdateForm(props) {
   React.useEffect(() => {
     const queryData = async () => {
       const record = idProp
-        ? await DataStore.query(ProductIDs, idProp)
+        ? (
+            await API.graphql({
+              query: getProductIDs.replaceAll("__typename", ""),
+              variables: { id: idProp },
+            })
+          )?.data?.getProductIDs
         : productIDsModelProp;
       setProductIDsRecord(record);
     };
@@ -255,8 +257,8 @@ export default function ProductIDsUpdateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
-          part_num,
-          customerIDs,
+          part_num: part_num ?? null,
+          customerIDs: customerIDs ?? null,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -286,17 +288,22 @@ export default function ProductIDsUpdateForm(props) {
               modelFields[key] = null;
             }
           });
-          await DataStore.save(
-            ProductIDs.copyOf(productIDsRecord, (updated) => {
-              Object.assign(updated, modelFields);
-            })
-          );
+          await API.graphql({
+            query: updateProductIDs.replaceAll("__typename", ""),
+            variables: {
+              input: {
+                id: productIDsRecord.id,
+                ...modelFields,
+              },
+            },
+          });
           if (onSuccess) {
             onSuccess(modelFields);
           }
         } catch (err) {
           if (onError) {
-            onError(modelFields, err.message);
+            const messages = err.errors.map((e) => e.message).join("\n");
+            onError(modelFields, messages);
           }
         }
       }}
@@ -346,6 +353,9 @@ export default function ProductIDsUpdateForm(props) {
         label={"Customer i ds"}
         items={customerIDs}
         hasError={errors?.customerIDs?.hasError}
+        runValidationTasks={async () =>
+          await runValidationTasks("customerIDs", currentCustomerIDsValue)
+        }
         errorMessage={errors?.customerIDs?.errorMessage}
         setFieldValue={setCurrentCustomerIDsValue}
         inputFieldRef={customerIDsRef}
