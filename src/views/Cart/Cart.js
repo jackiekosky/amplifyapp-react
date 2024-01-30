@@ -215,13 +215,6 @@ return (
             <TableCell textAlign="center"><FiX onClick={() => updateCart(index)}/></TableCell>
           </TableRow>
         ))}
-        <TableRow>
-          <TableCell></TableCell>
-          <TableCell textAlign="center"></TableCell>
-          <TableCell textAlign="center"></TableCell>
-          <TableCell textAlign="center"></TableCell>
-          <TableCell textAlign="center"></TableCell>
-        </TableRow>
         </TableBody>
       </Table>
       <Text marginTop="20px" marginBottom="20px">ShopWorks Customer Number: {SW_NUM}</Text>
