@@ -94,8 +94,7 @@ async function handleSubmit(event) {
       "Color": partColor,
       "Description": partDesc,
       "Size": "S",
-      "Qty": qty1.toString(),
-      "Price": partUnitCost.toString(),
+      "Qty": qty1.toString()
     }
     lineItems.push(qty1Item);
   }
@@ -105,8 +104,7 @@ async function handleSubmit(event) {
       "Color": partColor,
       "Description": partDesc,
       "Size": "M",
-      "Qty": qty2.toString(),
-      "Price": partUnitCost.toString(),
+      "Qty": qty2.toString()
     }
     lineItems.push(qty2Item);
   }
@@ -117,7 +115,6 @@ async function handleSubmit(event) {
       "Description": partDesc,
       "Size": "LG",
       "Qty": qty3.toString(),
-      "Price": partUnitCost.toString(),
     }
     lineItems.push(qty3Item);
   }
@@ -127,8 +124,7 @@ async function handleSubmit(event) {
       "Color": partColor,
       "Description": partDesc,
       "Size": "XL",
-      "Qty": qty4.toString(),
-      "Price": partUnitCost.toString(),
+      "Qty": qty4.toString()
     }
     lineItems.push(qty4Item);
   }
@@ -138,8 +134,7 @@ async function handleSubmit(event) {
       "Color": partColor,
       "Description": partDesc,
       "Size": "XXL",
-      "Qty": qty5.toString(),
-      "Price": partUnitCost.toString(),
+      "Qty": qty5.toString()
     }
     lineItems.push(qty5Item);
   }
@@ -149,8 +144,7 @@ async function handleSubmit(event) {
       "Color": partColor,
       "Description": partDesc,
       "Size": "3x",
-      "Qty": qty6.toString(),
-      "Price": partUnitCost.toString(),
+      "Qty": qty6.toString()
     }
     lineItems.push(qty6Item);
   }
@@ -329,7 +323,7 @@ return (
       <View key={Product.id}>
         <Heading level="1" fontWeight="600">{Product.part_num}</Heading>
         <Heading level="2" fontWeight="600">{Product.name} - {Product.color}</Heading>
-        <Heading level="3" fontWeight="600">${Product.cost}</Heading>
+        <Heading level="3" fontWeight="600"></Heading>
         <Table caption="" highlightOnHover={false} margin="20px 0">
           <TableHead>
             <TableRow>

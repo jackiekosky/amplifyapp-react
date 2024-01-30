@@ -199,7 +199,6 @@ return (
         <TableHead>
           <TableRow>
             <TableCell as="th">Item</TableCell>
-            <TableCell as="th" textAlign="center">Price</TableCell>
             <TableCell as="th" textAlign="center">Size</TableCell>
             <TableCell as="th" textAlign="center">Quantity</TableCell>
             <TableCell as="th" textAlign="center"></TableCell>
@@ -211,7 +210,6 @@ return (
         {Products.map((Product, index) => (
           <TableRow key={index}>
             <TableCell>{Product.Description} - {Product.PartNumber} {Product.Color}</TableCell>
-            <TableCell textAlign="center">${(Math.round(Product.Price * 100) / 100).toFixed(2)}</TableCell>
             <TableCell textAlign="center">{Product.Size}</TableCell>
             <TableCell textAlign="center">{Product.Qty}</TableCell>
             <TableCell textAlign="center"><FiX onClick={() => updateCart(index)}/></TableCell>
@@ -221,7 +219,7 @@ return (
           <TableCell></TableCell>
           <TableCell textAlign="center"></TableCell>
           <TableCell textAlign="center"></TableCell>
-          <TableCell textAlign="center">Total: ${(Math.round(Total * 100) / 100).toFixed(2)}</TableCell>
+          <TableCell textAlign="center"></TableCell>
           <TableCell textAlign="center"></TableCell>
         </TableRow>
         </TableBody>
